@@ -1,0 +1,669 @@
+/*------------------------------------------------------------------------------ Estilos globales ---------------------------------------------------------------*/
+/*estilos de los encabezados de las modales*/
+.modal-header {
+  background-color: #969fa8;
+  color: #fff;
+}
+/*estilos de los pies de las modales*/
+.modal-footer {
+  background-color: #969fa8;
+  color: #fff;
+}
+/*estilos del boton cerrar de las modales*/
+.btn-close {
+  background-color: #fff;
+  color: #fff;
+}
+/*Estilos de las letras*/
+.titulosletras {
+  padding-top: 40px;
+  z-index: 10;
+  font-weight: bold;
+  font-size: 2.4rem;
+  color: rgba(73, 71, 71, 0.747);
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .titulosletras {
+    font-size: 1.5rem; /* Tamaño de la fuente */
+  }
+}
+/*titulo de la letras de inicio.php*/
+.titulosletrasinicio {
+  padding-top: 40px;
+  z-index: 10;
+  font-weight: bold;
+  font-size: 2.7rem;
+  color: rgba(247, 247, 247, 0.747);
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .titulosletrasinicio {
+    font-size: 1.5rem; /* Tamaño de la fuente */
+  }
+}
+/*titulo de la letras de inicio.php nombre*/
+.titulosletrasinicionombre {
+  padding-top: 5px;
+  z-index: 10;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: rgba(247, 247, 247, 0.747);
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .titulosletrasinicionombre {
+    font-size: 1.1rem; /* Tamaño de la fuente */
+  }
+}
+.titulosletraspequeñas {
+  font-size: 1.7rem; /* Tamaño de la fuente */
+  margin-top: -10px; /* Margen superior */
+  color: #0f0f13d0; /* Color de la letra */
+  font-weight: 400; /* Peso de la fuente normal (más liviano) */
+  letter-spacing: 2px; /* Espaciado entre letras */
+  font-family: "Georgia", serif; /* Fuente personalizada  */
+  line-height: 1.4; /* Altura de línea para mejorar la legibilidad */
+}
+.imagenfondo {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(230, 235, 240, 0.753);
+  z-index: -1;
+}
+/*modifica el fondo semitransparente que esta encima de las imagenes*/
+.cuadroblancocontenido {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.966) 75%,
+    rgba(255, 255, 255, 0.884) 100%
+  );
+  overflow-y: scroll;
+}
+/*cuandro blanco del incio*/
+.cuadroblancocontenidoinicio {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(224, 224, 224, 0.452);
+  overflow-y: scroll;
+}
+/* Estilo base para los botones */
+.btn {
+  transition: all 0.3s ease; /* Transición suave para todos los efectos */
+  border-radius: 8px; /* Bordes redondeados */
+}
+/* Efecto cuando el cursor pasa por encima de los botones */
+.btn:hover {
+  transform: scale(1.08); /* Aumenta el tamaño del botón */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+/* Efectos específicos para cada tipo de botón */
+.btn-primary:hover {
+  background-color: #0069d9; /* Cambia el color de fondo */
+  border-color: #005cbf; /* Cambia el color del borde */
+}
+.btn-success:hover {
+  background-color: #218838; /* Cambia el color de fondo */
+  border-color: #1e7e34; /* Cambia el color del borde */
+}
+.btn-warning:hover {
+  background-color: #e0a800; /* Cambia el color de fondo */
+  border-color: #d39e00; /* Cambia el color del borde */
+}
+/* Estilo personalizado para darle un toque moderno */
+.form-floating input[type="text"] {
+  border: 2px solid #6c757d; /* Borde gris oscuro */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  transition: all 0.3s ease;
+}
+
+.form-floating input[type="text"]:focus {
+  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  background-color: #fff;
+}
+
+.form-select-prueba {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 2px solid #ced4da;
+  border-radius: 0.25rem;
+}
+.form-select-dashboard {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.2;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 2px solid #ced4da;
+  border-radius: 0.25rem;
+}
+.form-select:focus {
+  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  background-color: #fff;
+}
+
+.form-floating label {
+  font-weight: 500;
+  color: #495057;
+}
+/*estilos de los input de tipo date*
+    /* Estilo personalizado para darle un toque moderno */
+.form-floating input[type="date"] {
+  border: 2px solid #6c757d; /* Borde gris oscuro */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  transition: all 0.3s ease;
+}
+
+.form-floating input[type="date"]:focus {
+  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  background-color: #fff;
+}
+
+.form-floating label {
+  font-weight: 500;
+  color: #495057;
+}
+/*estilos de los input de tipo number*/
+/* Estilo personalizado para darle un toque moderno */
+.form-floating input[type="number"] {
+  border: 2px solid #6c757d; /* Borde gris oscuro */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  transition: all 0.3s ease;
+}
+
+.form-floating input[type="number"]:focus {
+  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  background-color: #fff;
+}
+
+.form-floating label {
+  font-weight: 500;
+  color: #495057;
+}
+/*estilos de los input de tipo file*/
+/* Estilo personalizado para darle un toque moderno */
+.form-floating input[type="file"] {
+  border: 2px solid #6c757d; /* Borde gris oscuro */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  transition: all 0.3s ease;
+}
+
+.form-floating input[type="file"]:focus {
+  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  background-color: #fff;
+}
+
+.form-floating label {
+  font-weight: 500;
+  color: #495057;
+}
+/*estilos de los select*/
+/* Estilo personalizado para darle un toque moderno */
+.form-floating select {
+  border: 2px solid #6c757d; /* Borde gris oscuro */
+  border-radius: 0.5rem; /* Bordes redondeados */
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #f8f9fa; /* Fondo gris claro */
+  transition: all 0.3s ease;
+}
+
+.form-floating select:focus {
+  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  background-color: #fff;
+}
+
+.form-floating label {
+  font-weight: 500;
+  color: #495057;
+}
+/*-----------------------------------------------------------estilos del spinner---------------------------------*/
+.contenedorspinner {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+.loader {
+  width: 48px;
+  height: 48px;
+  margin: auto;
+  position: relative;
+}
+.loader:before {
+  content: "";
+  width: 48px;
+  height: 5px;
+  background: #000;
+  opacity: 0.25;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  border-radius: 50%;
+  animation: shadow 0.5s linear infinite;
+}
+.loader:after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  animation: bxSpin 0.5s linear infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 4px;
+}
+@keyframes bxSpin {
+  17% {
+    border-bottom-right-radius: 3px;
+  }
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+  50% {
+    transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+@keyframes shadow {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.2, 1);
+  }
+}
+/*------------------------------------------------------------------------------ Menú superior ---------------------------------------------------------------*/
+/* =========================
+   RESET GENERAL
+   ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  padding-top: 80px; /* espacio para navbar fijo */
+  background: #f9f9f9;
+}
+
+/* =========================
+   NAVBAR PRINCIPAL
+   ========================= */
+.navbar {
+  width: 100%;
+  min-height: 80px;
+  background: rgb(247, 247, 247);
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* permite que items bajen si no caben */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+/* ICONO / LOGO */
+.icono {
+  width: 80px;
+  height: 50px;
+  background-image: url("../img/Logo_LDRenta_OG.png");
+  background-size: cover;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.icono:hover {
+  opacity: 0.8;
+}
+.icono:active {
+  transform: scale(0.95);
+}
+
+/* TEXTO USUARIO Y AVATAR */
+.txtnombreusuario {
+  font-weight: bold;
+  font-size: 0.8rem;
+  padding-left: 70px;
+  color: black;
+  text-align: center;
+}
+.imgavatar {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* =========================
+   MENU HORIZONTAL
+   ========================= */
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap; /* items no se salen */
+}
+
+.menu li {
+  list-style: none;
+}
+
+.menu a {
+  text-decoration: none;
+  color: black;
+  font-size: 0.82rem;
+  padding: 10px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* evita quiebre de palabra */
+}
+
+.menu a:hover {
+  background: #555;
+  color: white;
+}
+
+/* BOTÓN HAMBURGUESA */
+.menu-toggle {
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  display: none;
+  z-index: 10;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+/* Desktop grande > 1366px */
+@media (min-width: 1367px) {
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .menu-toggle {
+    display: none;
+  }
+  .menu a {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+  }
+  .txtnombreusuario {
+    font-size: 0.9rem;
+    padding-left: 100px;
+  }
+}
+
+/* iPad Pro horizontal 1024px – 1366px */
+@media (max-width: 1366px) and (min-width: 1024px) {
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .menu-toggle {
+    display: none;
+  }
+  .menu a {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+  .txtnombreusuario {
+    font-size: 0.85rem;
+    padding-left: 85px;
+  }
+}
+
+/* Tablets medianas 768px – 1023px */
+@media (max-width: 1150px) and (min-width: 768px) {
+  .menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background: rgb(235, 234, 234);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+  }
+  .menu.active {
+    display: flex !important;
+  }
+  .menu li a {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .menu-toggle {
+    display: block;
+    font-size: 28px;
+  }
+}
+
+/* Móviles <768px */
+@media (max-width: 767px) {
+  .menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background: rgb(235, 234, 234);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+  }
+  .menu.active {
+    display: flex !important;
+  }
+  .menu li a {
+    width: 100%;
+    padding: 12px 18px;
+    font-size: 0.85rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .menu-toggle {
+    display: block;
+    font-size: 28px;
+  }
+  .txtnombreusuario {
+    font-size: 0.75rem;
+    padding-left: 50px;
+  }
+  .icono {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/*------------------------------------------------------------mostramos las letras y el boton para agregar nuevos mantenimientos---------------------------------------------------------------------------*/
+
+.titulosletrasunidades,
+.contenedor_botones,
+.contenedor_botones_validacion_unidades {
+  position: absolute;
+}
+
+/*estilo de los titulos */
+.titulosletrasunidades {
+  padding-top: 50px;
+  padding-left: 30px;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: rgb(95, 95, 95);
+  font-weight: bold;
+  animation: slide-in 0.5s ease-out forwards;
+}
+@media (max-width: 768px) {
+  .titulosletrasunidades {
+    padding-top: 50px;
+    font-size: 1.6rem;
+  }
+}
+/*estilos de los botones de la administracion de unidades*/
+.contenedor_botones {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  margin-top: 20px;
+  padding-top: 80px;
+  z-index: 10;
+}
+.contenedor_botones .btn {
+  min-width: auto; /* Puedes ajustar el tamaño mínimo */
+  border-radius: 13px;
+}
+/* botones responsivos*/
+@media (max-width: 768px) {
+  .contenedor_botones {
+    padding-top: 140px;
+    width: 100%; /* Los botones ocuparán el 100% del ancho en pantallas pequeñas */
+    margin: 10px 0; /* Añadir margen entre los botones cuando estén apilados */
+  }
+}
+/* Opcional: Estilo de los botones en pantallas pequeñas */
+@media (max-width: 768px) {
+  .contenedor_botones .btn {
+    width: 50%; /* Los botones ocuparán el 100% del ancho en pantallas pequeñas */
+    margin: 10px 0; /* Añadir margen entre los botones cuando estén apilados */
+  }
+}
+
+/**------------------------------------estilos contenedor de los mantenimientos y vida util evita que se suba-----------------------------------------------*/
+.contenedorvalidacionunidades {
+  padding-top: 60px;
+  position: relative;
+}
+
+.letravalidacionunidadresponsiva {
+  padding-top: 110px;
+  padding-left: 50px;
+  font-weight: bold;
+  font-size: 1.3rem;
+  color: rgb(95, 95, 95);
+  font-weight: bold;
+  animation: slide-in 0.5s ease-out forwards;
+}
+
+/*------------------------------------------estilos vida util de unidades demo----------------*/
+/* ------------------------------------------ */
+/* Vida útil de unidades demo - progress bar */
+.progress .progress-bar-activa {
+  background-color: #5586cee7 !important;
+  background-image: none !important; /* Evita el degradado de Bootstrap */
+}
+
+.progress .progress-bar-proxima {
+  background-color: #cfa935ff !important;
+  background-image: none !important;
+}
+
+.progress .progress-bar-venta {
+  background-color: #4abb83ff !important;
+  background-image: none !important;
+}
+
+/* Badges */
+.badge-activa {
+  background-color: #5586cee7 !important;
+  color: #fff !important;
+}
+.badge-proxima {
+  background-color: #cfa935ff !important;
+  color: #fff !important;
+}
+.badge-venta {
+  background-color: #4abb83ff !important;
+  color: #fff !important;
+}
+
+:root {
+  --color-activa: #5586cee7;
+  --color-proxima: #cfa935ff;
+  --color-venta: #4abb83ff;
+}
+
+.progress-bar-activa {
+  background-color: var(--color-activa) !important;
+  background-image: none !important;
+}
+
+/*estilos del navhe*/
+.navbar-brand,
+.nav-link {
+  color: rgb(0, 0, 0) !important;
+  font-weight: 500;
+}
+
+/*-------------------------estilos de la tabla mantenimientos---------------------*/
+.txtmantenimientos {
+  font-size: 0.87rem;
+}

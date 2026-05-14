@@ -1,0 +1,8 @@
+LAS LIBRERIAS DEL BACKEND UTILIZADAS EN ESTE SISTEMA (by ChristianG)
+PHPMailer:
+Utilizada para enviar correos desde el servidor con php.
+Se utilizo el correo de sistema@ldrsolutions.com.mx
+Si se pone la contraseña en lugar de la clave no funcionara, ademas de activar authenticacion en 2 pasos
+Se creo una clave de aplicacion desde el panel de cuenta de google (contraseñas para aplicaciones)
+
+//Por ahora no funciona porque no tiene configurado el correo y la contraseña SMTP el cual va a enviar los correos
