@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Estilos propios -->
-  <link rel="stylesheet" href="../css/estilos_v2.css?v=1">
+  <link rel="stylesheet" href="../css/estilos.css?v=1">
 
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
@@ -39,12 +39,15 @@
 
 <body>
 
-  <?php include("../include/menu.php"); ?>
-  
-  <div class="cuadroblancocontenido">
+ <?php include("../include/menu.php"); ?>
+
+  <main class="main-content">
     <!-- AQUÍ se carga el dashboard -->
     <?php include("../modulos/modulo_unidades_mantenimiento_flotilla.php"); ?>
-  </div>
+  </main>
+
+  <?php include("../ui/modales_unidades_mantenimiento_flotilla.php"); ?>
+
   <div class="contenedorspinner" id="contenedorspinner">
     <span class="loader"></span>
   </div>

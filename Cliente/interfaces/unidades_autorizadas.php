@@ -37,13 +37,12 @@ error_reporting(E_ALL);
     <?php
     include("../include/menu.php");
     ?>
-
-    <div class="cuadroblancocontenido">
-
-
+    <main class="main-content">
         <?php include("../modulos/modulo_unidades_autorizadas.php"); ?>
+    </main>
 
-    </div>
+    <?php include("../ui/modales_unidades_autorizadas.php"); ?>
+
 
     <div class="contenedorspinner" id="contenedorspinner">
         <span class="loader"></span>

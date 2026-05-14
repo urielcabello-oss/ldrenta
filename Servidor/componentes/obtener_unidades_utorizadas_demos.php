@@ -64,24 +64,25 @@ $sqlobtenerunidadesdemoautorizadas = "SELECT unid.img_unidad,
 $resultado = $conexion->query($sqlobtenerunidadesdemoautorizadas);
 
 
-function obtenerSemaforoImpacto($impacto){
+function obtenerSemaforoImpacto($impacto)
+{
 
-    if($impacto == 1){
+    if ($impacto == 1) {
         return '<span class="badge bg-success">Impacto Bajo</span>';
     }
 
-    if($impacto == 2){
+    if ($impacto == 2) {
         return '<span class="badge bg-warning text-dark">Impacto Medio</span>';
     }
 
-    if($impacto == 3){
+    if ($impacto == 3) {
         return '<span class="badge bg-danger">Impacto Alto</span>';
     }
 
     return '<span class="badge bg-secondary">Sin evaluar</span>';
 }
 
-echo '<div id="vistaCards">';
+echo '<div id="vistaCards" class="row g-4">';
 while ($fila = $resultado->fetch_assoc()) {
 
     $id_asignacion_demo = $fila['id_asignacion_unidad_demo'];
@@ -100,14 +101,18 @@ while ($fila = $resultado->fetch_assoc()) {
 
     if (($fila['id_persona_fisica'] || $fila['id_persona_moral']) && $fila['autorizacion'] === 'APROVADO') {
         $tipo_solicitante = isset($fila['id_persona_fisica']) && $fila['id_persona_fisica'] ? 'fisica' : 'moral';
-        echo '<div class="card mb-3 card-solicitante tipo-' . $tipo_solicitante . '">';
+        echo '
+<div class="col-12 col-md-6 col-xl-4 fila-solicitante tipo-' . $tipo_solicitante . '">
+
+    <div class="ldr-renta-card h-100">
+';
         if (!empty($fila['id_prorroga_unidad_demo']) && $fila['id_estado_prueba_demo'] != 5) {
             echo '<div class="alerta d-flex align-items-center">
                 <img src="../../Cliente/videos/notificacion.gif" class="me-2 imgalertasucces">
                 <h6 class="txtvalidacioncomodato"><b>Prórroga solicitada</b></h6>
             </div>';
         }
-        echo '<div class="cardheader">';
+        echo '<div class="cardheader position-relative">';
         //--------------------------------habilitar y desabilitar botón de comodato solo si juridico ya lo subio-------------------------------------------------
         if ($fila['id_estatus_comodato_demo'] == 3) {
             echo '<button type="button" 
@@ -140,7 +145,7 @@ while ($fila = $resultado->fetch_assoc()) {
         }
 
         echo '<h6 class="card-title"><b>' . $fila['nombre_modelo'] . '</b></h6>
-            <div class="mb-2">'.obtenerSemaforoImpacto($fila['impacto_atencion']).'</div>
+            <div class="mb-2">' . obtenerSemaforoImpacto($fila['impacto_atencion']) . '</div>
             <h6 class="card-text"><i class="fas fa-barcode me-2"></i><strong>VIN:</strong> ' . $fila['vin'] . '</h6>
             <h6 class="card-text"><i class="fas fa-road me-2"></i><strong>Paso dif.</strong> ' . $fila['paso_diferencial'] . '</h6>
             <h6 class="card-text"><i class="fas fa-car me-2"></i><b>Placa: </b>' . $fila['placa'] . '</h6>
@@ -158,22 +163,11 @@ while ($fila = $resultado->fetch_assoc()) {
                  Prórroga
               </button>';
             }
-
-            echo '<button type="button" class="btn btn-success btn-sm btnreportefinalunidademo" 
-                 data-id_asignacion_demo="' . $fila['id_asignacion_unidad_demo'] . '">
-             Reporte
-          </button>';
-
-            if ($fila['id_estado_prueba_demo'] != 5) {
-                echo '<button type="button" 
-                     class="btn btn-warning btn-sm btnfinalizarpruebaunidademo" 
-                     data-id_asignacion_demo="' . $fila['id_asignacion_unidad_demo'] . '">
-                 Finalizar
-              </button>';
-            }
         }
-        echo '</div>
-        </div>';
+        echo '
+        </div>
+    </div>
+</div>';
     }
 }
 echo '</div>';

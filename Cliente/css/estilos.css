@@ -24,9 +24,8 @@
   align-items: center;
 }
 
-
 .contenedorimgunidadasignacion img {
-  width:400px;
+  width: 400px;
   height: 400px;
   object-fit: contain; /* evita deformación */
 }
@@ -207,7 +206,8 @@ body {
    MAIN CONTENT
 ========================================================= */
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -956,9 +956,8 @@ html, body {
   color: var(--ldr-primary);
 }
 
-
 /* ==========================================
-   SOLICITUD UNIDADES DEMO
+   SOLICITUD UNIDADES 
 ========================================== */
 
 .ldr-solicitud-wrapper {
@@ -975,7 +974,7 @@ html, body {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
 .ldr-solicitud-title {
@@ -994,7 +993,7 @@ html, body {
   background: #fff;
   border-radius: 24px;
   padding: 28px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
 /* ==========================================
@@ -1018,12 +1017,12 @@ html, body {
   overflow: hidden;
   border: 1px solid #edf0f2;
   transition: 0.25s ease;
-  box-shadow: 0 6px 18px rgba(15,23,42,0.05);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
 }
 
 .card-unidad-demo:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(15,23,42,0.12);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
 }
 
 .card-unidad-img {
@@ -1058,5 +1057,138 @@ html, body {
   align-items: center;
 }
 
+/* =====================================================
+   CARDS RENTA MODERNAS
+===================================================== */
 
+.ldr-renta-card {
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid #ececec;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  transition: 0.25s ease;
+  height: 100%;
+}
 
+.ldr-renta-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+}
+
+.ldr-renta-img-container {
+  position: relative;
+  background: #f8f9fa;
+  padding: 15px;
+}
+
+.ldr-renta-img {
+  width: 100%;
+  height: 220px;
+  object-fit: contain;
+}
+
+.ldr-renta-badge-top {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #0d6efd;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.ldr-renta-body {
+  padding: 20px;
+}
+
+.ldr-renta-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.ldr-renta-subtitle {
+  color: #6c757d;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.ldr-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.ldr-info-item {
+  background: #f8f9fa;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.ldr-info-item span {
+  display: block;
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.ldr-info-item strong {
+  font-size: 0.9rem;
+}
+
+.ldr-colaborador {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid #eee;
+}
+
+.ldr-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ldr-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.cardheader {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* botones superiores */
+.btncomodatodemo,
+.btnVerObservaciones {
+  z-index: 20 !important;
+
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+/* opcional efecto hover */
+.btncomodatodemo:hover,
+.btnVerObservaciones:hover {
+  transform: scale(1.08);
+}

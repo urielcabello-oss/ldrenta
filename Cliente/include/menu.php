@@ -102,7 +102,7 @@ $avatarFinal = empty($avatar)
                     <li>
                         <a href="unidades_autorizadas.php">
                             <i class="fas fa-clipboard-check"></i>
-                            Asignaciones
+                            Unidades rentadas
                         </a>
                     </li>
                 <?php endif; ?>
@@ -111,7 +111,7 @@ $avatarFinal = empty($avatar)
                     <li>
                         <a href="asignaciones_unidades_demo.php">
                             <i class="fas fa-file-alt"></i>
-                            Documentos
+                            Documentación
                         </a>
                     </li>
                 <?php endif; ?>
@@ -128,6 +128,38 @@ $avatarFinal = empty($avatar)
             </ul>
 
         </div>
+
+        <?php if (tienePermiso('CONTRATO', 'r') || tienePermiso('CONTRATOS', 'r')): ?>
+            <!-- ADMIN -->
+            <div class="menu-section">
+
+                <div class="menu-section-title">
+                    JURIDICO
+                </div>
+
+                <ul>
+
+                    <?php if (tienePermiso('CONTRATO', 'r')): ?>
+                        <li>
+                            <a href="comodatos.php">
+                                <i class="fas fa-file-contract"></i>
+                                Usuarios
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (tienePermiso('CONTRATOS', 'r')): ?>
+                        <li>
+                            <a href="historial_comodatos.php">
+                                <i class="fas fa-user-shield"></i>
+                                Roles y permisos
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                </ul>
+            </div>
+        <?php endif; ?>
 
         <?php if (tienePermiso('USUARIOS', 'r') || tienePermiso('ROLES', 'r')): ?>
             <!-- ADMIN -->

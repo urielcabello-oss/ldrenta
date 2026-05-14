@@ -25,9 +25,13 @@
     <?php
     include("../include/menu.php");
     ?>
-
+    <main class="main-content">
 
         <?php include("../modulos/modulo_asignaciones_unidades_demo.php"); ?>
+
+    </main>
+
+    <?php include("../ui/modales_asignaciones_unidades_demo.php"); ?>
 
 
     <div class="contenedorspinner" id="contenedorspinner">
@@ -35,7 +39,7 @@
     </div>
 
 
-    
+
     <!--jquery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
