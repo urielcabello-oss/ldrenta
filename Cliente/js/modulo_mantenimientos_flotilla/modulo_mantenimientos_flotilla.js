@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const tipoSelect = document.getElementById("tipoInput");
   const maintTableBody = document.getElementById("maintBody");
   const maintenanceForm = document.getElementById("maintenanceForm");
+  const tallerSelect = document.getElementById("tallerSelect");
 
   let selectedUnidadId = null;
   let dataTableInstance = null;
@@ -72,8 +73,40 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+  // ==========================================
+  // CARGAR TALLERES
+  // ==========================================
+
+  function cargarTalleres() {
+    fetch(
+      "../../Servidor/solicitudes/unidades/mantenimientos_unidades_flotilla/obtener_talleres.php",
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        tallerSelect.innerHTML = `
+        <option value="">
+          Seleccionar taller
+        </option>
+      `;
+
+        data.forEach((taller) => {
+          const option = document.createElement("option");
+
+          option.value = taller.id_taller;
+
+          option.textContent = taller.nombre_taller;
+
+          tallerSelect.appendChild(option);
+        });
+      })
+      .catch((err) => {
+        console.error("Error talleres:", err);
+      });
+  }
+
   // Cargar tipos inicialmente
   cargarTiposEnSelect();
+  cargarTalleres();
 
   // ---------------------------
   // Cards resumen
@@ -230,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ingreso: "fecha_ingreso",
       salida: "fecha_salida",
       kilometraje: "km_actual",
-      taller: "taller",
+      taller: "nombre_taller",
       costo: "costo_estimado",
     };
 
@@ -305,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Actualizar cards
         updateCards(data);
 
-        mantenimientosData = data;
+        mantenimientosData = data; // 👈 guardar original completo
 
         // destruir DataTable previo
         if (dataTableInstance) {
@@ -320,36 +353,24 @@ document.addEventListener("DOMContentLoaded", function () {
         const counts = { preventivo: 0, correctivo: 0, mixto: 0 };
         const statusCounts = {};
 
+        function formatNumber(value) {
+          const num = Number(String(value).replace(/,/g, ""));
+          if (isNaN(num)) return 0;
+          return num.toLocaleString("es-MX");
+        }
+
         // Helper de kilometraje
         function renderKilometraje(m) {
           if (m.km_manual && m.km_manual > 0) {
-            const km = Number(m.km_manual).toLocaleString("en-US");
-
-            return `
-      <span class="text-warning fw-bold km-tooltip"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="Manual">
-            ${km} km
-      </span>`;
+            return `<span class="text-warning fw-bold km-tooltip" data-bs-toggle="tooltip" title="Manual">
+      ${formatNumber(m.km_manual)} km
+    </span>`;
           } else if (m.km_actual && m.km_actual > 0) {
-            const km = Number(m.km_actual).toLocaleString("en-US");
-
-            return `
-      <span class="text-primary fw-bold km-tooltip"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="Telematics">
-            ${km} km
-      </span>`;
+            return `<span class="text-primary fw-bold km-tooltip" data-bs-toggle="tooltip" title="Telematics">
+      ${formatNumber(m.km_actual)} km
+    </span>`;
           } else {
-            return `
-      <span class="text-muted km-tooltip"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="Sin dato">
-            0 km
-      </span>`;
+            return `<span class="text-muted km-tooltip" data-bs-toggle="tooltip" title="Sin dato">0 km</span>`;
           }
         }
 
@@ -364,23 +385,32 @@ document.addEventListener("DOMContentLoaded", function () {
     <td class="txtmantenimientos">${m.fecha_ingreso || "-"}</td>
     <td class="txtmantenimientos">${m.fecha_salida || "-"}</td>
     <td class="txtmantenimientos">${renderKilometraje(m)}</td>
-    <td class="txtmantenimientos">${m.taller || "-"}</td>
     <td class="txtmantenimientos">
-  $${Number(m.costo_estimado || 0).toLocaleString("en-US", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })}
-</td>
+ ${m.nombre_taller || "-"}
+    </td>
+    <td class="txtmantenimientos">$${formatNumber(m.costo_estimado)}</td>
     <td class="txtmantenimientos" title="${m.descripcion_trabajo || ""}">
   ${(m.descripcion_trabajo || "-").substring(0, 50)}...
 </td>
     <td class="txtmantenimientos">
-      <button class="btn btn-sm btn-outline-primary" type="button" onclick='openEditModal(${JSON.stringify(
-        m,
-      ).replace(/'/g, "&apos;")})'>
-        <i class="bi bi-pencil"></i>
-      </button>
-    </td>
+
+  <!-- EDITAR -->
+  <button 
+    class="btn btn-sm btn-outline-primary me-1"
+    type="button"
+    onclick='openEditModal(${JSON.stringify(m).replace(/'/g, "&apos;")})'>
+    <i class="bi bi-pencil"></i>
+  </button>
+
+  <!-- VER EVIDENCIAS -->
+  <button 
+    class="btn btn-sm btn-outline-success"
+    type="button"
+    onclick='verEvidencias(${JSON.stringify(m).replace(/'/g, "&apos;")})'>
+    <i class="bi bi-images"></i>
+  </button>
+
+</td>
   `;
           if (maintTableBody) maintTableBody.appendChild(tr);
 
@@ -550,7 +580,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "fecha_ingreso",
         "fecha_salida",
         "km_actual",
-        "taller",
+        "nombre_taller",
         "costo_estimado",
         "descripcion_trabajo",
       ];
@@ -590,7 +620,7 @@ document.addEventListener("DOMContentLoaded", function () {
           m.fecha_ingreso || "",
           m.fecha_salida || "",
           m.km_manual || m.km_actual || 0,
-          m.taller || "",
+          m.nombre_taller || "",
           m.costo_estimado || 0,
           m.descripcion_trabajo || "", // 🔥 COMPLETO
         ]);
@@ -735,3 +765,99 @@ document.addEventListener("DOMContentLoaded", function () {
   // Llamar a telemetría independiente
   loadTelemetriaChart();
 });
+
+window.verEvidencias = function (mantenimiento) {
+
+  let contenido = "";
+
+  // ==========================
+  // FACTURA
+  // ==========================
+  if (mantenimiento.factura) {
+
+    contenido += `
+      <div class="mb-4">
+        <h6>Factura</h6>
+
+        <a 
+          href="../../Servidor/archivos/files/files_mantenimientos_flotilla/facturas_mantenimientos_flotilla/${mantenimiento.factura}" 
+          target="_blank"
+          class="btn btn-danger btn-sm">
+
+          <i class="bi bi-file-earmark-pdf"></i>
+          Ver factura
+        </a>
+      </div>
+    `;
+  }
+
+  // ==========================
+  // EVIDENCIAS
+  // ==========================
+  const evidencias = [
+    {
+      titulo: "Tarjeta de circulación",
+      archivo: mantenimiento.foto_tarjeta_circulacion,
+    },
+    {
+      titulo: "Odómetro",
+      archivo: mantenimiento.foto_odometro,
+    },
+    {
+      titulo: "Cara de llanta",
+      archivo: mantenimiento.foto_llanta,
+    },
+    {
+      titulo: "Desgaste de llanta",
+      archivo: mantenimiento.foto_desgaste,
+    },
+  ];
+
+  evidencias.forEach((ev) => {
+
+    if (ev.archivo) {
+
+      contenido += `
+        <div class="col-md-6 mb-3 text-center">
+
+          <h6>${ev.titulo}</h6>
+
+          <a 
+            href="../../Servidor/archivos/files/files_mantenimientos_flotilla/evidencias/${ev.archivo}" 
+            target="_blank">
+
+            <img 
+              src="../../Servidor/archivos/files/files_mantenimientos_flotilla/evidencias/${ev.archivo}"
+              class="img-fluid rounded border shadow-sm"
+              style="max-height:250px; object-fit:cover;">
+          </a>
+
+        </div>
+      `;
+    }
+  });
+
+  // Si no hay nada
+  if (!contenido) {
+
+    contenido = `
+      <div class="alert alert-warning mb-0">
+        No hay evidencias registradas.
+      </div>
+    `;
+  }
+
+  // Insertar contenido
+  document.getElementById("contenidoEvidencias").innerHTML = `
+    <div class="row">
+      ${contenido}
+    </div>
+  `;
+
+  // Abrir modal
+  const modal = new bootstrap.Modal(
+    document.getElementById("modalEvidencias")
+  );
+
+  modal.show();
+};

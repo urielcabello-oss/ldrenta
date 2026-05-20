@@ -3,16 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!isset($_SESSION['id_tipo_usuario'])) {
-    header("Location: ../../index.php");
-    exit;
-}
 
-// Solo demos
-if (in_array($_SESSION['id_tipo_usuario'], [1, 2, 3])) {
-    echo "<h3 style='text-align:center;margin-top:50px;'>No tienes permiso para acceder a Demos</h3>";
-    exit;
-}
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -65,17 +56,17 @@ error_reporting(E_ALL);
 
             <!-- ACCESOS RÁPIDOS -->
             <section class="ldr-access-grid">
-                <a href="unidades.php" class="ldr-access-card">
+                <a href="unidades_demo.php" class="ldr-access-card">
                     <div class="ldr-access-title">Unidades</div>
                     <div class="ldr-access-text">Administración y altas de unidades</div>
                 </a>
 
                 <a href="asignaciones_unidades_demo.php" class="ldr-access-card">
-                    <div class="ldr-access-title">Validación de unidades</div>
+                    <div class="ldr-access-title">Documentación de unidades</div>
                     <div class="ldr-access-text">Seguimiento de renta de la unidad y verificación de contratos</div>
                 </a>
 
-                <a href="unidades_asignadas.php" class="ldr-access-card">
+                <a href="unidades_autorizadas.php" class="ldr-access-card">
                     <div class="ldr-access-title">Unidades rentadas</div>
                     <div class="ldr-access-text">Visualiza unidades rentadas a personas físicas o morales</div>
                 </a>

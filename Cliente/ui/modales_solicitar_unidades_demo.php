@@ -86,7 +86,7 @@
                 </button>
 
                 <button type="button"
-                    class="btn btn-final-demo"
+                    class="btn btn-primary"
                     id="btnsolicitaruniaddemo">
 
                     <i class="fa-solid fa-paper-plane me-2"></i>

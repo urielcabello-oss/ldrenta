@@ -14,7 +14,7 @@
              </h1>
 
              <p class="ldr-page-subtitle">
-                 Administración de las documentos.
+                 Administración de los contratos.
              </p>
          </div>
 
@@ -27,7 +27,7 @@
 
              <div>
                  <h2>
-                     Listado de asignaciones
+                     Listado de contratos por asignación
                  </h2>
 
                  <p>

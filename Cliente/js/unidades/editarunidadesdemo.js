@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // 🔹 Abrir modal
   document.body.addEventListener("click", function (e) {
-    if (e.target.classList.contains("btneditarunidadesdemo")) {
+    if (e.target.classList.contains("btneditarunidades")) {
       idUnidad = e.target.dataset.id;
 
       $.post(
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "editarNumeroMotor",
       "editarCostoNeto",
       "editarColor",
-      "editarañounidad",
+      "editarAnioUnidad",
       "editarEstadoUnidad",
       "editarEstatusUnidad",
       "editarTipoUnidad",
@@ -64,18 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
       "editarfoliofacturaunidad",
       "editarfechaadquisicionunidad",
       "editarPasoDiferencial",
-      "editarCarga",
-      "editarPasajeros",
-      "editarCombustible",
-      "editarTraccion",
-      "editarCarroceria",
-      "editarPuertas",
-      "editarAsientos",
-      "editarCaja",
-      "editarFreno",
-      "editarSuspencion",
-      "editarEjes",
-      "editarUso",
     ];
 
     for (let id of campos) {

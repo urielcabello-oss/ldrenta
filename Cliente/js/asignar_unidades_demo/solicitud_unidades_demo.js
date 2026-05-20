@@ -120,7 +120,6 @@ document.addEventListener("DOMContentLoaded", function () {
     $.ajax({
       type: "POST",
 
-      // AQUI ESTÁ EL ERROR
       // DEBE SER seleccionar_persona_fisica_moral.php
 
       url: "../../Servidor/solicitudes/solicitud_unidades_demo/seleccionar_persona_fisica_moral.php",
@@ -242,15 +241,249 @@ document.addEventListener("DOMContentLoaded", function () {
       },
 
       success: function (response) {
-        document.getElementById("modalverunidaddemoasignacionbody").innerHTML =
-          response;
+  document.getElementById("modalverunidaddemoasignacionbody").innerHTML =
+    response;
 
-        const modalFormulario = new bootstrap.Modal(
-          document.getElementById("modalverunidaddemoasignacion"),
-        );
+  const modalFormulario = new bootstrap.Modal(
+    document.getElementById("modalverunidaddemoasignacion"),
+  );
 
-        modalFormulario.show();
+  modalFormulario.show();
+
+  // ============================================
+  // BOTON FINAL SOLICITAR UNIDAD
+  // ============================================
+
+  const btnSolicitar = document.getElementById(
+    "btnsolicitaruniaddemo",
+  );
+
+  if (!btnSolicitar) {
+    console.error("No se encontró #btnsolicitaruniaddemo");
+    return;
+  }
+
+  // Eliminamos listeners duplicados
+  const nuevoBoton = btnSolicitar.cloneNode(true);
+
+  btnSolicitar.parentNode.replaceChild(
+    nuevoBoton,
+    btnSolicitar,
+  );
+
+  nuevoBoton.addEventListener("click", function () {
+    // ======================================
+    // CAMPOS
+    // ======================================
+
+    const id_unidad =
+      document.getElementById("id_unidad");
+
+    const id_persona_fisica =
+      document.getElementById("id_persona_fisica");
+
+    const id_persona_moral =
+      document.getElementById("id_persona_moral");
+
+    const id_colaborador =
+      document.getElementById("id_colaborador");
+
+    const fecha_solicitudemo =
+  document.getElementById(
+    "fecha_solicitudemo",
+  );
+
+const fecha_devoluciondemo =
+  document.getElementById(
+    "fecha_devoluciondemo",
+  );
+
+    // ======================================
+    // VALIDACIONES
+    // ======================================
+
+    if (
+      !id_unidad ||
+      !id_colaborador ||
+      !fecha_solicitudemo ||
+      !fecha_devoluciondemo
+    ) {
+      Toastify({
+        text: "Faltan campos requeridos",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        style: {
+          background:
+            "linear-gradient(to right,#ff0000,#ff0000)",
+        },
+      }).showToast();
+
+      return;
+    }
+
+    const tienePersonaFisica =
+      id_persona_fisica &&
+      id_persona_fisica.value !== "";
+
+    const tienePersonaMoral =
+      id_persona_moral &&
+      id_persona_moral.value !== "";
+
+    if (!tienePersonaFisica && !tienePersonaMoral) {
+      Toastify({
+        text: "Debes asignar una persona física o moral",
+        duration: 3000,
+        gravity: "top",
+        position: "right",
+        style: {
+          background:
+            "linear-gradient(to right,#ff0000,#ff0000)",
+        },
+      }).showToast();
+
+      return;
+    }
+
+    // ======================================
+    // FORMDATA
+    // ======================================
+
+    const caja1 = new FormData();
+
+    caja1.append(
+      "id_unidad",
+      id_unidad.value,
+    );
+
+    caja1.append(
+      "id_colaborador",
+      id_colaborador.value,
+    );
+
+    caja1.append(
+      "fechasolicitudunidademo",
+      fecha_solicitudemo.value,
+    );
+
+    caja1.append(
+      "fechadevolucionunidademo",
+      fecha_devoluciondemo.value,
+    );
+
+    if (tienePersonaFisica) {
+      caja1.append(
+        "id_persona_fisica",
+        id_persona_fisica.value,
+      );
+    }
+
+    if (tienePersonaMoral) {
+      caja1.append(
+        "id_persona_moral",
+        id_persona_moral.value,
+      );
+    }
+
+    // ======================================
+    // CHECKBOXES
+    // ======================================
+
+    const emplacamiento_ldr =
+      document.getElementById(
+        "emplacamiento_ldr",
+      );
+
+    const asegurar_ldr =
+      document.getElementById(
+        "asegurar_ldr",
+      );
+
+    caja1.append(
+      "emplacamiento_ldr",
+      emplacamiento_ldr &&
+        emplacamiento_ldr.checked
+        ? "1"
+        : "0",
+    );
+
+    caja1.append(
+      "asegurar_ldr",
+      asegurar_ldr &&
+        asegurar_ldr.checked
+        ? "1"
+        : "0",
+    );
+
+    // ======================================
+    // TEXTAREAS
+    // ======================================
+
+    const comentarios_pruebas_demo =
+      document.getElementById(
+        "comentarios_pruebas_demo",
+      );
+
+    const objetivo_prueba_demo =
+      document.getElementById(
+        "objetivo_prueba_demo",
+      );
+
+    caja1.append(
+      "objetivo_prueba_demo",
+      objetivo_prueba_demo
+        ? objetivo_prueba_demo.value
+        : "",
+    );
+
+    caja1.append(
+      "comentarios_pruebas_demo",
+      comentarios_pruebas_demo
+        ? comentarios_pruebas_demo.value
+        : "",
+    );
+
+    // ======================================
+    // INSERTAR SOLICITUD
+    // ======================================
+
+    contenedorspinner.style.display = "flex";
+
+    $.ajax({
+      type: "POST",
+
+      data: caja1,
+
+      url: "../../Servidor/solicitudes/solicitud_unidades_demo/solicitar_comodato_demo.php",
+
+      contentType: false,
+
+      processData: false,
+
+      success: function (response) {
+        contenedorspinner.style.display = "none";
+
+        console.log(response);
+
       },
+
+      error: function () {
+        contenedorspinner.style.display = "none";
+
+        Toastify({
+          text: "Error al registrar la solicitud",
+          duration: 3000,
+          gravity: "top",
+          position: "right",
+          style: {
+            background:
+              "linear-gradient(to right,#ff0000,#ff0000)",
+          },
+        }).showToast();
+      },
+    });
+  });
+},
 
       error: function () {
         Toastify({

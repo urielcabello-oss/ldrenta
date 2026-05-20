@@ -9,6 +9,7 @@ $sql = "SELECT
             m.id_mantenimiento,
             m.id_unidad,
             m.id_estatus_mantenimiento,
+            m.id_taller,
             u.vin,
             u.ultimo_kilometraje,
             m.km_actual,
@@ -20,12 +21,16 @@ $sql = "SELECT
             em.estatus,
             m.fecha_ingreso,
             m.fecha_salida,
-            m.taller,
             m.costo_estimado,
             m.descripcion_trabajo,
             m.factura,
             m.proximo_km,
-            m.proximo_fecha
+            m.proximo_fecha,
+            t.nombre_taller,
+            m.foto_tarjeta_circulacion,
+            m.foto_odometro,
+            m.foto_llanta,
+            m.foto_desgaste
         FROM mantenimientos_flotilla m
         INNER JOIN tipo_mantenimiento tm 
             ON m.id_tipo_mantenimiento = tm.id_tipo_mantenimiento
@@ -37,7 +42,9 @@ $sql = "SELECT
             ON u.id_modelo = mo.id_modelo
         INNER JOIN marcas ma 
             ON mo.id_marca = ma.id_marca
-        WHERE u.id_tipo_unidad IN (1, 2, 4)";
+        LEFT JOIN talleres t
+            ON m.id_taller = t.id_taller
+        WHERE 1=1";
 
 // Filtrar por unidad si se pasa
 if ($id_unidad) {
@@ -61,4 +68,3 @@ if ($result && $result->num_rows > 0) {
 }
 
 echo json_encode($data);
-?>

@@ -45,11 +45,11 @@ if ($resultado->num_rows > 0) {
         // Botón de edición según tipo de usuario
         $btnEditar = "";
         if ($id_tipo_usuario == 1) {
-            $btnEditar = "<button class='btn btn-editarunidades btneditarunidades fas fa-edit' data-id='" . $fila['id_unidad'] . "'>
+            $btnEditar = "<button class='btn btneditarunidades fas fa-edit' data-id='" . $fila['id_unidad'] . "'>
                             
                           </button>";
         } else { // Demo
-            $btnEditar = "<button class='btn btn-editarunidades btneditarunidadesdemo fas fa-edit' data-id='" . $fila['id_unidad'] . "'>
+            $btnEditar = "<button class='btn btneditarunidadesdemo fas fa-edit' data-id='" . $fila['id_unidad'] . "'>
                           </button>";
         }
 
@@ -82,15 +82,6 @@ if ($resultado->num_rows > 0) {
                 <button class='btn btn-verificaciones btnverificaciones fa-solid fa-file-pdf' data-id='{$fila['id_unidad']}'>
                 </button>
             </td>
-            <td style='text-align:center'>
-    <button class='btn btn-warning btnsolicitartraslado'
-  data-id_unidad='{$fila['id_unidad']}'
-  data-modelo='{$fila['nombre_modelo']}'
-  data-placa='{$fila['placa']}'
-  data-sede='{$fila['ubicacion']}'>
-  <i class='fa-solid fa-truck'></i>
-</button>
-    </td>
         </tr>
 ";
     }

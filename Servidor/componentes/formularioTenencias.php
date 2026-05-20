@@ -1,87 +1,272 @@
-<div class="row">
-    <!-- ------------------------------------------------------------------------Tenencias ------------------------------------------------------------------->
-    <h3>Registro de tenencias</h3>
-</div>
-<div class="row">
-    <!---------------------------------------------------------------- folio tenencia ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="text" class="form-control" id="foliotenencia" value="" placeholder="foliotenencia" name="foliotenencia">
-            <label for="foliotenencialdr">Folio</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-    <!---------------------------------------------------------------- Año semestre tenencia ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="text" class="form-control" id="añotenencia" value="" placeholder="añotenencia" name="añotenencia">
-            <label for="añotenencialdr">Año semestre</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-</div>
-<div class="row">
-    <h3>Estatus y monto de pago</h3>
-    <!---------------------------------------------------------------- estatus tenencias ---------------------------------------->
+<div class="row g-4">
+
     <?php
     include("../../Servidor/conexion.php");
-    $sql = "SELECT id_estatus_tenencias, estatus FROM estatus_tenencias";
-    $result = $conectar->query($sql);
-    echo '
-    <div class="col-md-4">
-        <div class="form-floating">
-            <select class="form-select" id="estatustenencias" name="estatustenencias">
-                <option selected>Seleccionar estatus de tenecia</option>';
-
-    while ($row = $result->fetch_assoc()) {
-        // Mostrar cada marca como una opcion
-        $selected = ($data['id_estatus_tenencias'] == $row['id_estatus_tenencias']) ? 'selected' : '';
-        echo '<option value="' . $row['id_estatus_tenencias'] . '"' . $selected . '>' . $row['estatus'] . '</option>';
-    }
-
-    echo '</select>
-            <label for="id_estatus_tenenciasldr">Estatus</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-    ';
     ?>
-    <!---------------------------------------------------------------- Monto pago ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="number" class="form-control" id="montopago" value="" placeholder="montopago" name="montopago" oninput="document.getElementById('MontoPago').innerText = this.value ? parseFloat(this.value).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) + ' MXN' : '';">
-            <label for="montopagoldr">Monto de pago</label>
-        </div>
-        <label id="MontoPago" style="color: black;"></label>
-    </div>
-</div>
-<div class="row">
-<h3>Fecha de pago y vencimiento</h3>
-    <!---------------------------------------------------------------- Fecha pago ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="date" class="form-control" id="fechapago" value="" placeholder="fechapago" name="fechapago">
-            <label for="fechapagoldr">Pago</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-    <!---------------------------------------------------------------- Fecha vencimiento ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="date" class="form-control" id="fechavencimiento" value="" placeholder="fechavencimiento" name="fechavencimiento">
-            <label for="fechavencimientoldr">Vencimiento</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-</div>
-<div class="row">
-    <!---------------------------------------------------------------- Documento poliza tenencia ---------------------------------------->
-    <h3>Documento</h3>
-    <div class="col-md-6">
-        <div class="form-floating">
-            <div class="form-label">
-                <input type="file" class="form-control" id="documento_poliza_tenencia" name="documento_poliza_tenencia" accept=".pdf" value="">
+
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="titulo-seccion-orange">
+
+            <div class="icono-seccion">
+                <i class="fas fa-file-invoice-dollar"></i>
             </div>
+
+            <div>
+                <h5 class="mb-1 fw-bold">
+                    Registro de tenencia
+                </h5>
+
+                <small>
+                    Información fiscal y comprobante de pago de la unidad
+                </small>
+            </div>
+
         </div>
+
     </div>
+
+    <!-- ===================================================== -->
+    <!-- DATOS GENERALES -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-receipt"></i>
+                Datos generales
+            </div>
+
+            <div class="row g-3">
+
+                <!-- FOLIO -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Folio <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="text"
+                        class="form-control input-moderno"
+                        id="foliotenencia"
+                        name="foliotenencia"
+                        placeholder="Folio de tenencia">
+
+                </div>
+
+                <!-- AÑO / SEMESTRE -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Año / semestre <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="text"
+                        class="form-control input-moderno"
+                        id="añotenencia"
+                        name="añotenencia"
+                        placeholder="Ejemplo: 2026-1">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ESTATUS Y MONTO -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-money-check-dollar"></i>
+                Estatus y monto de pago
+            </div>
+
+            <div class="row g-3">
+
+                <!-- ESTATUS -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Estatus
+                    </label>
+
+                    <select class="form-select input-moderno"
+                        id="estatustenencias"
+                        name="estatustenencias">
+
+                        <option value="">
+                            Seleccionar estatus
+                        </option>
+
+                        <?php
+
+                        $sql = "SELECT 
+                                    id_estatus_tenencias,
+                                    estatus
+                                FROM estatus_tenencias";
+
+                        $result = $conectar->query($sql);
+
+                        while ($row = $result->fetch_assoc()) {
+
+                            echo '
+                                <option value="' . $row['id_estatus_tenencias'] . '">
+                                    ' . $row['estatus'] . '
+                                </option>';
+                        }
+
+                        ?>
+
+                    </select>
+
+                </div>
+
+                <!-- MONTO -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Monto de pago
+                    </label>
+
+                    <input type="number"
+                        class="form-control input-moderno"
+                        id="montopago"
+                        name="montopago"
+                        placeholder="Monto"
+
+                        oninput="
+                        document.getElementById('MontoPago').innerText =
+                        this.value
+                        ? parseFloat(this.value).toLocaleString(
+                            'es-MX',
+                            {
+                                style: 'currency',
+                                currency: 'MXN'
+                            }
+                        ) + ' MXN'
+                        : '';
+                        ">
+
+                    <small id="MontoPago"
+                        class="text-dark fw-semibold ps-1">
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- FECHAS -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-calendar-days"></i>
+                Fechas de pago y vencimiento
+            </div>
+
+            <div class="row g-3">
+
+                <!-- FECHA PAGO -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Fecha de pago
+                    </label>
+
+                    <input type="date"
+                        class="form-control input-moderno"
+                        id="fechapago"
+                        name="fechapago">
+
+                </div>
+
+                <!-- FECHA VENCIMIENTO -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Fecha de vencimiento
+                    </label>
+
+                    <input type="date"
+                        class="form-control input-moderno"
+                        id="fechavencimiento"
+                        name="fechavencimiento">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- DOCUMENTO -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-file-pdf"></i>
+                Documento PDF
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <label for="documento_poliza_tenencia"
+                        class="upload-box-modern">
+
+                        <div class="upload-box-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+
+                        <h6 class="mb-1">
+                            Cargar comprobante PDF
+                        </h6>
+
+                        <small>
+                            Arrastra el archivo o haz clic aquí
+                        </small>
+
+                        <input type="file"
+                            class="form-control input-moderno"
+                            id="documento_poliza_tenencia"
+                            name="documento_poliza_tenencia"
+                            accept=".pdf">
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

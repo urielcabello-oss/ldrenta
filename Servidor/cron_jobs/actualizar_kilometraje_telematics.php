@@ -1,6 +1,6 @@
 <?php
 // Datos de la API
-$apiUrl = 'https://www.telematicsadvance.com/api/v1/unit/list.json';
+$apiUrl = 'https://portal.telematicsadvance.com.mx/api/v1/unit/list.json';
 $apiKey = '763fcd49ab3a7bc87060e21d822c37e45d1ab780';
 
 // Conexión a la base de datos

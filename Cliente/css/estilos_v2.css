@@ -81,16 +81,12 @@
   left: 0px;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.966) 75%,
-    rgba(255, 255, 255, 0.884) 100%
-  );
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.966) 75%, rgba(255, 255, 255, 0.884) 100%);
   overflow-y: scroll;
 }
 /*cuandro blanco del incio*/
-.cuadroblancocontenidoinicio {
-  position: absolute;
+.cuadroblancocontenidoinicio{
+    position: absolute;
   top: 0px;
   left: 0px;
   width: 100%;
@@ -122,139 +118,141 @@
   border-color: #d39e00; /* Cambia el color del borde */
 }
 /* Estilo personalizado para darle un toque moderno */
-.form-floating input[type="text"] {
-  border: 2px solid #6c757d; /* Borde gris oscuro */
-  border-radius: 0.5rem; /* Bordes redondeados */
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #f8f9fa; /* Fondo gris claro */
-  transition: all 0.3s ease;
-}
+    .form-floating input[type="text"] {
+        border: 2px solid #6c757d; /* Borde gris oscuro */
+        border-radius: 0.5rem;     /* Bordes redondeados */
+        padding: 1rem;
+        font-size: 1rem;
+        background-color: #f8f9fa; /* Fondo gris claro */
+        transition: all 0.3s ease;
+    }
 
-.form-floating input[type="text"]:focus {
-  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  background-color: #fff;
-}
-
+    .form-floating input[type="text"]:focus {
+        border-color: #0d6efd;     /* Azul Bootstrap al enfocar */
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        background-color: #fff;
+    }
+    
 .form-select-prueba {
-  display: block;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
-  font-weight: 500;
-  line-height: 1.5;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 2px solid #ced4da;
-  border-radius: 0.25rem;
+    display: block;
+    width: 100%;
+    padding: .500rem .75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 2px solid #ced4da;
+    border-radius: .25rem;
+
 }
 .form-select-dashboard {
-  display: block;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8rem;
-  font-weight: 400;
-  line-height: 1.2;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 2px solid #ced4da;
-  border-radius: 0.25rem;
-}
-.form-select:focus {
-  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  background-color: #fff;
-}
+    display: block;
+    width: 100%;
+    padding: .500rem .75rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.2;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 2px solid #ced4da;
+    border-radius: .25rem;
 
-.form-floating label {
-  font-weight: 500;
-  color: #495057;
 }
-/*estilos de los input de tipo date*
+    .form-select:focus {
+        border-color: #0d6efd;     /* Azul Bootstrap al enfocar */
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        background-color: #fff;
+    }
+
+    .form-floating label {
+        font-weight: 500;
+        color: #495057;
+    }
+    /*estilos de los input de tipo date*
     /* Estilo personalizado para darle un toque moderno */
-.form-floating input[type="date"] {
-  border: 2px solid #6c757d; /* Borde gris oscuro */
-  border-radius: 0.5rem; /* Bordes redondeados */
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #f8f9fa; /* Fondo gris claro */
-  transition: all 0.3s ease;
-}
+    .form-floating input[type="date"] {
+      border: 2px solid #6c757d; /* Borde gris oscuro */
+      border-radius: 0.5rem;     /* Bordes redondeados */
+      padding: 1rem;
+      font-size: 1rem;
+      background-color: #f8f9fa; /* Fondo gris claro */
+      transition: all 0.3s ease;
+  }
 
-.form-floating input[type="date"]:focus {
-  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  background-color: #fff;
-}
+  .form-floating input[type="date"]:focus {
+      border-color: #0d6efd;     /* Azul Bootstrap al enfocar */
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      background-color: #fff;
+  }
 
-.form-floating label {
-  font-weight: 500;
-  color: #495057;
-}
-/*estilos de los input de tipo number*/
-/* Estilo personalizado para darle un toque moderno */
-.form-floating input[type="number"] {
-  border: 2px solid #6c757d; /* Borde gris oscuro */
-  border-radius: 0.5rem; /* Bordes redondeados */
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #f8f9fa; /* Fondo gris claro */
-  transition: all 0.3s ease;
-}
+  .form-floating label {
+      font-weight: 500;
+      color: #495057;
+  }
+    /*estilos de los input de tipo number*/
+    /* Estilo personalizado para darle un toque moderno */
+    .form-floating input[type="number"] {
+      border: 2px solid #6c757d; /* Borde gris oscuro */
+      border-radius: 0.5rem;     /* Bordes redondeados */
+      padding: 1rem;
+      font-size: 1rem;
+      background-color: #f8f9fa; /* Fondo gris claro */
+      transition: all 0.3s ease;
+  }
 
-.form-floating input[type="number"]:focus {
-  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  background-color: #fff;
-}
+  .form-floating input[type="number"]:focus {
+      border-color: #0d6efd;     /* Azul Bootstrap al enfocar */
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      background-color: #fff;
+  }
 
-.form-floating label {
-  font-weight: 500;
-  color: #495057;
-}
-/*estilos de los input de tipo file*/
-/* Estilo personalizado para darle un toque moderno */
-.form-floating input[type="file"] {
-  border: 2px solid #6c757d; /* Borde gris oscuro */
-  border-radius: 0.5rem; /* Bordes redondeados */
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #f8f9fa; /* Fondo gris claro */
-  transition: all 0.3s ease;
-}
+  .form-floating label {
+      font-weight: 500;
+      color: #495057;
+  }
+    /*estilos de los input de tipo file*/
+    /* Estilo personalizado para darle un toque moderno */
+    .form-floating input[type="file"] {
+      border: 2px solid #6c757d; /* Borde gris oscuro */
+      border-radius: 0.5rem;     /* Bordes redondeados */
+      padding: 1rem;
+      font-size: 1rem;
+      background-color: #f8f9fa; /* Fondo gris claro */
+      transition: all 0.3s ease;
+  }
 
-.form-floating input[type="file"]:focus {
-  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  background-color: #fff;
-}
+  .form-floating input[type="file"]:focus {
+      border-color: #0d6efd;     /* Azul Bootstrap al enfocar */
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      background-color: #fff;
+  }
 
-.form-floating label {
-  font-weight: 500;
-  color: #495057;
-}
-/*estilos de los select*/
-/* Estilo personalizado para darle un toque moderno */
-.form-floating select {
-  border: 2px solid #6c757d; /* Borde gris oscuro */
-  border-radius: 0.5rem; /* Bordes redondeados */
-  padding: 1rem;
-  font-size: 1rem;
-  background-color: #f8f9fa; /* Fondo gris claro */
-  transition: all 0.3s ease;
-}
+  .form-floating label {
+      font-weight: 500;
+      color: #495057;
+  }
+    /*estilos de los select*/
+    /* Estilo personalizado para darle un toque moderno */
+    .form-floating select {
+      border: 2px solid #6c757d; /* Borde gris oscuro */
+      border-radius: 0.5rem;     /* Bordes redondeados */
+      padding: 1rem;
+      font-size: 1rem;
+      background-color: #f8f9fa; /* Fondo gris claro */
+      transition: all 0.3s ease;
+  }
 
-.form-floating select:focus {
-  border-color: #0d6efd; /* Azul Bootstrap al enfocar */
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-  background-color: #fff;
-}
+  .form-floating select:focus {
+      border-color: #0d6efd;     /* Azul Bootstrap al enfocar */
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      background-color: #fff;
+  }
 
-.form-floating label {
-  font-weight: 500;
-  color: #495057;
-}
+  .form-floating label {
+      font-weight: 500;
+      color: #495057;
+  }
 /*-----------------------------------------------------------estilos del spinner---------------------------------*/
 .contenedorspinner {
   display: none;
@@ -325,27 +323,19 @@
   }
 }
 /*------------------------------------------------------------------------------ Menú superior ---------------------------------------------------------------*/
-/* =========================
-   RESET GENERAL
-   ========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: Arial, sans-serif;
-  padding-top: 80px; /* espacio para navbar fijo */
-  background: #f9f9f9;
+  padding-top: 60px; /* Evita que el contenido se oculte debajo del menú */
 }
-
-/* =========================
-   NAVBAR PRINCIPAL
-   ========================= */
+/* Navbar */
 .navbar {
   width: 100%;
-  min-height: 80px;
+  height: 80px;
   background: rgb(247, 247, 247);
   position: fixed;
   top: 0;
@@ -354,73 +344,80 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap; /* permite que items bajen si no caben */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   z-index: 1000;
 }
-
-/* ICONO / LOGO */
+.icono,
+.txtnombreusuario{
+  position: relative;
+}
 .icono {
-  width: 80px;
+  width: 55px;
   height: 50px;
-  background-image: url("../img/Logo_LDRenta_OG.png");
+  background-image: url("../img/LDR_LOGO.png");
   background-size: cover;
   display: inline-block;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
+
 .icono:hover {
   opacity: 0.8;
 }
+
 .icono:active {
   transform: scale(0.95);
 }
 
-/* TEXTO USUARIO Y AVATAR */
-.txtnombreusuario {
+.icono:link,
+.icono:visited {
+  text-decoration: none;
+}
+
+.icono:link:after,
+.icono:visited:after {
+  content: attr(data-url);
+  display: none;
+}
+
+.icono[data-url]::before {
+  content: attr(data-url);
+  display: none;
+}
+.txtnombreusuario{
   font-weight: bold;
   font-size: 0.8rem;
   padding-left: 70px;
   color: black;
   text-align: center;
 }
-.imgavatar {
+.imgavatar{
   width: 40px;
   height: 40px;
   object-fit: cover;
-  border-radius: 50%;
 }
-
-/* =========================
-   MENU HORIZONTAL
-   ========================= */
+/* Menú de navegación */
 .menu {
   list-style: none;
   display: flex;
   gap: 5px;
-  flex-wrap: wrap; /* items no se salen */
+  
 }
-
 .menu li {
   list-style: none;
 }
-
 .menu a {
   text-decoration: none;
   color: black;
   font-size: 0.82rem;
-  padding: 10px 10px;
+  padding: 10px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  white-space: nowrap; /* evita quiebre de palabra */
 }
-
 .menu a:hover {
   background: #555;
   color: white;
 }
-
-/* BOTÓN HAMBURGUESA */
+/* Botón menú hamburguesa */
 .menu-toggle {
   font-size: 30px;
   background: none;
@@ -430,125 +427,50 @@ body {
   display: none;
   z-index: 10;
 }
-
-/* =========================
-   RESPONSIVE
-   ========================= */
-
-/* Desktop grande > 1366px */
-@media (min-width: 1367px) {
-  .menu {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .menu-toggle {
-    display: none;
-  }
-  .menu a {
-    font-size: 0.9rem;
-    padding: 10px 15px;
-  }
-  .txtnombreusuario {
-    font-size: 0.9rem;
-    padding-left: 100px;
-  }
-}
-
-/* iPad Pro horizontal 1024px – 1366px */
-@media (max-width: 1366px) and (min-width: 1024px) {
-  .menu {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-  }
-  .menu-toggle {
-    display: none;
-  }
-  .menu a {
-    font-size: 0.85rem;
-    padding: 8px 12px;
-  }
-  .txtnombreusuario {
-    font-size: 0.85rem;
-    padding-left: 85px;
-  }
-}
-
-/* Tablets medianas 768px – 1023px */
-@media (max-width: 1150px) and (min-width: 768px) {
+/* Responsive */
+@media (max-width: 1011px) {
   .menu {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 80px;
+    top: 60px;
     left: 0;
     width: 100%;
     background: rgb(235, 234, 234);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 10px 0;
-    border-top: 1px solid #ddd;
   }
   .menu.active {
-    display: flex !important;
+    display: flex !important; /* Asegura que el menú se muestre */
   }
-  .menu li a {
-    width: 100%;
-    padding: 12px 20px;
-    font-size: 0.9rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .menu li {
+    text-align: center;
+    padding: 10px 0;
   }
   .menu-toggle {
     display: block;
-    font-size: 28px;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  @media (max-width: 1082px) {
+    .menulist {
+      font-size: 1.3rem;
+    }
   }
 }
 
-/* Móviles <768px */
-@media (max-width: 767px) {
-  .menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    background: rgb(235, 234, 234);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-  }
-  .menu.active {
-    display: flex !important;
-  }
-  .menu li a {
-    width: 100%;
-    padding: 12px 18px;
-    font-size: 0.85rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .menu-toggle {
-    display: block;
-    font-size: 28px;
-  }
-  .txtnombreusuario {
-    font-size: 0.75rem;
-    padding-left: 50px;
-  }
-  .icono {
-    width: 45px;
-    height: 45px;
-  }
-}
 
 /*------------------------------------------------------------mostramos las letras y el boton para agregar nuevos mantenimientos---------------------------------------------------------------------------*/
+
 
 .titulosletrasunidades,
 .contenedor_botones,
 .contenedor_botones_validacion_unidades {
   position: absolute;
 }
+
 
 /*estilo de los titulos */
 .titulosletrasunidades {
@@ -583,7 +505,7 @@ body {
 }
 /* botones responsivos*/
 @media (max-width: 768px) {
-  .contenedor_botones {
+  .contenedor_botones{
     padding-top: 140px;
     width: 100%; /* Los botones ocuparán el 100% del ancho en pantallas pequeñas */
     margin: 10px 0; /* Añadir margen entre los botones cuando estén apilados */
@@ -597,13 +519,19 @@ body {
   }
 }
 
+
+
+
+
+
 /**------------------------------------estilos contenedor de los mantenimientos y vida util evita que se suba-----------------------------------------------*/
-.contenedorvalidacionunidades {
+.contenedorvalidacionunidades{
   padding-top: 60px;
   position: relative;
+  
 }
 
-.letravalidacionunidadresponsiva {
+.letravalidacionunidadresponsiva{
   padding-top: 110px;
   padding-left: 50px;
   font-weight: bold;
@@ -612,6 +540,7 @@ body {
   font-weight: bold;
   animation: slide-in 0.5s ease-out forwards;
 }
+
 
 /*------------------------------------------estilos vida util de unidades demo----------------*/
 /* ------------------------------------------ */
@@ -651,19 +580,16 @@ body {
   --color-venta: #4abb83ff;
 }
 
-.progress-bar-activa {
-  background-color: var(--color-activa) !important;
-  background-image: none !important;
-}
+.progress-bar-activa { background-color: var(--color-activa) !important; background-image: none !important; }
+
 
 /*estilos del navhe*/
-.navbar-brand,
-.nav-link {
-  color: rgb(0, 0, 0) !important;
-  font-weight: 500;
-}
+.navbar-brand, .nav-link {
+      color: rgb(0, 0, 0) !important;
+      font-weight: 500;
+    }
 
-/*-------------------------estilos de la tabla mantenimientos---------------------*/
-.txtmantenimientos {
-  font-size: 0.87rem;
-}
+    /*-------------------------estilos de la tabla mantenimientos---------------------*/
+    .txtmantenimientos{
+      font-size: 0.87rem;
+    }

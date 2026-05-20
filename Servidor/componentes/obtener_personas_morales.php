@@ -34,9 +34,7 @@ if ($resultado->num_rows > 0) {
     while ($fila = $resultado->fetch_assoc()) {
         echo "<tr>
             <td class='sticky-left-0'>";
-                   if ($id_tipo_usuario == 5 || $id_tipo_usuario == 6): // tipos de usuario solicitantes demos 
                 echo "<button class='btn fas fa-edit btn-editar_persona_fisica btneditarpersonafisica' data-id='" . $fila['id_persona_moral'] . "'></button>";
-            endif;
             echo"</td>
             <td class='titulostablaunidades'>" . $fila['id_persona_moral'] . "</td>
             <td class='titulostablaunidades'>" . $fila['organizacion_institucion'] . "</td>

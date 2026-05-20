@@ -14,7 +14,7 @@
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
 
-                    <div>
+                    <div class="texto-panel-demo">
 
                         <h5 class="fw-bold mb-2" style="color:#ff6b35;">
                             Flujo de asignación
@@ -30,6 +30,7 @@
 
                     </div>
 
+
                 </div>
 
             </div>
@@ -44,14 +45,14 @@
                             <i class="fa-solid fa-car-side"></i>
                         </div>
 
-                        <div>
-                            <h6 class="mb-1 fw-bold">
+                        <div class="texto-panel-demo">
+                            <h5 class="mb-1 fw-bold">
                                 Unidades
-                            </h6>
+                            </h5>
 
-                            <small class="text-muted">
+                            <p class="text-muted">
                                 Consulta disponibilidad y asigna rápidamente
-                            </small>
+                            </p>
                         </div>
 
                     </div>
@@ -70,11 +71,11 @@
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
             <div>
-                <h4 class="titulo-validacion mb-1">
+                <h4 class="ldr-page-title">
                     Registro de clientes
                 </h4>
 
-                <p class="subtitulo-validacion mb-0">
+                <p class="ldr-page-subtitle">
                     Registro de clientes y asignación de unidades disponibles.
                 </p>
             </div>
@@ -116,11 +117,11 @@
                 DISPONIBILIDAD
             </span>
 
-            <h3 class="ldr-solicitud-title">
-                Consulta de unidades demo
+            <h3 class="ldr-page-title">
+                Consulta de unidades 
             </h3>
 
-            <p class="ldr-solicitud-subtitle">
+            <p class="ldr-page-subtitle">
                 Verifica disponibilidad y aplica filtros avanzados.
             </p>
         </div>

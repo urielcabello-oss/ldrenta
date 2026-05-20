@@ -33,24 +33,12 @@ $valores = [
     "vin" => obtener("VIN"),
     "numero_motor" => obtener("motorunidad"),
     "placa" => obtener("placaunidad"),
-    "costo_neto" => obtener("tarjetacirculacionunidad"),
+    "costo_neto" => obtener("costoneto"),
     "id_color" => obtener("colorunidad"),
     "fecha_adquisicion" => obtener("fechaadquisicionunidad"),
-    "año_unidad" => obtener("añounidad"),
+    "año_unidad" => obtener("anounidad"),
     "id_arrendadora" => obtener("arrendadora"),
     "folio_factura" => obtener("foliofactura"),
-    "capacidad_carga" => obtener("capacidad_carga"),
-    "capacidad_pasajeros" => obtener("capacidad_pasajeros"),
-    "id_tipo_combustible" => obtener("tipo_combustible"),
-    "id_traccion" => obtener("traccion"),
-    "tipo_carrceria" => obtener("tipo_carroceria"),
-    "numero_puertas" => obtener("numero_puertas"),
-    "numero_asientos" => obtener("numero_asientos"),
-    "id_tipo_caja" => obtener("tipo_caja"),
-    "id_tipo_freno" => obtener("tipo_frenos"),
-    "id_tipo_suspencion" => obtener("suspension"),
-    "numero_ejes" => obtener("numero_ejes"),
-    "id_tipo_uso" => obtener("uso_permitido"),
     "paso_diferencial" => obtener("paso_diferencial")
 ];
 
@@ -94,6 +82,27 @@ if (isset($_FILES['imagen_unidad']) && $_FILES['imagen_unidad']['error'] == 0) {
     move_uploaded_file($_FILES['imagen_unidad']['tmp_name'], $ruta . $nombreImagen);
 }
 
+$validar = $conexion->prepare("
+SELECT id_unidad 
+FROM unidades 
+WHERE vin = ? OR placa = ?
+");
+
+$validar->bind_param(
+    "ss",
+    $valores["vin"],
+    $valores["placa"]
+);
+
+$validar->execute();
+
+$resultado = $validar->get_result();
+
+if ($resultado->num_rows > 0) {
+    echo "Duplicate";
+    exit;
+}
+
 /* ==============================
    4️⃣ PREPARED STATEMENT
 ============================== */
@@ -117,25 +126,12 @@ $stmt = $conexion->prepare("
         año_unidad,
         id_arrendadora,
         folio_factura,
-        capacidad_carga,
-        capacidad_pasajeros,
-        id_tipo_combustible,
-        id_traccion,
-        tipo_carrceria,
-        numero_puertas,
-        numero_asientos,
-        id_tipo_caja,
-        id_tipo_freno,
-        id_tipo_suspencion,
-        numero_ejes,
-        id_tipo_uso,
         paso_diferencial
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 ");
 
-/* tipos aproximados (ajusta si necesitas) */
 $stmt->bind_param(
-"iiiiiiissssisssissiiiiiiiiiiis",
+    "iiiiiiisssdissiisd",
     $creador_unidad,
     $valores["id_modelo"],
     $valores["id_estado_unidad"],
@@ -153,18 +149,6 @@ $stmt->bind_param(
     $valores["año_unidad"],
     $valores["id_arrendadora"],
     $valores["folio_factura"],
-    $valores["capacidad_carga"],
-    $valores["capacidad_pasajeros"],
-    $valores["id_tipo_combustible"],
-    $valores["id_traccion"],
-    $valores["tipo_carrceria"],
-    $valores["numero_puertas"],
-    $valores["numero_asientos"],
-    $valores["id_tipo_caja"],
-    $valores["id_tipo_freno"],
-    $valores["id_tipo_suspencion"],
-    $valores["numero_ejes"],
-    $valores["id_tipo_uso"],
     $valores["paso_diferencial"]
 );
 

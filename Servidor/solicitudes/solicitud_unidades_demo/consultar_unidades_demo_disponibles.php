@@ -3,7 +3,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-session_start();  // 👈 mover arriba
+session_start();  
 
 error_log("POST: " . print_r($_POST, true));
 error_log("SESSION: " . print_r($_SESSION, true));
@@ -39,8 +39,7 @@ if (isset($_POST['fechasolicitudunidademo'])
 
     // Construcción dinámica del WHERE
     $filtros = "WHERE ung.id_estado_unidad = 1 
-                AND ung.id_estatus_unidad = 1 
-                AND ung.id_tipo_unidad = 3";
+                AND ung.id_estatus_unidad = 1 ";
 
     if ($nombre_modelo !== '')          $filtros .= " AND ung.id_modelo = '$nombre_modelo'";
     if ($capacidad_carga !== '')        $filtros .= " AND ung.capacidad_carga >= '$capacidad_carga'";

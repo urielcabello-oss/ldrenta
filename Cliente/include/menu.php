@@ -71,6 +71,7 @@ $avatarFinal = empty($avatar)
 
         </div>
 
+        <?php if (tienePermiso('UNIDADES', 'r') || tienePermiso('RENTUNID', 'r') || tienePermiso('ASIGNACIONES', 'r') || tienePermiso('DOCUMENTOS', 'r') || tienePermiso('MENTENIMIENTO', 'r')): ?>
         <!-- OPERACIONES -->
         <div class="menu-section">
 
@@ -97,21 +98,21 @@ $avatarFinal = empty($avatar)
                         </a>
                     </li>
                 <?php endif; ?>
+                
+                <?php if (tienePermiso('DOCUMENTOS', 'r')): ?>
+                    <li>
+                        <a href="asignaciones_unidades_demo.php">
+                            <i class="fas fa-file-alt"></i>
+                            Documentación
+                        </a>
+                    </li>
+                <?php endif; ?>
 
                 <?php if (tienePermiso('ASIGNACIONES', 'r')): ?>
                     <li>
                         <a href="unidades_autorizadas.php">
                             <i class="fas fa-clipboard-check"></i>
                             Unidades rentadas
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <?php if (tienePermiso('DOCUMENTOS', 'r')): ?>
-                    <li>
-                        <a href="asignaciones_unidades_demo.php">
-                            <i class="fas fa-file-alt"></i>
-                            Documentación
                         </a>
                     </li>
                 <?php endif; ?>
@@ -128,6 +129,8 @@ $avatarFinal = empty($avatar)
             </ul>
 
         </div>
+        <?php endif; ?>
+
 
         <?php if (tienePermiso('CONTRATO', 'r') || tienePermiso('CONTRATOS', 'r')): ?>
             <!-- ADMIN -->
@@ -143,7 +146,7 @@ $avatarFinal = empty($avatar)
                         <li>
                             <a href="comodatos.php">
                                 <i class="fas fa-file-contract"></i>
-                                Usuarios
+                                Contratos
                             </a>
                         </li>
                     <?php endif; ?>
@@ -152,7 +155,7 @@ $avatarFinal = empty($avatar)
                         <li>
                             <a href="historial_comodatos.php">
                                 <i class="fas fa-user-shield"></i>
-                                Roles y permisos
+                                Historial de contratos
                             </a>
                         </li>
                     <?php endif; ?>
@@ -197,16 +200,18 @@ $avatarFinal = empty($avatar)
         <div class="menu-section">
 
             <div class="menu-section-title">
-                Intranet
+                INTRANET
             </div>
 
             <ul>
+                <li>
 
                 <a href="http://localhost/intranet/LDRHSystem/Cliente/interfaces/Inicio.php">
                     <i class="fas fa-building"></i>
                     <span>Intranet</span>
                 </a>
 
+                </li>
             </ul>
         </div>
 

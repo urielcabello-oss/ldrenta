@@ -10,6 +10,7 @@
   background-color: #87888a;
   color: #fff;
 }
+
 .modal {
   z-index: 20000 !important;
 }
@@ -18,6 +19,23 @@
   z-index: 19990 !important;
 }
 
+.ldr-btn-close{
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 10;
+
+    background-color: rgba(255, 255, 255, 0.76);
+    border-radius: 50%;
+    padding: 10px;
+
+    transition: all .2s ease;
+}
+
+.ldr-btn-close:hover{
+    transform: scale(1.08);
+    background-color: rgba(167, 11, 11, 0.685);
+}
 .contenedorimgunidadasignacion {
   display: flex;
   justify-content: center;
@@ -28,6 +46,84 @@
   width: 400px;
   height: 400px;
   object-fit: contain; /* evita deformación */
+}
+
+/* CARD DE UNIDAD */
+
+.ldr-card-unidad{
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    border: 1px solid #f1f1f1;
+}
+
+.ldr-card-unidad-img{
+    background: linear-gradient(135deg,#f8f9fa,#eef1f4);
+    padding: 25px;
+    text-align: center;
+}
+
+.ldr-card-unidad-img img{
+    max-height: 220px;
+    width: 100%;
+    object-fit: contain;
+    transition: .3s ease;
+}
+
+.ldr-card-unidad-img img:hover{
+    transform: scale(1.03);
+}
+
+.ldr-card-unidad-body{
+    padding: 24px;
+}
+
+.ldr-badge-unidad{
+    display: inline-block;
+    background: rgba(238,152,81,.15);
+    color: #ee9851;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.ldr-card-unidad-title{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #2b2b2b;
+}
+
+.ldr-card-unidad-subtitle{
+    color: #7b7b7b;
+    margin-bottom: 20px;
+}
+
+.ldr-card-unidad-info{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.ldr-card-unidad-info div{
+    background: #f8f9fb;
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.ldr-card-unidad-info span{
+    display: block;
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-bottom: 4px;
+}
+
+.ldr-card-unidad-info strong{
+    color: #2b2b2b;
+    font-size: 14px;
 }
 /* =================================================================================================
    ************************************************ MENU ********************************************
@@ -53,7 +149,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 280px;
+  width: 220px;
   height: 100vh;
   background: #fff;
   border-right: 1px solid #e5e7eb;
@@ -83,13 +179,13 @@ body {
 ========================================================= */
 
 .sidebar-logo {
-  padding: 25px;
+  padding: 30px;
   border-bottom: 1px solid #f1f1f1;
   text-align: center;
 }
 
 .sidebar-logo img {
-  width: 150px;
+  width: 70px;
 }
 
 /* =========================================================
@@ -97,28 +193,28 @@ body {
 ========================================================= */
 
 .sidebar-user {
-  padding: 20px;
+  padding: 15px;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
   border-bottom: 1px solid #f1f1f1;
 }
 
 .sidebar-user img {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .sidebar-user-info h4 {
-  font-size: 18px;
+  font-size: 13px;
   margin-bottom: 5px;
   color: #111827;
 }
 
 .sidebar-user-info span {
-  font-size: 14px;
+  font-size: 11px;
   color: #6b7280;
 }
 
@@ -136,26 +232,32 @@ body {
 }
 
 .menu-section-title {
-  font-size: 12px;
+  font-size: 9px;
   font-weight: 700;
   color: #9ca3af;
   margin-bottom: 15px;
   letter-spacing: 1px;
 }
 
+
+.menu-section ul li a {
+    font-size: 11px; /* Ajusta el tamaño */
+}
+
+
 .sidebar-menu ul {
   list-style: none;
 }
 
 .sidebar-menu li {
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 .sidebar-menu a {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 20px;
+  gap: 10px;
+  padding: 10px 18px;
   color: #374151;
   text-decoration: none;
   border-radius: 12px;
@@ -212,7 +314,7 @@ body {
 }
 
 .main-content {
-  margin-left: 240px;
+  margin-left: 180px;
   min-height: 100vh;
   padding: 25px;
   transition: all 0.3s ease;
@@ -363,7 +465,7 @@ body {
 
 .ldr-stat-number {
   display: block;
-  font-size: 2rem;
+  font-size: 1.4rem;
   font-weight: 800;
   color: var(--ldr-primary);
   line-height: 1;
@@ -372,7 +474,7 @@ body {
 
 .ldr-stat-label {
   display: block;
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   color: var(--ldr-text);
   font-weight: 500;
 }
@@ -420,11 +522,11 @@ body {
 .ldr-welcome-box {
   background: linear-gradient(135deg, #ffffff, #f8f8f8);
   border-radius: 22px;
-  padding: 35px;
+  padding: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 15px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
@@ -432,7 +534,7 @@ body {
   display: inline-block;
   background: rgba(232, 111, 12, 0.12);
   color: var(--ldr-primary);
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   font-weight: 700;
   padding: 8px 14px;
   border-radius: 50px;
@@ -440,21 +542,21 @@ body {
 }
 
 .ldr-welcome-text h1 {
-  font-size: 2.2rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--ldr-dark);
   margin-bottom: 10px;
 }
 
 .ldr-welcome-text p {
-  font-size: 1rem;
+  font-size: 0.7rem;
   color: var(--ldr-text);
   max-width: 700px;
   margin: 0;
 }
 
 .ldr-welcome-logo img {
-  max-height: 90px;
+  max-height: 70px;
   opacity: 0.9;
 }
 
@@ -470,7 +572,7 @@ body {
   background: var(--ldr-white);
   border: 1px solid var(--ldr-border);
   border-radius: 18px;
-  padding: 22px;
+  padding: 20px;
   text-decoration: none;
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
@@ -482,14 +584,14 @@ body {
 }
 
 .ldr-access-title {
-  font-size: 1.05rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--ldr-dark);
   margin-bottom: 8px;
 }
 
 .ldr-access-text {
-  font-size: 0.92rem;
+  font-size: 0.7rem;
   color: var(--ldr-text);
   line-height: 1.4;
 }
@@ -507,7 +609,7 @@ body {
 }
 
 .ldr-section-header h2 {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: var(--ldr-dark);
   margin-bottom: 6px;
@@ -515,6 +617,7 @@ body {
 
 .ldr-section-header p {
   margin: 0;
+  font-size: 0.8rem;
   color: var(--ldr-text);
 }
 
@@ -534,7 +637,7 @@ body {
 .ldr-footer-minimal {
   text-align: center;
   margin-top: 25px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 /* RESPONSIVE */
@@ -587,13 +690,14 @@ body {
 }
 
 .ldr-info-block h4 {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--ldr-dark);
   margin-bottom: 10px;
 }
 
 .ldr-info-block p {
+  font-size: 0.8rem;
   margin: 0;
   color: var(--ldr-text);
   line-height: 1.5;
@@ -642,21 +746,22 @@ body {
   display: inline-block;
   background: rgba(232, 111, 12, 0.12);
   color: var(--ldr-primary);
+  font-size: 0.6rem;
+  font-weight: 700;
   padding: 8px 14px;
   border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  margin-bottom: 14px;
+  margin-bottom: 15px;
 }
 
 .ldr-page-title {
-  font-size: 2rem;
+  font-size: 1.3rem;
   font-weight: 800;
   color: var(--ldr-dark);
   margin-bottom: 10px;
 }
 
 .ldr-page-subtitle {
+  font-size: 0.8rem;
   color: var(--ldr-text);
   margin: 0;
 }
@@ -671,9 +776,10 @@ body {
   color: #fff;
   border: none;
   border-radius: 14px;
-  padding: 12px 22px;
+  padding: 10px 20px;
   font-weight: 600;
   transition: 0.2s ease;
+  font-size: 0.80rem;
 }
 
 .ldr-btn-primary:hover {
@@ -690,6 +796,7 @@ body {
   padding: 12px 22px;
   font-weight: 600;
   transition: 0.2s ease;
+  font-size: 0.80rem;
 }
 
 .ldr-btn-secondary:hover {
@@ -717,13 +824,14 @@ body {
 }
 
 .ldr-table-header h2 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 800;
   margin-bottom: 6px;
   color: var(--ldr-dark);
 }
 
 .ldr-table-header p {
+  font-size: 0.8rem;
   margin: 0;
   color: var(--ldr-text);
 }
@@ -741,7 +849,7 @@ body {
   border: none !important;
   background: #f5f5f7;
   color: var(--ldr-dark);
-  font-size: 0.85rem;
+  font-size: 0.5rem;
   font-weight: 700;
   text-transform: uppercase;
   padding: 16px 14px;
@@ -763,7 +871,7 @@ body {
   border-top: none !important;
   padding: 16px 14px;
   white-space: nowrap;
-  font-size: 0.92rem;
+  font-size: 0.8rem;
 }
 
 /* =========================
@@ -826,7 +934,7 @@ body {
 #flotillaTable thead tr.filters select {
   border-radius: 10px;
   border: 1px solid #ddd;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
 }
 
 /*===============================
@@ -882,15 +990,17 @@ body {
   font-weight: 600;
   color: #374151;
   margin-bottom: 8px;
+  font-size: 14px;
 }
 
 .input-moderno {
-  min-height: 50px;
+  min-height: 30px;
   border-radius: 14px;
   border: 1px solid #dbe3ea;
   padding-left: 14px;
   transition: all 0.2s ease;
   background: #fff;
+  font-size: 14px;
 }
 
 .input-moderno:focus {
@@ -903,10 +1013,11 @@ body {
   color: white;
   border: none;
   border-radius: 14px;
-  padding: 12px 22px;
+  padding: 10px 20px;
   font-weight: 600;
   transition: all 0.2s ease;
   box-shadow: 0 6px 18px rgba(255, 107, 26, 0.25);
+  font-size: 0.80rem;
 }
 
 .btn-orange:hover {
@@ -917,8 +1028,9 @@ body {
 
 .btn-modern {
   border-radius: 14px;
-  padding: 12px 20px;
+  padding: 10px 20px;
   font-weight: 600;
+  font-size: 0.80rem;
 }
 
 /*----------------------------------------------------------------------------------------------*/
@@ -977,18 +1089,6 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.ldr-solicitud-title {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: #1f2937;
-  margin-bottom: 8px;
-}
-
-.ldr-solicitud-subtitle {
-  color: #6b7280;
-  margin: 0;
-}
-
 .ldr-filtros-card {
   background: #fff;
   border-radius: 24px;
@@ -996,15 +1096,47 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
+.texto-panel-demo h5 {
+  font-size: 1rem !important;
+}
+
+.texto-panel-demo p {
+  font-size: 0.8rem !important;
+}
+
+.mini-icono {
+  width: 10px;
+  height: 10px;
+  border-radius: 16px;
+  background: rgba(255, 107, 53, .12);
+  color: #ff6b35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.icono-panel-demo {
+  width: 10px;
+  height: 10px;
+  border-radius: 16px;
+  background: rgba(255, 107, 53, .12);
+  color: #ff6b35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
 /* ==========================================
    CONTENEDOR CARDS
 ========================================== */
 
 .contenedorunidadesdisponiblesdemo {
-  margin-top: 30px;
+  margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 /* ==========================================
@@ -1013,48 +1145,65 @@ body {
 
 .card-unidad-demo {
   background: #fff;
-  border-radius: 24px;
+  border-radius: 18px;
   overflow: hidden;
   border: 1px solid #edf0f2;
-  transition: 0.25s ease;
-  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
 
 .card-unidad-demo:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.10);
 }
 
 .card-unidad-img {
   width: 100%;
-  height: 220px;
+  height: 160px; /* antes 220 */
   object-fit: cover;
   background: #f5f5f5;
 }
 
 .card-unidad-body {
-  padding: 22px;
+  padding: 14px 16px;
 }
 
 .card-unidad-title {
-  font-size: 1.15rem;
-  font-weight: 800;
+  font-size: 1rem;
+  font-weight: 700;
   color: #1f2937;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  line-height: 1.2;
 }
 
 .card-unidad-info {
-  font-size: 0.92rem;
+  font-size: 0.85rem;
   color: #6b7280;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
+  line-height: 1.3;
 }
 
 .card-unidad-footer {
-  padding: 20px 22px;
+  padding: 12px 16px;
   border-top: 1px solid #f1f5f9;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+  .contenedorunidadesdisponiblesdemo {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card-unidad-img {
+    height: 150px;
+  }
 }
 
 /* =====================================================
@@ -1191,4 +1340,323 @@ body {
 .btncomodatodemo:hover,
 .btnVerObservaciones:hover {
   transform: scale(1.08);
+}
+
+/*polizas de aseguradoras*/
+/* =========================================================
+CARD GENERAL
+========================================================= */
+
+.ldr-card-form{
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 10px 35px rgba(0,0,0,.08);
+    border: 1px solid rgba(0,0,0,.04);
+}
+
+/* =========================================================
+HEADER CARD
+========================================================= */
+
+.ldr-card-header{
+    padding: 18px 22px;
+    border-bottom: 1px solid #f1f1f1;
+    background: #fafafa;
+}
+
+.ldr-card-header h5{
+    margin: 0;
+    font-weight: 700;
+    color: #2b2b2b;
+}
+
+/* =========================================================
+BODY CARD
+========================================================= */
+
+.ldr-card-body{
+    padding: 22px;
+}
+
+/* =========================================================
+HISTORIAL
+========================================================= */
+
+.contenedor_poliza_seguro{
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* =========================================================
+SCROLL MODERNO
+========================================================= */
+
+.contenedor_poliza_seguro::-webkit-scrollbar{
+    width: 8px;
+}
+
+.contenedor_poliza_seguro::-webkit-scrollbar-thumb{
+    background: rgba(0,0,0,.15);
+    border-radius: 10px;
+}
+
+/* =========================================================
+BOTÓN CERRAR
+========================================================= */
+
+.ldr-btn-close{
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 10;
+
+    background-color: rgba(255,255,255,.15);
+    border-radius: 50%;
+    padding: 10px;
+
+    transition: all .2s ease;
+}
+
+.ldr-btn-close:hover{
+    transform: scale(1.08);
+    background-color: rgba(255,255,255,.25);
+}
+/* =========================================================
+TABLA MODERNA
+========================================================= */
+
+.ldr-table-wrapper{
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+/* TABLA */
+
+.ldr-table{
+    margin: 0;
+}
+
+.ldr-table thead th{
+    border: none;
+    background: #f8f9fb;
+    color: #5d6166;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 16px;
+    white-space: nowrap;
+}
+
+.ldr-table tbody td{
+    border-top: 1px solid #f1f1f1;
+    padding: 16px;
+    vertical-align: middle;
+}
+
+.ldr-table tbody tr{
+    transition: all .2s ease;
+}
+
+.ldr-table tbody tr:hover{
+    background: #fafafa;
+}
+
+/* BOTONES */
+
+.btn-table-action{
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s ease;
+    text-decoration: none;
+}
+
+/* EDITAR */
+
+.btn-edit{
+    background: rgba(255,193,7,.15);
+    color: #d39e00;
+}
+
+.btn-edit:hover{
+    background: #ffc107;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* PDF */
+
+.btn-pdf{
+    background: rgba(220,53,69,.12);
+    color: #dc3545;
+}
+
+.btn-pdf:hover{
+    background: #dc3545;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* FOLIO */
+
+.badge-folio{
+    background: rgba(13,110,253,.1);
+    color: #0d6efd;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* EMPTY */
+
+.ldr-empty-state{
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.ldr-empty-state i{
+    font-size: 45px;
+    color: #d0d0d0;
+    margin-bottom: 15px;
+}
+
+.ldr-empty-state h6{
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.ldr-empty-state small{
+    color: #8b8b8b;
+}
+
+/*
+==========================================================
+    DOCUMENTOS
+=========================================================
+*/
+.carddemo{
+    transition: .2s ease;
+    background:#fff;
+}
+
+.carddemo:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,.10)!important;
+}
+
+.carddemo .badge{
+    font-size:.65rem;
+    padding:.35rem .55rem;
+    border-radius:20px;
+    font-weight:600;
+}
+
+.btnacciondemo{
+    height:32px;
+    border-radius:10px!important;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.btnacciondemo i{
+    font-size:13px;
+}
+
+.carddemo small{
+    font-size:.73rem;
+}
+
+.carddemo h6{
+    font-size:1rem;
+}
+
+.carddemo .btn{
+    padding:0;
+}
+
+/*
+==========================================================
+                  MANTENIMIENTOS
+=========================================================*/
+
+.ldr-maintenance-header{
+    background: #fff;
+    border-radius: 24px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 18px rgba(0,0,0,.05);
+    margin-bottom: 20px;
+}
+
+.ldr-card-mini{
+    background: #fff;
+    border-radius: 22px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.05);
+    height: 100%;
+}
+
+.ldr-icon-card{
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+.ldr-chart-icon{
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+#maintTable thead th{
+    font-size: 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+#maintTable tbody td{
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover{
+    background: rgba(238,152,81,.06);
+}
+
+.card{
+    transition: .2s ease;
+}
+
+.card:hover{
+    transform: translateY(-2px);
+}
+
+@media(max-width:768px){
+
+    .ldr-maintenance-header{
+        padding: 20px;
+    }
+
+    .ldr-card-mini{
+        padding: 5px;
+    }
+
 }

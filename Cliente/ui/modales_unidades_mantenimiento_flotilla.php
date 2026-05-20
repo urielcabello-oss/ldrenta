@@ -1,4 +1,3 @@
-
 <!-- Modal: Registrar mantenimiento -->
 <div class="modal fade" id="maintenanceModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -35,8 +34,19 @@
                             <input type="date" name="fecha_salida" id="fechaSalida" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Taller</label>
-                            <input type="text" name="taller" id="tallerInput" class="form-control">
+                            <label class="form-label fw-semibold">
+                                Taller aliado
+                            </label>
+
+                            <select
+                                name="id_taller"
+                                id="tallerSelect"
+                                class="form-select ldr-select"
+                                required>
+                                <option value="">
+                                    Seleccionar taller
+                                </option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Costo estimado</label>
@@ -106,7 +116,9 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Taller</label>
-                            <input type="text" name="taller" id="editTallerInput" class="form-control">
+                            <select name="id_taller" id="editTallerSelect" class="form-select">
+                                <option value="">Seleccionar taller</option>
+                            </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Costo estimado</label>
@@ -119,6 +131,66 @@
                         <div class="col-6">
                             <label class="form-label">Factura (adjuntar archivo)</label>
                             <input type="file" name="factura" id="editFacturaFile" class="form-control" accept=".pdf,.jpg,.png">
+                        </div>
+
+                        <!-- Evidencias -->
+                        <div class="col-12 mt-3">
+                            <h6 class="fw-bold border-bottom pb-2">
+                                Evidencias del mantenimiento
+                            </h6>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Foto tarjeta de circulación
+                            </label>
+
+                            <input
+                                type="file"
+                                name="foto_tarjeta_circulacion"
+                                id="editFotoTarjeta"
+                                class="form-control"
+                                accept=".jpg,.jpeg,.png,.webp,.pdf">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Foto del odómetro
+                            </label>
+
+                            <input
+                                type="file"
+                                name="foto_odometro"
+                                id="editFotoOdometro"
+                                class="form-control"
+                                accept=".jpg,.jpeg,.png,.webp">
+                        </div>
+
+                        <!-- SOLO NEUMÁTICOS -->
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Foto cara de llanta
+                            </label>
+
+                            <input
+                                type="file"
+                                name="foto_llanta"
+                                id="editFotoLlanta"
+                                class="form-control"
+                                accept=".jpg,.jpeg,.png,.webp">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">
+                                Foto desgaste llanta
+                            </label>
+
+                            <input
+                                type="file"
+                                name="foto_desgaste"
+                                id="editFotoDesgaste"
+                                class="form-control"
+                                accept=".jpg,.jpeg,.png,.webp">
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Estatus</label>
@@ -146,4 +218,38 @@
             </form>
         </div>
     </div>
+</div>
+
+//modal evidencias
+<!-- Modal evidencias -->
+<div class="modal fade" id="modalEvidencias" tabindex="-1">
+
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Evidencias del mantenimiento
+                </h5>
+
+                <button 
+                    type="button" 
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <div id="contenidoEvidencias"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

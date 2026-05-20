@@ -23,7 +23,7 @@
             <div class="col-md-6">
 
                 <label class="label-form">
-                    Fecha devolución
+                    Fecha de devolución
                 </label>
 
                 <input type="date"

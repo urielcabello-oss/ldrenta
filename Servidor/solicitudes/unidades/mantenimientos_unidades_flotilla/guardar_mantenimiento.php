@@ -32,7 +32,7 @@ try {
 
     // Campos opcionales
     $fecha_salida = $_POST['fecha_salida'] ?? null;
-    $taller = $_POST['taller'] ?? null;
+    $id_taller = $_POST['id_taller'] ?? null;
     $costo_estimado = isset($_POST['costo_estimado']) && $_POST['costo_estimado'] !== '' ? $_POST['costo_estimado'] : 0;
     $descripcion_trabajo = $_POST['descripcion_trabajo'] ?? null;
     $proximo_km = isset($_POST['proximo_km']) && $_POST['proximo_km'] !== '' ? $_POST['proximo_km'] : 0;
@@ -43,24 +43,33 @@ try {
 
     // Preparar SQL
     $sql = "INSERT INTO mantenimientos_flotilla (
-                id_unidad, id_tipo_mantenimiento, id_estatus_mantenimiento,
-                fecha_ingreso, fecha_salida, taller, costo_estimado,
-                descripcion_trabajo, proximo_km, proximo_fecha,
-                fecha_registro, id_usuario_registra, km_manual
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
+    id_unidad,
+    id_tipo_mantenimiento,
+    id_estatus_mantenimiento,
+    fecha_ingreso,
+    fecha_salida,
+    id_taller,
+    costo_estimado,
+    descripcion_trabajo,
+    proximo_km,
+    proximo_fecha,
+    fecha_registro,
+    id_usuario_registra,
+    km_manual
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
 
     $stmt = $conexion->prepare($sql);
     if (!$stmt) throw new Exception("Error al preparar la consulta: " . $conexion->error);
 
     // bind_param: i=int, d=double, s=string
     $stmt->bind_param(
-    "iiisssdssisi",
+    "iiissidssidi",
     $id_unidad,
     $id_tipo_mantenimiento,
     $id_estatus,
     $fecha_ingreso,
     $fecha_salida,
-    $taller,
+    $id_taller,
     $costo_estimado,
     $descripcion_trabajo,
     $proximo_km,
@@ -74,7 +83,6 @@ try {
     } else {
         throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
     }
-
 } catch (Exception $e) {
     $response = ["success" => false, "message" => $e->getMessage()];
 }
@@ -82,4 +90,3 @@ try {
 // Devolver JSON limpio
 echo json_encode($response);
 exit;
-?>

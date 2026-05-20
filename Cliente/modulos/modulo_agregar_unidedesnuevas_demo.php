@@ -1,6 +1,8 @@
+<form id="formRegistrarUnidadDemo" enctype="multipart/form-data">
+
 <div class="container-fluid px-3 px-md-4 mt-4">
 
-    <!-- HEADER PRINCIPAL -->
+    <!-- HEADER -->
     <div class="panel-acciones-final p-4 mb-4">
 
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
@@ -15,29 +17,27 @@
                 </p>
             </div>
 
-            <div class="d-flex gap-2 flex-wrap">
-
-                <button type="button"
+            <button type="button"
                     class="btn btn-light btn-modern border"
                     onclick="window.history.back();">
 
-                    <i class="fa-solid fa-arrow-left me-2"></i>
-                    Regresar
-                </button>
+                <i class="fa-solid fa-arrow-left me-2"></i>
+                Regresar
 
-            </div>
+            </button>
 
         </div>
 
     </div>
 
-    <!-- =========================== -->
+    <!-- ========================================= -->
     <!-- MARCA Y MODELO -->
-    <!-- =========================== -->
+    <!-- ========================================= -->
 
     <div class="panel-acciones-final p-4 mb-4">
 
         <div class="titulo-seccion-orange mb-4">
+
             <div class="icono-seccion">
                 <i class="fa-solid fa-car-side"></i>
             </div>
@@ -48,14 +48,15 @@
                 </h5>
 
                 <small>
-                    Información principal de identificación de la unidad
+                    Información principal de identificación
                 </small>
             </div>
+
         </div>
 
         <div class="row g-4">
 
-            <!-- Marca -->
+            <!-- MARCA -->
             <div class="col-md-6">
 
                 <label class="form-label label-form">
@@ -63,17 +64,19 @@
                 </label>
 
                 <select class="form-select input-moderno"
-                    id="marcaunidad"
-                    name="marcaunidades">
+                        id="marcaunidad"
+                        name="marcaunidad">
 
                     <option value="">Seleccionar</option>
 
                     <?php
-                    $sql = "SELECT id_marca, nombre_marca FROM marcas WHERE id_marca = 1";
-                    $result = $conectar->query($sql);
+                    $sql = "SELECT id_marca, nombre_marca FROM marcas";
+                    $result = $conexion->query($sql);
 
                     while ($row = $result->fetch_assoc()) {
-                        echo '<option value="' . $row['id_marca'] . '">' . $row['nombre_marca'] . '</option>';
+                        echo '<option value="' . $row['id_marca'] . '">
+                                ' . $row['nombre_marca'] . '
+                              </option>';
                     }
                     ?>
 
@@ -81,7 +84,7 @@
 
             </div>
 
-            <!-- Modelo -->
+            <!-- MODELO -->
             <div class="col-md-6">
 
                 <label class="form-label label-form">
@@ -89,8 +92,8 @@
                 </label>
 
                 <select class="form-select input-moderno"
-                    id="modelounidad"
-                    name="modelounidades">
+                        id="modelounidad"
+                        name="modelounidad">
 
                     <option value="">Seleccionar</option>
 
@@ -98,36 +101,13 @@
 
             </div>
 
-            <script>
-                document.getElementById('marcaunidad').addEventListener('change', function() {
-                    const marcaId = this.value;
-
-                    fetch('../../Servidor/solicitudes/unidades/obtener_modelos.php?marca_id=' + marcaId)
-                        .then(response => response.json())
-                        .then(data => {
-                            const modeloSelect = document.getElementById('modelounidad');
-                            modeloSelect.innerHTML = '<option value="">Seleccionar</option>'; // limpia anteriores
-
-                            data.forEach(modelo => {
-                                const option = document.createElement('option');
-                                option.value = modelo.id_modelo;
-                                option.text = modelo.nombre_modelo;
-                                modeloSelect.appendChild(option);
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error al cargar modelos:', error);
-                        });
-                });
-            </script>
-
         </div>
 
     </div>
 
-    <!-- =========================== -->
+    <!-- ========================================= -->
     <!-- DATOS GENERALES -->
-    <!-- =========================== -->
+    <!-- ========================================= -->
 
     <div class="panel-acciones-final p-4 mb-4">
 
@@ -143,7 +123,7 @@
                 </h5>
 
                 <small>
-                    Información administrativa y técnica de la unidad
+                    Información administrativa y técnica
                 </small>
             </div>
 
@@ -151,6 +131,7 @@
 
         <div class="row g-4">
 
+            <!-- COSTO -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -158,23 +139,42 @@
                 </label>
 
                 <input type="number"
-                    class="form-control input-moderno"
-                    id="tarjetacirculacionunidad">
+                       step="0.01"
+                       class="form-control input-moderno"
+                       id="costoneto"
+                       name="costoneto">
 
             </div>
 
+            <!-- COLOR -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
-                    Paso diferencial
+                    Color
                 </label>
 
-                <input type="text"
-                    class="form-control input-moderno"
-                    id="paso_diferencial">
+                <select class="form-select input-moderno"
+                        id="colorunidad"
+                        name="colorunidad">
+
+                    <option value="">Seleccionar</option>
+
+                    <?php
+                    $sql = "SELECT id_color, color_unidad FROM unidad_color";
+                    $result = $conexion->query($sql);
+
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . $row['id_color'] . '">
+                                ' . $row['color_unidad'] . '
+                              </option>';
+                    }
+                    ?>
+
+                </select>
 
             </div>
 
+            <!-- PLACA -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -182,11 +182,13 @@
                 </label>
 
                 <input type="text"
-                    class="form-control input-moderno"
-                    id="placaunidad">
+                       class="form-control input-moderno"
+                       id="placaunidad"
+                       name="placaunidad">
 
             </div>
 
+            <!-- VIN -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -194,11 +196,13 @@
                 </label>
 
                 <input type="text"
-                    class="form-control input-moderno"
-                    id="VIN">
+                       class="form-control input-moderno"
+                       id="vin"
+                       name="vin">
 
             </div>
 
+            <!-- MOTOR -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -206,11 +210,13 @@
                 </label>
 
                 <input type="text"
-                    class="form-control input-moderno"
-                    id="motorunidad">
+                       class="form-control input-moderno"
+                       id="motorunidad"
+                       name="motorunidad">
 
             </div>
 
+            <!-- AÑO -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -218,18 +224,47 @@
                 </label>
 
                 <input type="number"
-                    class="form-control input-moderno"
-                    id="añounidad">
+                       class="form-control input-moderno"
+                       id="anounidad"
+                       name="anounidad">
 
             </div>
 
+            <!-- PASO DIFERENCIAL -->
+            <div class="col-md-4">
+
+                <label class="form-label label-form">
+                    Paso diferencial
+                </label>
+
+                <input type="number"
+                       step="0.01"
+                       class="form-control input-moderno"
+                       id="pasodiferencial"
+                       name="pasodiferencial">
+
+            </div>
+
+            <!-- FOLIO FACTURA -->
+            <div class="col-md-4">
+
+                <label class="form-label label-form">
+                    Folio factura
+                </label>
+
+                <input type="text"
+                       class="form-control input-moderno"
+                       id="foliofactura"
+                       name="foliofactura">
+
+            </div>
         </div>
 
     </div>
 
-    <!-- =========================== -->
+    <!-- ========================================= -->
     <!-- ESTADO Y ESTATUS -->
-    <!-- =========================== -->
+    <!-- ========================================= -->
 
     <div class="panel-acciones-final p-4 mb-4">
 
@@ -245,7 +280,7 @@
                 </h5>
 
                 <small>
-                    Configuración operativa de la unidad
+                    Configuración operativa
                 </small>
             </div>
 
@@ -253,14 +288,16 @@
 
         <div class="row g-4">
 
+            <!-- ESTADO -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
-                    Estado de unidad
+                    Estado unidad
                 </label>
 
                 <select class="form-select input-moderno"
-                    id="estadounidad">
+                        id="estadounidad"
+                        name="estadounidad">
 
                     <option value="">Seleccionar</option>
 
@@ -269,7 +306,9 @@
                     $result = $conexion->query($sql);
 
                     while ($row = $result->fetch_assoc()) {
-                        echo '<option value="' . $row['id_estado_unidad'] . '">' . $row['estado'] . '</option>';
+                        echo '<option value="' . $row['id_estado_unidad'] . '">
+                                ' . $row['estado'] . '
+                              </option>';
                     }
                     ?>
 
@@ -277,6 +316,7 @@
 
             </div>
 
+            <!-- ESTATUS -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -284,7 +324,8 @@
                 </label>
 
                 <select class="form-select input-moderno"
-                    id="estatusunidad">
+                        id="estatusunidad"
+                        name="estatusunidad">
 
                     <option value="">Seleccionar</option>
 
@@ -293,7 +334,9 @@
                     $result = $conexion->query($sql);
 
                     while ($row = $result->fetch_assoc()) {
-                        echo '<option value="' . $row['id_estatus_unidad'] . '">' . $row['estatus'] . '</option>';
+                        echo '<option value="' . $row['id_estatus_unidad'] . '">
+                                ' . $row['estatus'] . '
+                              </option>';
                     }
                     ?>
 
@@ -301,28 +344,39 @@
 
             </div>
 
+            <!-- TIPO -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
-                    Tipo de unidad
+                    Tipo unidad
                 </label>
 
                 <select class="form-select input-moderno"
-                    id="tipounidad">
+                        id="tipounidad"
+                        name="tipounidad">
 
                     <option value="">Seleccionar</option>
 
                     <?php
 
-                    $sql = "SELECT id_tipo_unidad, tipo_unidad FROM tipo_unidad";
+                    if ($id_tipo_usuario == 1) {
+                        $sql = "SELECT id_tipo_unidad, tipo_unidad 
+                                FROM tipo_unidad 
+                                WHERE id_tipo_unidad != 3";
+                    } else {
+                        $sql = "SELECT id_tipo_unidad, tipo_unidad 
+                                FROM tipo_unidad 
+                                WHERE id_tipo_unidad = 3";
+                    }
 
                     $result = $conexion->query($sql);
 
                     while ($row = $result->fetch_assoc()) {
-                        echo '<option value="' . $row['id_tipo_unidad'] . '">' . $row['tipo_unidad'] . '</option>';
+                        echo '<option value="' . $row['id_tipo_unidad'] . '">
+                                ' . $row['tipo_unidad'] . '
+                              </option>';
                     }
                     ?>
-
 
                 </select>
 
@@ -332,9 +386,9 @@
 
     </div>
 
-    <!-- =========================== -->
+    <!-- ========================================= -->
     <!-- UBICACION -->
-    <!-- =========================== -->
+    <!-- ========================================= -->
 
     <div class="panel-acciones-final p-4 mb-4">
 
@@ -350,7 +404,7 @@
                 </h5>
 
                 <small>
-                    Datos administrativos de adquisición
+                    Información administrativa
                 </small>
             </div>
 
@@ -358,6 +412,7 @@
 
         <div class="row g-4">
 
+            <!-- SEDE -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -365,16 +420,19 @@
                 </label>
 
                 <select class="form-select input-moderno"
-                    id="sedeunidad">
+                        id="sedeunidad"
+                        name="sedeunidad">
 
                     <option value="">Seleccionar</option>
 
                     <?php
                     $sql = "SELECT id_sede, ubicacion FROM sedes";
-                    $result = $conectar->query($sql);
+                    $result = $conexion->query($sql);
 
                     while ($row = $result->fetch_assoc()) {
-                        echo '<option value="' . $row['id_sede'] . '">' . $row['ubicacion'] . '</option>';
+                        echo '<option value="' . $row['id_sede'] . '">
+                                ' . $row['ubicacion'] . '
+                              </option>';
                     }
                     ?>
 
@@ -382,6 +440,7 @@
 
             </div>
 
+            <!-- FECHA -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
@@ -389,20 +448,69 @@
                 </label>
 
                 <input type="date"
-                    class="form-control input-moderno"
-                    id="fechaadquisicionunidad">
+                       class="form-control input-moderno"
+                       id="fechaadquisicion"
+                       name="fechaadquisicion">
 
             </div>
 
+            <!-- TIPO ADQUISICION -->
             <div class="col-md-4">
 
                 <label class="form-label label-form">
-                    Folio factura
+                    Tipo adquisición
                 </label>
 
-                <input type="number"
-                    class="form-control input-moderno"
-                    id="foliofactura">
+                <select class="form-select input-moderno"
+                        id="tipoadquisicion"
+                        name="tipoadquisicion">
+
+                    <option value="">Seleccionar</option>
+
+                    <?php
+                    $sql = "SELECT id_tipo_adquisicion, nombre_tipo_adquisicion 
+                            FROM tipo_adquisicion";
+
+                    $result = $conexion->query($sql);
+
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . $row['id_tipo_adquisicion'] . '">
+                                ' . $row['nombre_tipo_adquisicion'] . '
+                              </option>';
+                    }
+                    ?>
+
+                </select>
+
+            </div>
+
+            <!-- ARRENDADORA -->
+            <div class="col-md-4">
+
+                <label class="form-label label-form">
+                    Arrendadora
+                </label>
+
+                <select class="form-select input-moderno"
+                        id="arrendadora"
+                        name="arrendadora">
+
+                    <option value="">Seleccionar</option>
+
+                    <?php
+                    $sql = "SELECT id_arrendadora, arrendadora 
+                            FROM arrendadora";
+
+                    $result = $conexion->query($sql);
+
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . $row['id_arrendadora'] . '">
+                                ' . $row['arrendadora'] . '
+                              </option>';
+                    }
+                    ?>
+
+                </select>
 
             </div>
 
@@ -410,9 +518,9 @@
 
     </div>
 
-    <!-- =========================== -->
+    <!-- ========================================= -->
     <!-- IMAGEN -->
-    <!-- =========================== -->
+    <!-- ========================================= -->
 
     <div class="panel-acciones-final p-4 mb-5">
 
@@ -428,7 +536,7 @@
                 </h5>
 
                 <small>
-                    Fotografía de referencia de la unidad
+                    Fotografía de referencia
                 </small>
             </div>
 
@@ -439,16 +547,18 @@
             <div class="col-md-8">
 
                 <input type="file"
-                    class="form-control input-moderno"
-                    id="imagen_unidad"
-                    accept="image/*">
+                       class="form-control input-moderno"
+                       id="imagen_unidad"
+                       name="imagen_unidad"
+                       accept="image/*">
 
             </div>
 
             <div class="col-md-4">
 
-                <button class="btn btn-orange w-100 py-3"
-                    id="btnregistrarunidad">
+                <button type="button"
+                        class="btn btn-orange w-100 py-3"
+                        id="btnregistrarunidad">
 
                     <i class="fa-solid fa-check me-2"></i>
                     Registrar unidad
@@ -461,8 +571,45 @@
 
     </div>
 
+</div>
 
-    <style>
+</form>
 
+<script>
 
-    </style>
+document.getElementById('marcaunidad').addEventListener('change', function () {
+
+    const marcaId = this.value;
+
+    fetch('../../Servidor/solicitudes/unidades/obtener_modelos.php?marca_id=' + marcaId)
+
+        .then(response => response.json())
+
+        .then(data => {
+
+            const modeloSelect = document.getElementById('modelounidad');
+
+            modeloSelect.innerHTML = '<option value="">Seleccionar</option>';
+
+            data.forEach(modelo => {
+
+                const option = document.createElement('option');
+
+                option.value = modelo.id_modelo;
+                option.text = modelo.nombre_modelo;
+
+                modeloSelect.appendChild(option);
+
+            });
+
+        })
+
+        .catch(error => {
+
+            console.error('Error al cargar modelos:', error);
+
+        });
+
+});
+
+</script>

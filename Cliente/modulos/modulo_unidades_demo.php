@@ -32,7 +32,6 @@ $id_tipo_usuario = $_SESSION['id_tipo_usuario'];
             </p>
         </div>
 
-        <?php if ($id_tipo_usuario == 5 || $id_tipo_usuario == 6 || $id_tipo_usuario == 15 || $id_tipo_usuario == 4): ?>
 
             <div class="ldr-header-actions">
 
@@ -47,7 +46,6 @@ $id_tipo_usuario = $_SESSION['id_tipo_usuario'];
 
             </div>
 
-        <?php endif; ?>
 
     </section>
 
@@ -89,7 +87,6 @@ $id_tipo_usuario = $_SESSION['id_tipo_usuario'];
                         <th>Seguros</th>
                         <th>Tenencias</th>
                         <th>Verificaciones</th>
-                        <th>Traslado</th>
                     </tr>
                 </thead>
 
@@ -109,8 +106,6 @@ $id_tipo_usuario = $_SESSION['id_tipo_usuario'];
 
 <!--js para mandar a llamar el modal de edicion de unidades-->
 <script src="../js/unidades/modulo_demos.js"></script>
-<!--js para mandar a llamar el modal de edicion de unidades-->
-<script src="../js/unidades/solicitud_traslado.js"></script>
 <!--js para mandar a llamar el modal de edicion de unidades-->
 <script src="../js/unidades/editarunidadesdemo.js"></script>
 <!--js para mandar a llamar el modal de polizas aseguradoras-->

@@ -1,115 +1,143 @@
-
-<!----------------------------------------------------------------------- modal de edicion de unidades ------------------------------------------------------------------->
-<!-- Modal -->
-<div class="modal fade modalEditarUnidadesdemo" id="modalEditarUnidadesdemo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editar unidades</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="modalEditarUnidadesBody">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" id="btnactualizarunidad">Actualizar</button>
+<!-- =========================================================
+MODAL EDITAR UNIDAD DEMO
+========================================================= -->
+<div class="modal fade"
+    id="modalEditarUnidadesdemo"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content panel-acciones-final border-0 position-relative">
+      <!-- BOTÓN CERRAR -->
+      <button type="button"
+        class="btn-close btn-close-white ldr-btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close">
+      </button>
+      <div class="modal-body p-4">
+        <!-- HEADER -->
+        <div class="titulo-seccion-orange mb-4">
+          <div class="icono-seccion">
+            <i class="fas fa-truck"></i>
+          </div>
+          <div>
+            <h5 class="mb-1 fw-bold">
+              Editar unidad
+            </h5>
+            <small>
+              Actualiza la información general de la unidad
+            </small>
+          </div>
+        </div>
+        <!-- BODY DINÁMICO -->
+        <div id="modalEditarUnidadesBody"></div>
+        <!-- FOOTER -->
+        <div class="d-flex justify-content-end gap-2 mt-4">
+          <button type="button"
+            class="btn btn-light btn-modern"
+            data-bs-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="button"
+            class="btn-orange"
+            id="btnactualizarunidad">
+            <i class="fas fa-save"></i>
+            Actualizar unidad
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!----------------------------------------------------------------------- modal traslado de unidades ------------------------------------------------------------------->
-<!--modal-->
-<div class="modal fade" id="modalTrasladoUnidad" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title">Solicitud de traslado de unidad</h5>
-        <button class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <div class="modal-body">
-
-        <div class="row">
-
-          <div class="col-md-6 mb-3">
-            <label>Modelo</label>
-            <input type="text" class="form-control" id="traslado_modelo" readonly>
-          </div>
-
-          <div class="col-md-6 mb-3">
-            <label>Placa</label>
-            <input type="text" class="form-control" id="traslado_placa" readonly>
-          </div>
-
-          <div class="row">
-
-            <div class="col-md-6 mb-3">
-              <label>Ubicación actual</label>
-              <input type="text" class="form-control" id="traslado_origen">
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label>Nueva ubicación</label>
-              <input type="text" class="form-control" id="traslado_destino">
-            </div>
-
-            <div class="col-12 mb-3">
-              <label>Motivo del traslado</label>
-              <textarea class="form-control" id="traslado_motivo"></textarea>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary" id="btnEnviarTraslado">Solicitar traslado</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-<!----------------------------------------------------------------------- modal de registro de aseguradoras ------------------------------------------------------------------->
-<!-- Modal -->
-<div class="modal fade modalpolizasunidades" id="modalPolizasUnidades" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Seguros</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="modalPolizasUnidadesBody">
-        <?php
-        include("../../Servidor/componentes/formularioPolizas.php");
-        ?>
-
-        <div class="d-flex " style="padding-left: 20px;">
-          <button type="button" class="btn btn-primary btn" id="btnguardaraseguradora">Guardar</button>
-        </div>
-        <div>
-          <div class="contenedor_tabla_polizas">
-            <div class="row">
-              <div class="col-md">
-                <h4>Historial</h4>
-                <div class="contenedor_poliza_seguro" id="contenedor_poliza_seguro">
+<!-- =========================================================
+MODAL PÓLIZAS / SEGUROS
+========================================================= -->
+<div class="modal fade modalpolizasunidades"
+    id="modalPolizasUnidades"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+        <div class="modal-content panel-acciones-final border-0 position-relative">
+            <!-- BOTÓN CERRAR -->
+            <button type="button"
+                class="btn-close btn-close-white ldr-btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+            </button>
+            <div class="modal-body p-4">
+                <!--  HEADER -->
+                <div class="titulo-seccion-orange mb-4">
+                    <div class="icono-seccion">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 fw-bold">
+                            Gestión de seguros
+                        </h4>
+                        <small>
+                            Administra pólizas, aseguradoras e historial de cobertura
+                        </small>
+                    </div>
                 </div>
-              </div>
+                <!-- CONTENIDO -->
+                <div class="row g-4">
+                    <!-- FORMULARIO -->
+                    <div class="col-xl-4">
+                        <div class="ldr-card-form h-100">
+                            <div class="ldr-card-header">
+                                <h5>
+                                    <i class="fas fa-file-circle-plus me-2"></i>
+                                    Registrar póliza
+                                </h5>
+                            </div>
+                            <div class="ldr-card-body">
+                                <?php
+                                include("../../Servidor/componentes/formularioPolizas.php");
+                                ?>
+                                <div class="d-grid mt-4">
+                                    <button type="button"
+                                        class="btn-orange"
+                                        id="btnguardaraseguradora">
+                                        <i class="fas fa-save me-2"></i>
+                                        Guardar póliza
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  HISTORIAL -->
+                    <div class="col-xl-8">
+                        <div class="ldr-card-form h-100">
+                            <div class="ldr-card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-clock-rotate-left me-2"></i>
+                                    Historial de pólizas
+                                </h5>
+                                <span class="badge bg-primary">
+                                    Seguros registrados
+                                </span>
+                            </div>
+                            <div class="ldr-card-body">
+                                <div id="contenedor_poliza_seguro"
+                                    class="contenedor_poliza_seguro">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <!-- FOOTER -->
+            <div class="modal-footer border-0">
+                <button type="button"
+                    class="btn btn-light btn-modern"
+                    data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
     </div>
-  </div>
 </div>
 
 
@@ -132,39 +160,94 @@
   </div>
 </div>
 
-<!----------------------------------------------------------------------------modal registro tenencias------------------------------------------------------------>
-<!-- Modal -->
-<div class="modal fade modalTenenciasunidades" id="modalTenenciasunidades" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tenencias</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="modalTenenciasunidadesBody">
-        <?php
-        include("../../Servidor/componentes/formularioTenencias.php");
-        ?>
-        <div class="d-flex " style="padding-left: 20px;">
-          <button type="button" class="btn btn-primary btn" id="btnguardartenencia">Guardar</button>
-        </div>
-        <div>
-          <div class="contenedor_tabla_polizas">
-            <div class="row">
-              <div class="col-md">
-                <h4>Historial</h4>
-                <div class="contenedor_poliza_tenencia" id="contenedor_poliza_tenencia">
+<!-- =========================================================
+MODAL TENENCIAS
+========================================================= -->
+<div class="modal fade modalTenenciasunidades"
+    id="modalTenenciasunidades"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+        <div class="modal-content panel-acciones-final border-0 position-relative">
+            <!-- BOTÓN CERRAR -->
+            <button type="button"
+                class="btn-close btn-close-white ldr-btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+            </button>
+            <div class="modal-body p-4">
+                <!--  HEADER -->
+                <div class="titulo-seccion-orange mb-4">
+                    <div class="icono-seccion">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 fw-bold">
+                            Gestión de tenencias
+                        </h4>
+                        <small>
+                            Administra pólizas, tenencias e historial
+                        </small>
+                    </div>
                 </div>
-              </div>
+                <!-- CONTENIDO -->
+                <div class="row g-4">
+                    <!-- FORMULARIO -->
+                    <div class="col-xl-4">
+                        <div class="ldr-card-form h-100">
+                            <div class="ldr-card-header">
+                                <h5>
+                                    <i class="fas fa-file-circle-plus me-2"></i>
+                                    Registrar póliza
+                                </h5>
+                            </div>
+                            <div class="ldr-card-body">
+                                <?php
+                                include("../../Servidor/componentes/formularioTenencias.php");
+                                ?>
+                                <div class="d-grid mt-4">
+                                    <button type="button"
+                                        class="btn-orange"
+                                        id="btnguardartenencia">
+                                        <i class="fas fa-save me-2"></i>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  HISTORIAL -->
+                    <div class="col-xl-8">
+                        <div class="ldr-card-form h-100">
+                            <div class="ldr-card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-clock-rotate-left me-2"></i>
+                                    Historial 
+                                </h5>
+                                <span class="badge bg-primary">
+                                    Tenencias registrados
+                                </span>
+                            </div>
+                            <div class="ldr-card-body">
+                                <div id="contenedor_poliza_tenencia"
+                                    class="contenedor_poliza_tenencia">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <!-- FOOTER -->
+            <div class="modal-footer border-0">
+                <button type="button"
+                    class="btn btn-light btn-modern"
+                    data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
     </div>
-  </div>
 </div>
 
 <!--------------------------------------------------------------------------modal editar tenencias ------------------------------------------------------------------>
@@ -186,41 +269,95 @@
   </div>
 </div>
 
-<!----------------------------------------------------------------------------modal registro verificaciones------------------------------------------------------------>
-<!-- Modal -->
-<div class="modal fade modalverificaciones" id="modalverificaciones" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-fullscreen">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Verificaciones</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="modalverificacionesBody">
-        <?php  ?>
 
-        <?php
-        include("../../Servidor/componentes/formularioVerificaciones.php");
-        ?>
-        <div class="d-flex " style="padding-left: 20px;">
-          <button type="button" class="btn btn-primary btn" id="btnguardarverificacion">Guardar</button>
-        </div>
-        <div>
-          <div class="contenedor_tabla_polizas">
-            <div class="row">
-              <div class="col-md">
-                <h4>Historial</h4>
-                <div class="contenedor_poliza_verificacion" id="contenedor_poliza_verificacion">
+<!-- =========================================================
+MODAL TENENCIAS
+========================================================= -->
+<div class="modal fade modalverificaciones"
+    id="modalverificaciones"
+    tabindex="-1"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false">
+    <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+        <div class="modal-content panel-acciones-final border-0 position-relative">
+            <!-- BOTÓN CERRAR -->
+            <button type="button"
+                class="btn-close btn-close-white ldr-btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+            </button>
+            <div class="modal-body p-4">
+                <!--  HEADER -->
+                <div class="titulo-seccion-orange mb-4">
+                    <div class="icono-seccion">
+                        <i class="fas fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 fw-bold">
+                            Gestión de verificaciones
+                        </h4>
+                        <small>
+                            Administra pólizas, verificaciones e historial
+                        </small>
+                    </div>
                 </div>
-              </div>
+                <!-- CONTENIDO -->
+                <div class="row g-4">
+                    <!-- FORMULARIO -->
+                    <div class="col-xl-4">
+                        <div class="ldr-card-form h-100">
+                            <div class="ldr-card-header">
+                                <h5>
+                                    <i class="fas fa-file-circle-plus me-2"></i>
+                                    Registrar póliza
+                                </h5>
+                            </div>
+                            <div class="ldr-card-body">
+                                <?php
+                                include("../../Servidor/componentes/formularioVerificaciones.php");
+                                ?>
+                                <div class="d-grid mt-4">
+                                    <button type="button"
+                                        class="btn-orange"
+                                        id="btnguardarverificacion">
+                                        <i class="fas fa-save me-2"></i>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  HISTORIAL -->
+                    <div class="col-xl-8">
+                        <div class="ldr-card-form h-100">
+                            <div class="ldr-card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">
+                                    <i class="fas fa-clock-rotate-left me-2"></i>
+                                    Historial 
+                                </h5>
+                                <span class="badge bg-primary">
+                                    Tenencias registrados
+                                </span>
+                            </div>
+                            <div class="ldr-card-body">
+                                <div id="contenedor_poliza_verificacion"
+                                    class="contenedor_poliza_verificacion">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
+            <!-- FOOTER -->
+            <div class="modal-footer border-0">
+                <button type="button"
+                    class="btn btn-light btn-modern"
+                    data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
     </div>
-  </div>
 </div>
 <!--------------------------------------------------------------------------modal editar verificaciones ------------------------------------------------------------------>
 <!-- Modal -->

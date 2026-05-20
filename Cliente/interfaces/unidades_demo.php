@@ -86,6 +86,8 @@
         <script src="../js/alertas/alertas.js"></script>
         <!--inactividad y cerrar la sesion-->
         <script src="../js/inactividad.js"></script>
+        <!--js para mandar obtener el mapa de telematics-->
+        <script src="../js/api/obtener_mapa_telematics.js"></script>
 
 
     </body>

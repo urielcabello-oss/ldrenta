@@ -144,12 +144,6 @@ if (isset($_POST['id_unidad'])) {
         <div class="row">
         <div class="col-md-4">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="requiere_master_driverldr" name="requiere_master_driverldr" value="1">
-                <label class="form-check-label" for="requiere_master_driverldr"><strong>¿Requiere Master Driver?</strong></label>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="emplacamiento_ldr" name="emplacamiento_ldr" value="1">
                 <label class="form-check-label" for="emplacamiento_ldr"><strong>¿LDR realiza el emplacamiento de la unidad?</strong></label>
             </div>
@@ -164,7 +158,7 @@ if (isset($_POST['id_unidad'])) {
         <div class="row">
         <div class="col-md-12">
              <div class="form-group">
-                <p class="textmotivodenegacioncartaresponsiva">Objetivo de la prueba:</p>
+                <p class="textmotivodenegacioncartaresponsiva">Objetivo de la renta de la unidad:</p>
                 <textarea class="form-control textareaobjetivosdemosolicitud objetivo_prueba_demo" id="objetivo_prueba_demo" name="objetivo_prueba_demo"></textarea>
             </div>
             <label class="" style="color: white;"> </label>

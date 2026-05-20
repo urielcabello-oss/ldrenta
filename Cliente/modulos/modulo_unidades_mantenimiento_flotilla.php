@@ -1,150 +1,363 @@
+<!-- ===================================================== -->
 <!-- CONTENEDOR PRINCIPAL -->
-<div class="container-fluid px-3 px-md-4 mt-4">
+<!-- ===================================================== -->
 
+<div class="ldr-dashboard">
 
+    <!-- ===================================================== -->
     <!-- HEADER -->
-    <section class="ldr-page-header">
+    <!-- ===================================================== -->
 
-        <div>
-            <span class="ldr-page-badge">
-                GESTIÓN DE MANTENIMIENTOS
-            </span>
+    <section class="ldr-maintenance-header">
 
-            <h1 class="ldr-page-title">
-                Administra los mantenimientos
-            </h1>
+        <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3">
 
-            <p class="ldr-page-subtitle">
-                Registro y administración mantenimientos.
-            </p>
+            <div>
+
+                <span class="ldr-page-badge">
+                    MANTENIMIENTOS FLOTILLA
+                </span>
+
+                <h1 class="ldr-page-title">
+                    Dashboard de mantenimientos
+                </h1>
+
+                <p class="ldr-page-subtitle">
+                    Control y administración de servicios preventivos, correctivos y mixtos.
+                </p>
+
+            </div>
+
+            <div>
+
+                <button class="btn ldr-btn-primary" id="btnNewMaintenance">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Nuevo mantenimiento
+                </button>
+
+            </div>
+
         </div>
 
     </section>
-</div>
 
+    <!-- ===================================================== -->
+    <!-- CARDS -->
+    <!-- ===================================================== -->
 
-<div class="contenedor_botones">
-    <div class="d-flex justify-content-end">
-        <button class="btn btn-primary me-2" id="btnNewMaintenance">
-            <i class="bi bi-plus-lg"></i> Nuevo mantenimiento
-        </button>
-    </div>
+    <div class="row g-3 mt-1">
 
-</div>
+        <div class="col-xl-3 col-md-6">
 
+            <div class="ldr-card-mini">
 
-<div class="container">
-    <!-- Dashboard Cards -->
-    <div class="row g-3 mb-3">
-        <div class="col-md-3">
-            <div class="card p-3">
-                <h6 class="mb-1">Mantenimientos este mes</h6>
-                <h3 id="cardThisMonth">0</h3>
-                <p class="small-muted mb-0">Total procedimientos registrados</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card p-3">
-                <h6 class="mb-1">Unidades fuera de servicio</h6>
-                <h3 id="cardOutOfService">0</h3>
-                <p class="small-muted mb-0">Actualmente en taller</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card p-3">
-                <h6 class="mb-1">Costo total (mes)</h6>
-                <h3 id="cardCost">$0</h3>
-                <p class="small-muted mb-0">MXN</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card p-3">
-                <h6 class="mb-1">Preventivos vs Correctivos</h6>
-                <h5 id="cardAvgDays">0</h5>
-                <p class="small-muted mb-0">Porcentaje de mantenimientos</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tabla mantenimientos -->
-    <div class="row mb-3">
-        <div class="col-12">
-            <div class="p-3 border rounded">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5 class="mb-0">Bitácora de mantenimientos</h5>
-                    <button class="btn btn-sm btn-outline-secondary" id="exportCsv">
-                        <i class="bi bi-download"></i> Exportar CSV
-                    </button>
+                <div class="ldr-icon-card bg-primary-subtle text-primary">
+                    <i class="bi bi-tools"></i>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-hover" id="maintTable">
-                        <thead class="table-light">
-                            <tr>
-                                <th class="txtmantenimientos">Id</th>
-                                <th class="txtmantenimientos">Modelo</th>
-                                <th class="txtmantenimientos">VIN</th>
-                                <th class="txtmantenimientos">Tipo mantenimiento</th>
-                                <th class="txtmantenimientos">Estatus</th>
-                                <th class="txtmantenimientos">Ingreso</th>
-                                <th class="txtmantenimientos">Salida</th>
-                                <th class="txtmantenimientos">Kilometraje</th>
-                                <th class="txtmantenimientos">Taller</th>
-                                <th class="txtmantenimientos">Costo</th>
-                                <th class="txtmantenimientos">Descripción</th>
-                                <th class="txtmantenimientos">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="maintBody"></tbody>
-                    </table>
+
+                <div>
+
+                    <small class="text-muted">
+                        Este mes
+                    </small>
+
+                    <h5 id="cardThisMonth" class="fw-bold mb-0">
+                        0
+                    </h5>
+
+                    <span class="small text-muted">
+                        mantenimientos
+                    </span>
+
                 </div>
+
             </div>
+
         </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="ldr-card-mini">
+
+                <div class="ldr-icon-card bg-danger-subtle text-danger">
+                    <i class="bi bi-truck"></i>
+                </div>
+
+                <div>
+
+                    <small class="text-muted">
+                        Fuera de servicio
+                    </small>
+
+                    <h5 id="cardOutOfService" class="fw-bold mb-0">
+                        0
+                    </h5>
+
+                    <span class="small text-muted">
+                        en taller
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="ldr-card-mini">
+
+                <div class="ldr-icon-card bg-success-subtle text-success">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+
+                <div>
+
+                    <small class="text-muted">
+                        Costo total
+                    </small>
+
+                    <h5 id="cardCost" class="fw-bold mb-0">
+                        $0
+                    </h5>
+
+                    <span class="small text-muted">
+                        MXN
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xl-3 col-md-6">
+
+            <div class="ldr-card-mini">
+
+                <div class="ldr-icon-card bg-warning-subtle text-warning">
+                    <i class="bi bi-bar-chart"></i>
+                </div>
+
+                <div>
+
+                    <small class="text-muted">
+                        Preventivos
+                    </small>
+
+                    <h5 id="cardAvgDays" class="fw-bold mb-0">
+                        0%
+                    </h5>
+
+                    <span class="small text-muted">
+                        vs correctivos
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
+    <!-- ===================================================== -->
+    <!-- TABLA -->
+    <!-- ===================================================== -->
+     <div style="padding-top: 20px;">
 
+    <section class="ldr-table-card">
 
+        <div class="ldr-table-header">
 
-    <!-- Gráficas -->
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col-12">
-                <h5 class="text-center mb-3 fw-semibold">Resumen de mantenimientos</h5>
+            <div>
+
+                <h2>
+                    Bitácora de mantenimientos
+                </h2>
+
+                <p>
+                    Historial general de mantenimientos registrados.
+                </p>
+
             </div>
 
-            <div class="col-md-6 mb-3">
-                <div class="card shadow-sm p-3">
-                    <h6 class="text-center mb-3">Mantenimientos por tipo</h6>
-                    <div class="chart-container" style="position: relative; height:280px;">
+
+
+            <button class="btn btn-outline-dark btn-sm rounded-pill" id="exportCsv">
+
+                <i class="bi bi-download me-2"></i>
+                Exportar CSV
+
+            </button>
+
+
+
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table align-middle ldr-table" id="maintTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Modelo</th>
+                        <th>VIN</th>
+                        <th>Tipo</th>
+                        <th>Estatus</th>
+                        <th>Ingreso</th>
+                        <th>Salida</th>
+                        <th>KM</th>
+                        <th>Taller</th>
+                        <th>Costo</th>
+                        <th>Descripción</th>
+                        <th class="text-center">Acciones</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="maintBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- GRAFICAS -->
+    <!-- ===================================================== -->
+
+    <div class="row g-4 mt-2">
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="ldr-chart-icon bg-primary-subtle text-primary">
+                            <i class="bi bi-pie-chart"></i>
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h6 class="fw-bold mb-0">
+                                Por tipo
+                            </h6>
+
+                            <small class="text-muted">
+                                Preventivos y correctivos
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div style="height: 260px;">
                         <canvas id="chartTypes"></canvas>
                     </div>
+
                 </div>
+
             </div>
 
-            <div class="col-md-6 mb-3">
-                <div class="card shadow-sm p-3">
-                    <h6 class="text-center mb-3">Mantenimientos por estatus</h6>
-                    <div class="chart-container" style="position: relative; height:280px;">
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="ldr-chart-icon bg-success-subtle text-success">
+                            <i class="bi bi-clipboard-check"></i>
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h6 class="fw-bold mb-0">
+                                Estatus
+                            </h6>
+
+                            <small class="text-muted">
+                                Seguimiento de servicios
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div style="height: 260px;">
                         <canvas id="chartStatus"></canvas>
                     </div>
+
                 </div>
+
             </div>
 
-            <div class="col-md-6 mb-3">
-                <div class="card shadow-sm p-3">
-                    <h6 class="text-center mb-3">Unidades con y sin telemetría</h6>
-                    <div class="chart-container" style="position: relative; height:280px;">
-                        <canvas id="chartTelemetria" style="height:300px;"></canvas>
-                        <button class="btn btn-secondary" id="exportTelemetriaCsv">Exportar CSV Telemetría</button>
-                    </div>
-                </div>
-            </div>
         </div>
+
+        <div class="col-xl-4">
+
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div class="ldr-chart-icon bg-warning-subtle text-warning">
+                            <i class="bi bi-wifi"></i>
+                        </div>
+
+                        <div class="ms-3">
+
+                            <h6 class="fw-bold mb-0">
+                                Telemetría
+                            </h6>
+
+                            <small class="text-muted">
+                                Unidades conectadas
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                    <div style="height: 260px;">
+                        <canvas id="chartTelemetria"></canvas>
+                    </div>
+
+                    <div class="mt-3">
+
+                        <button class="btn btn-outline-secondary btn-sm rounded-pill w-100" id="exportTelemetriaCsv">
+
+                            <i class="bi bi-download me-2"></i>
+                            Exportar CSV
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-
 </div>
-
-
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -93,7 +93,7 @@ $id_tipo_usuario = $_SESSION['id_tipo_usuario'];
             </button>
         </div>
     </div>
-</div>
+
 
 <!-- CONTENIDO -->
     <section class="ldr-table-card">
@@ -113,7 +113,7 @@ $id_tipo_usuario = $_SESSION['id_tipo_usuario'];
         </div>
         <?php include("../../Servidor/componentes/obtener_unidades_demo_autorizadas.php"); ?>
     </section>
-
+</div>
 
 <!--panel lateral-->
 <div class="offcanvas offcanvas-end" tabindex="-1" id="panelPendientes" style="width:500px;">

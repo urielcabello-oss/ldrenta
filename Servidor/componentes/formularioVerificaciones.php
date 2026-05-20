@@ -1,103 +1,276 @@
-<div class="row">
-    <!-- ------------------------------------------------------------------------Verificaciones ------------------------------------------------------------------->
-    <h3>Registro de verificaciones</h3>
-</div>
-<div class="row">
-    <!---------------------------------------------------------------- folio verificacion ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="text" class="form-control" id="folioverificacion" value="" placeholder="folioverificacion" name="folioverificacion">
-            <label for="folioverificacionldr">Folio</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-    <!---------------------------------------------------------------- monto verificacion ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="number" class="form-control" id="montoverificacion" value="" placeholder="montoverificacion" name="montoverificacion"oninput="document.getElementById('MontoVerificacion').innerText = this.value ? parseFloat(this.value).toLocaleString('es-MX', { style: 'currency', currency: 'MXN' }) + ' MXN' : '';">
-            <label for="montoverificacionldr">Monto</label>
-        </div>
-        <label id="MontoVerificacion" style="color: black;"></label>
-    </div>
-</div>
-<div class="row">
-    <h3>Año y semestre</h3>
-    <!---------------------------------------------------------------- año verificacion ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="number" class="form-control" id="añoverificacion" value="" placeholder="añoverificacion" name="añoverificacion">
-            <label for="añoverificacionldr">Año</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-    <!---------------------------------------------------------------- semestre ---------------------------------------->
+<div class="row g-4">
+
     <?php
     include("../../Servidor/conexion.php");
-    $sql = "SELECT id_semestre, nombre_semestre FROM verificacion_semestre";
-    $result = $conectar->query($sql);
-    echo '
-    <div class="col-md-4">
-        <div class="form-floating">
-            <select class="form-select" id="semestreverificacion" name="semestreverificacion">
-                <option selected>Selecciona un semestre</option>';
-
-    while ($row = $result->fetch_assoc()) {
-        // Mostrar cada marca como una opcion
-        $selected = ($data['id_semestre'] == $row['id_semestre']) ? 'selected' : '';
-        echo '<option value="' . $row['id_semestre'] . '"' . $selected . '>' . $row['nombre_semestre'] . '</option>';
-    }
-
-    echo '</select>
-            <label for="id_semestreldr">Semestre</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-    ';
     ?>
-</div>
-<div class="row">
-    <h3>Fecha de verificación y proxima</h3>
-    <!---------------------------------------------------------------- Fecha verificacion ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="date" class="form-control" id="fechaverificacion" value="" placeholder="fechaverificacion" name="fechaverificacion">
-            <label for="fechaverificacionldr">Verificación</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-    <!---------------------------------------------------------------- Fecha siguiente verificacion ---------------------------------------->
-    <div class="col-md-4">
-        <div class="form-floating">
-            <input type="date" class="form-control" id="fechaproximaverificacion" value="" placeholder="fechaproximaverificacion" name="fechaproximaverificacion">
-            <label for="fechaproximaverificacionldr">Proxima verificación</label>
-        </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
-    </div>
-</div>
-<div class="row">
-    <h3>Estatus</h3>
-    <!---------------------------------------------------------------- estatus verificacion ---------------------------------------->
-    <?php
-    include("../../Servidor/conexion.php");
-    $sql = "SELECT id_estatus_verificacion, estatus FROM estatus_verificacion";
-    $result = $conectar->query($sql);
-    echo '
-    <div class="col-md-4">
-        <div class="form-floating">
-            <select class="form-select" id="estatusverificacion" name="estatusverificacion">
-                <option selected>Seleccionar estatus de verificación</option>';
 
-    while ($row = $result->fetch_assoc()) {
-        // Mostrar cada marca como una opcion
-        $selected = ($data['id_estatus_verificacion'] == $row['id_estatus_verificacion']) ? 'selected' : '';
-        echo '<option value="' . $row['id_estatus_verificacion'] . '"' . $selected . '>' . $row['estatus'] . '</option>';
-    }
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
 
-    echo '</select>
-            <label for="id_estatus_verificacionldr">Estatus</label>
+    <div class="col-12">
+
+        <div class="titulo-seccion-orange">
+
+            <div class="icono-seccion">
+                <i class="fas fa-clipboard-check"></i>
+            </div>
+
+            <div>
+                <h5 class="mb-1 fw-bold">
+                    Registro de verificación
+                </h5>
+
+                <small>
+                    Información de verificaciones vehiculares
+                </small>
+            </div>
+
         </div>
-        <label class="" style="color: white;">*Campo obligatorio</label>
+
     </div>
-    ';
-    ?>
+
+    <!-- ===================================================== -->
+    <!-- DATOS GENERALES -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-file-signature"></i>
+                Datos generales
+            </div>
+
+            <div class="row g-3">
+
+                <!-- FOLIO -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Folio <span class="text-danger">*</span>
+                    </label>
+
+                    <input type="text"
+                        class="form-control input-moderno"
+                        id="folioverificacion"
+                        name="folioverificacion"
+                        placeholder="Folio de verificación">
+
+                </div>
+
+                <!-- MONTO -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Monto
+                    </label>
+
+                    <input type="number"
+                        class="form-control input-moderno"
+                        id="montoverificacion"
+                        name="montoverificacion"
+                        placeholder="Monto de verificación"
+                        oninput="
+                            document.getElementById('MontoVerificacion').innerText =
+                            this.value
+                            ? parseFloat(this.value).toLocaleString(
+                                'es-MX',
+                                {
+                                    style: 'currency',
+                                    currency: 'MXN'
+                                }
+                              ) + ' MXN'
+                            : '';
+                        ">
+
+                    <small id="MontoVerificacion"
+                        class="text-muted fw-bold mt-1 d-block"></small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- AÑO Y SEMESTRE -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-calendar-alt"></i>
+                Año y semestre
+            </div>
+
+            <div class="row g-3">
+
+                <!-- AÑO -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Año
+                    </label>
+
+                    <input type="number"
+                        class="form-control input-moderno"
+                        id="añoverificacion"
+                        name="añoverificacion"
+                        placeholder="Ejemplo: 2026">
+
+                </div>
+
+                <!-- SEMESTRE -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Semestre
+                    </label>
+
+                    <select class="form-select input-moderno"
+                        id="semestreverificacion"
+                        name="semestreverificacion">
+
+                        <option value="">
+                            Selecciona un semestre
+                        </option>
+
+                        <?php
+
+                        $sql = "SELECT id_semestre, nombre_semestre 
+                                FROM verificacion_semestre";
+
+                        $result = $conectar->query($sql);
+
+                        while ($row = $result->fetch_assoc()) {
+
+                            echo '
+                            <option value="' . $row['id_semestre'] . '">
+                                ' . $row['nombre_semestre'] . '
+                            </option>';
+                        }
+
+                        ?>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- FECHAS -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-calendar-check"></i>
+                Fechas de verificación
+            </div>
+
+            <div class="row g-3">
+
+                <!-- FECHA VERIFICACION -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Fecha de verificación
+                    </label>
+
+                    <input type="date"
+                        class="form-control input-moderno"
+                        id="fechaverificacion"
+                        name="fechaverificacion">
+
+                </div>
+
+                <!-- PROXIMA VERIFICACION -->
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Próxima verificación
+                    </label>
+
+                    <input type="date"
+                        class="form-control input-moderno"
+                        id="fechaproximaverificacion"
+                        name="fechaproximaverificacion">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- ESTATUS -->
+    <!-- ===================================================== -->
+
+    <div class="col-12">
+
+        <div class="ldr-form-section">
+
+            <div class="ldr-section-title">
+                <i class="fas fa-circle-check"></i>
+                Estado de la verificación
+            </div>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+
+                    <label class="form-label label-form">
+                        Estatus
+                    </label>
+
+                    <select class="form-select input-moderno"
+                        id="estatusverificacion"
+                        name="estatusverificacion">
+
+                        <option value="">
+                            Seleccionar estatus
+                        </option>
+
+                        <?php
+
+                        $sql = "SELECT id_estatus_verificacion, estatus 
+                                FROM estatus_verificacion";
+
+                        $result = $conectar->query($sql);
+
+                        while ($row = $result->fetch_assoc()) {
+
+                            echo '
+                            <option value="' . $row['id_estatus_verificacion'] . '">
+                                ' . $row['estatus'] . '
+                            </option>';
+                        }
+
+                        ?>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>

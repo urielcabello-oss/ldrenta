@@ -5,12 +5,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   const editForm = document.getElementById("editMaintenanceForm");
   const tipoSelect = document.getElementById("editTipoInput");
   const estatusSelect = document.getElementById("editEstatus");
+  const tallerSelect = document.getElementById("editTallerSelect");
   const endpointTipos =
     "../../Servidor/solicitudes/unidades/mantenimientos_unidades_flotilla/tipo_mantenimiento.php";
   const endpointGuardar =
     "../../Servidor/solicitudes/unidades/mantenimientos_unidades_flotilla/editar_mantenimiento.php";
   const endpointEstatus =
     "../../Servidor/solicitudes/unidades/mantenimientos_unidades_flotilla/estatus_mantenimiento.php";
+  const endpointTalleres =
+    "../../Servidor/solicitudes/unidades/mantenimientos_unidades_flotilla/obtener_talleres.php";
 
   if (!editForm) return;
 
@@ -36,10 +39,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+
   // =========================
   // Abrir modal con datos
   // =========================
   window.openEditModal = async (mantenimiento) => {
+    console.log("OBJETO COMPLETO:", mantenimiento);
+    console.log("ID TALLER:", mantenimiento.id_taller);
     console.log(
       "ID estatus que viene:",
       mantenimiento.id_estatus_mantenimiento,
@@ -53,6 +59,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (tipoSelect.options.length <= 1) {
       await cargarTipos();
     }
+    // Esperar que los talleres estén cargados
+    if (tallerSelect.options.length <= 1) {
+      await cargarTalleres();
+    }
 
     document.getElementById("editUnidadIdInput").value =
       mantenimiento.id_unidad || "";
@@ -62,6 +72,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.getElementById("editIdMantenimiento").value =
       mantenimiento.id_mantenimiento || "";
+
+    tallerSelect.value = String(mantenimiento.id_taller || "");
 
     tipoSelect.value = mantenimiento.id_tipo_mantenimiento || "";
     estatusSelect.value = String(mantenimiento.id_estatus_mantenimiento || "");
@@ -93,8 +105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       mantenimiento.fecha_salida && mantenimiento.fecha_salida !== "0000-00-00"
         ? mantenimiento.fecha_salida
         : "";
-    document.getElementById("editTallerInput").value =
-      mantenimiento.taller || "";
     document.getElementById("editCostoInput").value =
       mantenimiento.costo_estimado || "";
     document.getElementById("editDescInput").value =
@@ -137,6 +147,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
+  async function cargarTalleres() {
+    try {
+      const res = await fetch(endpointTalleres);
+
+      if (!res.ok) {
+        throw new Error("Error al obtener talleres");
+      }
+
+      const data = await res.json();
+
+      tallerSelect.innerHTML = '<option value="">Seleccionar taller</option>';
+
+      data.forEach((taller) => {
+        const opt = document.createElement("option");
+
+        opt.value = taller.id_taller;
+        opt.textContent = taller.nombre_taller;
+
+        tallerSelect.appendChild(opt);
+      });
+    } catch (err) {
+      console.error("Error cargando talleres:", err);
+    }
+  }
+
   // =========================
   // Guardar cambios (enviar al backend)
   // =========================
@@ -150,7 +185,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       "id_tipo_mantenimiento",
       "id_estatus_mantenimiento",
       "fecha_salida",
-      "taller",
+      "id_taller",
       "costo_estimado",
       "descripcion_trabajo",
       "proximo_km",
@@ -194,4 +229,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   // =========================
   await cargarTipos();
   await cargarEstatus();
+  await cargarTalleres();
 });

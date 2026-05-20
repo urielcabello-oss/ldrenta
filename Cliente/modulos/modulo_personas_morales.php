@@ -75,7 +75,7 @@
 
         </div>
       <div class="table-responsive">
-        <table class="table table-hover tablaunidades" id="tablaUnidades">
+        <table class="table align-middle ldr-table" id="tablaUnidades">
           <thead>
             <tr>
               <th class="titulostablaunidades"></th>
