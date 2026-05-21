@@ -144,7 +144,7 @@ $avatarFinal = empty($avatar)
 
                     <?php if (tienePermiso('CONTRATO', 'r')): ?>
                         <li>
-                            <a href="comodatos.php">
+                            <a href="comodatos_demos.php">
                                 <i class="fas fa-file-contract"></i>
                                 Contratos
                             </a>

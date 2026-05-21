@@ -15,20 +15,23 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // 🔹 Abrir modal
-  document.body.addEventListener("click", function (e) {
-    if (e.target.classList.contains("btneditarunidades")) {
-      idUnidad = e.target.dataset.id;
+document.body.addEventListener("click", function (e) {
 
-      $.post(
-        "../../Servidor/solicitudes/unidades/formularioeditarunidadesdemo.php",
-        { idunidad: idUnidad },
-        function (response) {
-          body.innerHTML = response;
-          modal.show();
-        },
-      );
+  const btn = e.target.closest(".btneditarunidadesdemo");
+
+  if (!btn) return;
+
+  idUnidad = btn.dataset.id;
+
+  $.post(
+    "../../Servidor/solicitudes/unidades/formularioeditarunidadesdemo.php",
+    { idunidad: idUnidad },
+    function (response) {
+      body.innerHTML = response;
+      modal.show();
     }
-  });
+  );
+});
 
   // 🔹 Actualizar
   document.body.addEventListener("click", function (e) {

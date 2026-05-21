@@ -36,7 +36,7 @@ $valores = [
     "costo_neto" => obtener("costoneto"),
     "id_color" => obtener("colorunidad"),
     "fecha_adquisicion" => obtener("fechaadquisicionunidad"),
-    "año_unidad" => obtener("anounidad"),
+    "anio_unidad" => obtener("anounidad"),
     "id_arrendadora" => obtener("arrendadora"),
     "folio_factura" => obtener("foliofactura"),
     "paso_diferencial" => obtener("paso_diferencial")
@@ -57,7 +57,7 @@ $obligatorios = [
     "costo_neto",
     "id_color",
     "numero_motor",
-    "año_unidad",
+    "anio_unidad",
     "folio_factura",
     "vin"
 ];
@@ -123,7 +123,7 @@ $stmt = $conexion->prepare("
         id_color,
         img_unidad,
         fecha_adquisicion,
-        año_unidad,
+        anio_unidad,
         id_arrendadora,
         folio_factura,
         paso_diferencial
@@ -146,7 +146,7 @@ $stmt->bind_param(
     $valores["id_color"],
     $nombreImagen,
     $valores["fecha_adquisicion"],
-    $valores["año_unidad"],
+    $valores["anio_unidad"],
     $valores["id_arrendadora"],
     $valores["folio_factura"],
     $valores["paso_diferencial"]

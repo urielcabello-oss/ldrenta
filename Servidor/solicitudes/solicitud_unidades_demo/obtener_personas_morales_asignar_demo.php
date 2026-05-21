@@ -6,14 +6,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// Verificar que la sesión tenga los datos necesarios
-if (!isset($_SESSION['id_colaborador']) || !isset($_SESSION['id_tipo_usuario'])) {
-    echo "<div class='alert alert-danger'>Sesión inválida</div>";
-    exit;
-}
-
-$colaborador = $_SESSION['id_colaborador'];
-$id_tipo_usuario = $_SESSION['id_tipo_usuario'];
 
 // Validar variables POST
 $id_unidad = $_POST['id_unidad'] ?? null;
@@ -41,10 +33,7 @@ $sql = "SELECT pm.id_persona_moral,
         FROM personas_morales pm
         LEFT JOIN colaboradores col ON pm.id_registrador_persona_moral = col.id_colaborador";
 
-// Si no es administrador (tipo 4), limitar registros a los que registró el colaborador
-if ($id_tipo_usuario != 4) {
-    $sql .= " WHERE pm.id_registrador_persona_moral = '$colaborador'";
-}
+
 
 $sql .= " ORDER BY pm.id_persona_moral DESC";
 

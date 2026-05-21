@@ -1,3 +1,12 @@
+<?php
+include("../../Servidor/conexion.php");
+
+if (!isset($_SESSION)) {
+  session_start();
+}
+
+
+?>
 <!--Aqui comienza el contenedor de unidades-->
 
 <div class="container-fluid px-3 px-md-4 mt-4">

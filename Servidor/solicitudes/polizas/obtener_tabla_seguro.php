@@ -5,13 +5,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-if (!isset($_SESSION['id_tipo_usuario'])) {
-    echo '
-    <div class="alert alert-danger">
-        Sesión inválida
-    </div>';
-    exit;
-}
 
 if (!isset($_POST['id_unidad'])) {
     echo '

@@ -1,346 +1,421 @@
 <?php
 include("../../Servidor/conexion.php");
+
 if (!isset($_SESSION)) {
     session_start();
 }
 
-// 🔔 IDs de asignaciones con archivos actualizados por solicitante no vistos por jurídico
+/* =========================================================
+   NOTIFICACIONES
+========================================================= */
+
 $actualizaciones = [];
-$sqlNotif = "SELECT DISTINCT id_asignacion_unidad_demo 
-             FROM observaciones_documentos_juridico 
-             WHERE visto_por_usuario = 0
-             AND comentario LIKE '%actualizado%'";
+
+$sqlNotif = "SELECT DISTINCT id_asignacion_unidad_demo
+             FROM observaciones_documentos_juridico
+             WHERE visto_por_usuario = 0";
+
 $resNotif = $conexion->query($sqlNotif);
-while ($row = $resNotif->fetch_assoc()) {
-    $actualizaciones[] = $row['id_asignacion_unidad_demo'];
+
+if ($resNotif && $resNotif->num_rows > 0) {
+
+    while ($row = $resNotif->fetch_assoc()) {
+
+        $actualizaciones[] = $row['id_asignacion_unidad_demo'];
+    }
 }
 
-// Consulta principal de unidades
-$sqlobtenerunidadsubircomodato = "SELECT unid.img_unidad,
-                uda.id_asignacion_unidad_demo,
-                uda.id_unidad,
-                uda.id_colaborador_que_asigna,
-                uda.id_autorizador,
-                uda.id_persona_fisica,
-                uda.autorizacion,
-                uda.id_estatus_comodato_demo,
-                pf.id_persona_fisica,
-                pf.nombre_1,
-                pf.nombre_2,
-                pf.apellido_paterno,
-                pf.apellido_materno,
-                pm.id_persona_moral,
-                pm.organizacion_institucion,
-                model.nombre_modelo,
-                unid.placa,
-                estatuscomodato.estatus_comodato,
-                uda.fecha_prestamo,
-                uda.fecha_devolucion,
-                uda.id_colaborador_que_asigna,
-                ca.nombre_1 AS nombre1colaborador,
-                ca.nombre_2 AS nombre2colaborador,
-                ca.apellido_paterno AS apellidopcolaborador,
-                ca.apellido_materno AS apellidomcolaborador,
-                aud.nombre_1 AS nombre1autorizador,
-                aud.nombre_2 AS nombre2autorizador,
-                aud.apellido_paterno AS apellidopaternoautorizador,
-                aud.apellido_materno AS apellidomaternoautorizador,
-                usr.avatar AS avatar_colaborador,
-                usr_aut.avatar AS avatar_autorizador,
-                jdc.nombre_1 AS nombre1jefe,
-                jdc.nombre_2 AS nombre2jefe,
-                jdc.apellido_paterno AS apellidopjefe,
-                jdc.apellido_materno AS apellidomjefe,
-                usrc.avatar AS avatar_jefe_directo
-            FROM asignacion_unidad_demo AS uda
-                LEFT JOIN unidades AS unid ON uda.id_unidad = unid.id_unidad
-                LEFT JOIN modelos AS model ON unid.id_modelo = model.id_modelo
-                LEFT JOIN estatus_comodato AS estatuscomodato ON uda.id_estatus_comodato_demo = estatuscomodato.id_estatus_comodato
-                LEFT JOIN personas_fisicas AS pf ON uda.id_persona_fisica = pf.id_persona_fisica
-                LEFT JOIN personas_morales AS pm ON uda.id_persona_moral = pm.id_persona_moral
-                INNER JOIN colaboradores AS ca ON uda.id_colaborador_que_asigna = ca.id_colaborador
-                INNER JOIN colaboradores AS aud ON uda.id_autorizador = aud.id_colaborador
-                INNER JOIN usuarios AS usr ON usr.id_colaborador = ca.id_colaborador
-                LEFT JOIN usuarios AS usr_aut ON usr_aut.id_colaborador = uda.id_autorizador
-                LEFT JOIN jefes_directos AS jd ON uda.id_autorizacion_jefe_directo = jd.id_jefe_directo
-                LEFT JOIN colaboradores AS jdc ON jd.id_colaborador = jdc.id_colaborador
-                LEFT JOIN usuarios AS usrc ON usrc.id_colaborador = jdc.id_colaborador
-            WHERE uda.autorizacion = 'APROVADO'
-            ORDER BY uda.id_asignacion_unidad_demo DESC";
-$resultado = $conexion->query($sqlobtenerunidadsubircomodato);
+/* =========================================================
+   CONSULTA PRINCIPAL
+========================================================= */
 
-// Contenedor de Cards
-echo '<div id="vistaCards">';
+$sql = "SELECT
+            uda.id_asignacion_unidad_demo,
+            uda.id_unidad,
+            uda.id_colaborador_que_asigna,
+            uda.id_persona_fisica,
+            uda.id_persona_moral,
+            uda.fecha_prestamo,
+            uda.fecha_devolucion,
+            uda.id_estatus_comodato_demo,
+            uda.archivo_comodato_firmado,
+
+            unid.img_unidad,
+            unid.placa,
+            unid.vin,
+
+            model.nombre_modelo,
+
+            estatuscomodato.estatus_comodato,
+
+            pf.nombre_1,
+            pf.nombre_2,
+            pf.apellido_paterno,
+            pf.apellido_materno,
+
+            pm.organizacion_institucion,
+
+            col.nombre_1 AS nombre_colaborador_1,
+            col.nombre_2 AS nombre_colaborador_2,
+            col.apellido_paterno AS apellido_colaborador_p,
+            col.apellido_materno AS apellido_colaborador_m,
+
+            usr.avatar AS avatar_colaborador
+
+        FROM asignacion_unidad_demo AS uda
+
+        LEFT JOIN unidades AS unid
+            ON uda.id_unidad = unid.id_unidad
+
+        LEFT JOIN modelos AS model
+            ON unid.id_modelo = model.id_modelo
+
+        LEFT JOIN estatus_comodato AS estatuscomodato
+            ON uda.id_estatus_comodato_demo = estatuscomodato.id_estatus_comodato
+
+        LEFT JOIN personas_fisicas AS pf
+            ON uda.id_persona_fisica = pf.id_persona_fisica
+
+        LEFT JOIN personas_morales AS pm
+            ON uda.id_persona_moral = pm.id_persona_moral
+
+        LEFT JOIN colaboradores AS col
+            ON uda.id_colaborador_que_asigna = col.id_colaborador
+
+        LEFT JOIN usuarios AS usr
+            ON usr.id_colaborador = col.id_colaborador
+
+        WHERE uda.estado = 1
+
+        ORDER BY uda.id_asignacion_unidad_demo DESC";
+
+$resultado = $conexion->query($sql);
+
+if (!$resultado) {
+
+    die("Error en la consulta: " . $conexion->error);
+}
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
+
+echo '
+<div class="container-fluid">
+
+    <div class="row g-4">
+';
+
+/* =========================================================
+   RECORRER CARDS
+========================================================= */
+
 while ($fila = $resultado->fetch_assoc()) {
-    if (($fila['id_persona_fisica'] || $fila['id_persona_moral']) && $fila['autorizacion'] === 'APROVADO') {
-        $tipo_solicitante = isset($fila['id_persona_fisica']) && $fila['id_persona_fisica'] ? 'fisica' : 'moral';
-        $nombreJefe = trim($fila['nombre1jefe'] . ' ' . $fila['nombre2jefe'] . ' ' . $fila['apellidopjefe'] . ' ' . $fila['apellidomjefe']);
-        $idAsignacion = $fila['id_asignacion_unidad_demo'];
-        $tieneActualizacion = in_array($idAsignacion, $actualizaciones);
 
-        if ($fila['id_estatus_comodato_demo'] != 1 && $fila['id_estatus_comodato_demo'] != 4 && $fila['id_estatus_comodato_demo'] != 5) {
-            echo '<div class="card mb-3  tipo-' . $tipo_solicitante . '">';
+    $idAsignacion = $fila['id_asignacion_unidad_demo'];
 
-            // 🔴 Badge solo si hay actualización
-            if ($tieneActualizacion) {
-                echo '<span class="position-absolute top-0 end-0 translate-middle badge rounded-pill bg-danger" style="font-size:0.8rem;z-index:10;">¡Nuevo!</span>';
-            }
+    $tieneActualizacion = in_array($idAsignacion, $actualizaciones);
 
-            if ($fila['id_estatus_comodato_demo'] == 3) {
-                echo '<div class="alerta d-flex align-items-center">
-                <img src="../../Cliente/videos/succes-green.gif" class="me-2 imgalertasucces"> 
-                <h6 class="txtvalidacioncomodato"><b>Comodato subido</b></h6>
-                </div>';
-            } elseif ($fila['id_estatus_comodato_demo'] == 7) {
-                echo '<div class="alerta d-flex align-items-center">
-                <img src="../../Cliente/videos/warning-red.gif" class="me-2 imgalertasucces"> 
-                <h6 class="txtvalidacioncomodato"><b>Comodato regresado</b></h6>
-                </div>';
-            }
+    /* =========================================================
+       SOLICITANTE
+    ========================================================= */
 
-            echo '<div class="cardheader">
-                <img src="../../Servidor/archivos/imagenes/imagenes_unidades/' . $fila['img_unidad'] . '" onerror="this.src=\'../../Cliente/img/unidades/silueta_tracto3.png\'" class="card-img-top img-fluid imgcard" alt="...">
+    $nombreSolicitante = '';
+
+    if (!empty($fila['id_persona_fisica'])) {
+
+        $nombreSolicitante = trim(
+            $fila['nombre_1'] . ' ' .
+            $fila['nombre_2'] . ' ' .
+            $fila['apellido_paterno'] . ' ' .
+            $fila['apellido_materno']
+        );
+
+        $badgeTipo = '
+            <span class="badge bg-primary">
+                Persona Física
+            </span>
+        ';
+
+    } else {
+
+        $nombreSolicitante = $fila['organizacion_institucion'];
+
+        $badgeTipo = '
+            <span class="badge bg-dark">
+                Persona Moral
+            </span>
+        ';
+    }
+
+    /* =========================================================
+       COLABORADOR
+    ========================================================= */
+
+    $nombreColaborador = trim(
+        $fila['nombre_colaborador_1'] . ' ' .
+        $fila['nombre_colaborador_2'] . ' ' .
+        $fila['apellido_colaborador_p'] . ' ' .
+        $fila['apellido_colaborador_m']
+    );
+
+    $avatar = !empty($fila['avatar_colaborador'])
+        ? "https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/" . $fila['avatar_colaborador'] . ".png"
+        : "../../Cliente/img/iconos/default_avatar.png";
+
+    /* =========================================================
+       ESTATUS
+    ========================================================= */
+
+    $estatusBadge = '';
+
+    switch ($fila['id_estatus_comodato_demo']) {
+
+        case 3:
+
+            $estatusBadge = '
+                <span class="badge bg-success">
+                    COMODATO SUBIDO
+                </span>
+            ';
+        break;
+
+        case 7:
+
+            $estatusBadge = '
+                <span class="badge bg-warning text-dark">
+                    COMODATO REGRESADO
+                </span>
+            ';
+        break;
+
+        default:
+
+            $estatusBadge = '
+                <span class="badge bg-secondary">
+                    ' . $fila['estatus_comodato'] . '
+                </span>
+            ';
+        break;
+    }
+
+    /* =========================================================
+       CARD
+    ========================================================= */
+
+    echo '
+
+<div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-3">
+
+    <div class="card border-0 shadow rounded-4 overflow-hidden carddemo h-100" style="border:1px solid #f1f1f1;">
+
+        <!-- IMAGE -->
+        <div class="position-relative">
+
+            <img 
+                src="../../Servidor/archivos/imagenes/imagenes_unidades/' . $fila['img_unidad'] . '"
+
+                onerror="this.src=\'../../Cliente/img/unidades/silueta_tracto3.png\'"
+
+                class="w-100"
+
+                style="
+                    height:110px;
+                    object-fit:contain;
+                    background:#f8f9fa;
+                    padding:6px;
+                "
+            >
+
+            <!-- BADGE TIPO -->
+            <div class="position-absolute top-0 start-0 p-2">
+                ' . $badgeTipo . '
             </div>
-            <div class="card-body">';
 
-            if (isset($fila['id_persona_fisica']) && $fila['id_persona_fisica']) {
-                echo '<h6 class="card-title"><b>' . $fila['nombre_1'] . ' ' . $fila['nombre_2'] . ' ' . $fila['apellido_paterno'] . ' ' . $fila['apellido_materno'] . '</b></h6>';
-            } elseif (isset($fila['organizacion_institucion'])) {
-                echo '<h6 class="card-title"><b>' . $fila['organizacion_institucion'] . '</b></h6>';
-            }
+            <!-- BADGE NUEVO -->
+    ';
 
-            echo '<h5 class="card-title txteatlevalidacioncomodato"><strong>' . $fila['nombre_modelo'] . '</strong></h5>
-                  <h6 class="card-text txtvalidacioncomodato"><b>Solicitante: </b><br>
-                  <img src="' . (empty($fila["avatar_colaborador"]) ? "../../Cliente/img/iconos/default_avatar.png" : "https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/" . $fila["avatar_colaborador"]) . '.png"
-                        class="rounded-circle me-2" style="margin-top: 5px; width: 30px; height: 30px; object-fit: cover;" alt="avatar">
-                  ' . $fila['nombre1colaborador'] . ' ' . $fila['nombre2colaborador'] . ' ' . $fila['apellidopcolaborador'] . ' ' . $fila['apellidomcolaborador'] . '</h6>';
+    if ($tieneActualizacion) {
 
-            if (!empty($nombreJefe)) {
-                echo '<h6 class="card-text txtvalidacioncomodato"><b>Jefe directo que autorizó: </b><br>
-                      <img src="' . (empty($fila["avatar_jefe_directo"]) ? "../../Cliente/img/iconos/default_avatar.png" : "https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/" . $fila["avatar_jefe_directo"]) . '.png"
-                      class="rounded-circle me-2" style="margin-top: 5px; width: 30px; height: 30px; object-fit: cover;" alt="avatar">' . $nombreJefe . '</h6>';
-            }
+        echo '
 
-            echo '<h6 class="card-text txtvalidacioncomodato"><b>Autorizador: </b><br>
-                  <img src="' . (empty($fila["avatar_autorizador"]) ? "../../Cliente/img/iconos/default_avatar.png" : "https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/" . $fila["avatar_autorizador"]) . '.png"
-                  class="rounded-circle me-2" style="margin-top: 5px; width: 30px; height: 30px; object-fit: cover;" alt="avatar">
-                  ' . $fila['nombre1autorizador'] . ' ' . $fila['nombre2autorizador'] . ' ' . $fila['apellidopaternoautorizador'] . ' ' . $fila['apellidomaternoautorizador'] . '</h6>';
+            <div class="position-absolute top-0 end-0 p-2">
 
-            echo '<h6 class="card-text txtvalidacioncomodato"><i class="fas fa-car me-2"></i><strong>Placa: </strong>' . $fila['placa'] . '</h6>
-                  <h6 class="card-text txtvalidacioncomodato"><i class="fas fa-calendar-check me-2"></i><strong>Asignación: </strong>' . $fila['fecha_prestamo'] . '</h6>
-                  <h6 class="text txtvalidacioncomodato"><i class="fas fa-undo-alt me-2"></i><strong>Devolución: </strong>' . ($fila['fecha_devolucion'] != '0000-00-00' ? $fila['fecha_devolucion'] : '') . '</h6>
-                  
-                  <button type="button" 
-                        data-idunidad="' . $fila['id_unidad'] . '" 
-                        data-idasignacion="' . $fila['id_asignacion_unidad_demo'] . '" 
-                        data-idcolaborador="' . $fila['id_colaborador_que_asigna'] . '"  
-                        class="btn mt-3 btnmosrarmodalunidadcomodatodemo">Subir COMODATO</button>
+                <span class="badge bg-danger">
+                    ¡Nuevo!
+                </span>
 
-                  <button type="button" 
-                        data-idunidad="' . $fila['id_unidad'] . '" 
-                        data-idasignacion="' . $fila['id_asignacion_unidad_demo'] . '" 
-                        data-idcolaborador="' . $fila['id_colaborador_que_asigna'] . '"  
-                        class="btn mt-3 btnverarchivos">Archivos</button>';
-
-            echo '</div></div>';
-        }
+            </div>
+        ';
     }
-}
-echo '</div>'; // Fin contenedor de cards
 
+    echo '
 
+        </div>
 
-$resultado->data_seek(0);
+        <!-- BODY -->
+        <div class="card-body p-2 d-flex flex-column">
 
-// 🔔 IDs de asignaciones con archivos actualizados por solicitante no vistos por jurídico
-$actualizaciones = [];
-$sqlNotif = "SELECT DISTINCT id_asignacion_unidad_demo 
-             FROM observaciones_documentos_juridico 
-             WHERE visto_por_usuario = 0
-             AND comentario LIKE '%actualizado%'";
-$resNotif = $conexion->query($sqlNotif);
-while ($row = $resNotif->fetch_assoc()) {
-    $actualizaciones[] = $row['id_asignacion_unidad_demo'];
-}
+            <!-- TITULO -->
+            <h6 class="fw-semibold text-dark mb-0 text-truncate small">
+                ' . $fila['nombre_modelo'] . '
+            </h6>
 
+            <!-- SOLICITANTE -->
+            <small class="text-muted text-truncate d-block mb-1" style="font-size:11px;">
+                ' . $nombreSolicitante . '
+            </small>
 
-echo '<div id="vistaTabla" style="display: none;">
-    <div class="table-responsive">
-        <table class="table table-hover tablaunidades" id="tablaUnidades">
-            <thead class="table-light">
-                <tr>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-user me-2"></i>Nombre del usuario/empresa</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-car-side me-2"></i>Modelo</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-car me-2"></i>Placa</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-calendar-check me-2"></i>Asignación</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-undo-alt me-2"></i>Devolución</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-file-contract me-2"></i>Subir comodato</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-file-contract me-2"></i>Archivos</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-user-tie me-2"></i>Solicitante</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-user-check me-2"></i>Jefe directo aurorización</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-user-check me-2"></i>Autorizador</th>
-                    <th class="titulostablaverificarcomodatodemo"><i class="fas fa-file-signature me-2"></i>Estado</th>
-                </tr>
-            </thead>
-            <tbody>';
+            <!-- ESTATUS -->
+            <div class="mb-3">
+                ' . $estatusBadge . '
+            </div>
 
-while ($fila = $resultado->fetch_assoc()) {
-    if (($fila['id_persona_fisica'] || $fila['id_persona_moral']) && $fila['autorizacion'] === 'APROVADO') {
-        $idAsignacion = $fila['id_asignacion_unidad_demo'];
-        $tieneActualizacion = in_array($idAsignacion, $actualizaciones);
+            <!-- INFO -->
+            <div class="mb-3 small">
 
-        // Nombre completo del solicitante
-        $nombre = trim(
-            ($fila['nombre_1'] ?? '') . ' ' .
-            ($fila['nombre_2'] ?? '') . ' ' .
-            ($fila['apellido_paterno'] ?? '') . ' ' .
-            ($fila['apellido_materno'] ?? '') . ' ' .
-            ($fila['organizacion_institucion'] ?? '')
-        );
+                <div class="d-flex justify-content-between mb-1">
 
-        // Tipo de solicitante
-        $tipo_solicitante = isset($fila['id_persona_fisica']) && $fila['id_persona_fisica'] ? 'fisica' : 'moral';
+                    <span class="text-muted">
+                        Placa
+                    </span>
 
-        //nombre solicitante
-        $solicitante = trim(
-            ($fila['nombre1colaborador'] ?? '') . ' ' .
-            ($fila['nombre2colaborador'] ?? '') . ' ' .
-            ($fila['apellidopcolaborador'] ?? '') . ' ' .
-            ($fila['apellidomcolaborador'] ?? '')
-        );
+                    <strong>
+                        ' . $fila['placa'] . '
+                    </strong>
 
-        // Nombre jefe directo
-        $nombreJefe = '';
-        if (!empty($fila['nombre1jefe'])) {
-            $nombreJefe = trim(
-                ($fila['nombre1jefe'] ?? '') . ' ' .
-                ($fila['nombre2jefe'] ?? '') . ' ' .
-                ($fila['apellidopjefe'] ?? '') . ' ' .
-                ($fila['apellidomjefe'] ?? '')
-            );
-        }
+                </div>
 
-        echo '<tr class="fila-solicitante tipo-' . $tipo_solicitante . '">';
-        echo '<td class="titulostablaverificarcomodatodemo">' . $nombre . '</td>';
-        echo '<td class="titulostablaverificarcomodatodemo">' . $fila['nombre_modelo'] . '</td>';
-        echo '<td class="titulostablaverificarcomodatodemo">' . $fila['placa'] . '</td>';
-        echo '<td class="titulostablaverificarcomodatodemo">' . $fila['fecha_prestamo'] . '</td>';
-        echo '<td class="titulostablaverificarcomodatodemo">' . ($fila['fecha_devolucion'] != '0000-00-00' ? $fila['fecha_devolucion'] : '') . '</td>';
+                <div class="d-flex justify-content-between mb-1">
 
-        // Botón subir comodato
-        echo '<td style="text-align: center;">
-                <button type="button" 
-                    data-idunidad="' . $fila['id_unidad'] . '" 
-                    data-idasignacion="' . $idAsignacion . '" 
-                    data-idcolaborador="' . $fila['id_colaborador_que_asigna'] . '" 
-                    class="fas fa-upload btn btntablaverificarcomodatodemojuridico btnmosrarmodalunidadcomodatodemo">
-                </button>
-              </td>';
+                    <span class="text-muted">
+                        VIN
+                    </span>
 
-        // Botón ver archivos + badge
-        echo '<td style="text-align: center; position: relative;">
-                <button type="button" 
-                        data-idunidad="' . $fila['id_unidad'] . '" 
-                        data-idasignacion="' . $idAsignacion . '" 
-                        data-idcolaborador="' . $fila['id_colaborador_que_asigna'] . '"  
-                        class="btn mt-1 btnverarchivos fas fa-folder"></button>';
-        if ($tieneActualizacion) {
-            echo '<span class="badge-actualizacion position-absolute top-0 start-100 translate-middle rounded-pill bg-danger" 
-                        style="font-size:0.7rem; z-index:10; color:white;">¡Nuevo!</span>';
-        }
-        echo '</td>';
+                    <strong class="text-truncate ms-2">
+                        ' . $fila['vin'] . '
+                    </strong>
 
-        // Avatar solicitante
-        echo '<td class="titulostablaverificarcomodatodemo" style="text-align: center;">';
-        if (!empty($solicitante)) {
-                echo '<img src="' . (empty($fila["avatar_colaborador"]) ? "../../Cliente/img/default_avatar.png" : "https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/" . $fila["avatar_colaborador"] . '.png') . '" 
-                     class="rounded-circle me-2" style="width: 25px; height: 25px; object-fit: cover;" alt="avatar">';
-                     echo'<br>' . $solicitante;
-            }else{
-                echo '<span class="text-muted">Sin solicitante</span>';
-            }
-            echo '</td>';
+                </div>
 
-        // Jefe directo
-        echo '<td class="titulostablaverificarcomodatodemo" style="text-align: center;">';
-        if (!empty($nombreJefe)) {
-            echo '<img src="' . (empty($fila["avatar_jefe_directo"]) ? "../../Cliente/img/default_avatar.png" : "https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/" . $fila["avatar_jefe_directo"] . '.png') . '" 
-                        class="rounded-circle me-2" style="width: 25px; height: 25px; object-fit: cover;" alt="avatar">';
-            echo '<br>' . $nombreJefe;
-        } else {
-            echo '<span class="text-muted">Sin jefe asignado</span>';
-        }
-        echo '</td>';
+                <div class="d-flex justify-content-between mb-1">
 
-        // Autorizador
-        echo '<td class="titulostablaverificarcomodatodemo" style="text-align: center;">
-                <img src="' . (empty($fila["avatar_autorizador"]) ? "../../Cliente/img/default_avatar.png" : "https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/" . $fila["avatar_autorizador"] . '.png') . '" 
-                     class="rounded-circle me-2" style="width: 25px; height: 25px; object-fit: cover;" alt="avatar">
-                     <br>' . $fila['nombre1autorizador'] . ' ' . $fila['nombre2autorizador'] . ' ' . $fila['apellidopaternoautorizador'] . ' ' . $fila['apellidomaternoautorizador'] . '
-              </td>';
+                    <span class="text-muted">
+                        Asignación
+                    </span>
 
-        // Estado comodato
-        echo '<td class="titulostablaverificarcomodatodemo">';
-        if ($fila['id_estatus_comodato_demo'] == 3) {
-            echo '<div class="d-flex align-items-center">
-                    <img src="../../Cliente/videos/succes-green.gif" class="me-2 imgalertasuccestabla">
-                    <b>Comodato subido</b>
-                  </div>';
-        } elseif ($fila['id_estatus_comodato_demo'] == 7) {
-            echo '<div class="d-flex align-items-center">
-                    <img src="../../Cliente/videos/warning-red.gif" class="me-2 imgalertasuccestabla">
-                    <b>Comodato regresado</b>
-                  </div>';
-        }
-        echo '</td>';
+                    <strong>
+                        ' . $fila['fecha_prestamo'] . '
+                    </strong>
 
-        echo '</tr>';
-    }
-}
-?>
-</tbody>
-</table>
+                </div>
+
+                <div class="d-flex justify-content-between">
+
+                    <span class="text-muted">
+                        Devolución
+                    </span>
+
+                    <strong>
+    ';
+
+    echo ($fila['fecha_devolucion'] != '0000-00-00')
+        ? $fila['fecha_devolucion']
+        : 'Sin fecha';
+
+    echo '
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- COLABORADOR -->
+            <div class="d-flex align-items-center gap-2 mb-2">
+
+                <img 
+                    src="' . $avatar . '"
+
+                    style="
+                        width:38px;
+                        height:38px;
+                        object-fit:cover;
+                        border-radius:50%;
+                    "
+                >
+
+                <div class="flex-grow-1 overflow-hidden">
+
+                    <small class="text-muted d-block">
+                        Solicitante
+                    </small>
+
+                    <strong class="small text-truncate d-block">
+                        ' . $nombreColaborador . '
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <!-- BOTONES -->
+            <div class="mt-auto">
+
+                <div class="d-flex gap-2">
+
+                    <!-- SUBIR -->
+                    <button 
+                        type="button"
+
+                        class="btn btn-primary btn-sm py-1 flex-fill btnmosrarmodalunidadcomodatodemo"
+
+                        data-idunidad="' . $fila['id_unidad'] . '"
+                        data-idasignacion="' . $fila['id_asignacion_unidad_demo'] . '"
+                        data-idcolaborador="' . $fila['id_colaborador_que_asigna'] . '"
+
+                        title="Subir COMODATO"
+                    >
+
+                        <i class="fa-solid fa-upload"></i>
+
+                    </button>
+
+                    <!-- ARCHIVOS -->
+                    <button 
+                        type="button"
+
+                        class="btn btn-dark btn-sm flex-fill btnverarchivos"
+
+                        data-idunidad="' . $fila['id_unidad'] . '"
+                        data-idasignacion="' . $fila['id_asignacion_unidad_demo'] . '"
+                        data-idcolaborador="' . $fila['id_colaborador_que_asigna'] . '"
+
+                        title="Ver archivos"
+                    >
+
+                        <i class="fa-solid fa-folder-open"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
-
-<script>
-// Función para marcar como visto y quitar badge
-function marcarVisto(idAsignacion) {
-    // AJAX
-    fetch('../../Servidor/solicitudes/unidades_demo_autorizadas/marcar_visto_actualizaciones.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'id_asignacion=' + idAsignacion
-    })
-    .then(response => response.text())
-    .then(data => {
-        if(data === 'ok') {
-            // Quitar badge de la tabla
-            document.querySelectorAll('.btnverarchivos').forEach(btn => {
-                if(btn.dataset.idasignacion == idAsignacion) {
-                    const badgeTabla = btn.nextElementSibling;
-                    if(badgeTabla && badgeTabla.classList.contains('badge-actualizacion')) {
-                        badgeTabla.remove();
-                    }
-                }
-            });
-
-            // Quitar badge de la card
-            document.querySelectorAll('#vistaCards .card').forEach(card => {
-                const cardId = card.querySelector('.btnmosrarmodalunidadcomodatodemo')?.dataset.idasignacion;
-                if(cardId == idAsignacion) {
-                    const badgeCard = card.querySelector('span.position-absolute.bg-danger');
-                    if(badgeCard) badgeCard.remove();
-                }
-            });
-        }
-    });
+';
 }
 
-// Evento para botones "Archivos" en tabla y cards
-document.querySelectorAll('.btnverarchivos, #vistaCards .btnverarchivos').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const idAsignacion = this.dataset.idasignacion;
-        marcarVisto(idAsignacion);
-    });
-});
-</script>
+/* =========================================================
+   CIERRE
+========================================================= */
+
+echo '
+    </div>
+</div>
+';
+?>

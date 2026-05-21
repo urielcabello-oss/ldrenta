@@ -1,5 +1,13 @@
 <?php
-//session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <!doctype html>
 <html lang="en">
@@ -14,7 +22,7 @@
     integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/estilos.css">
-    <title>COMODATOS</title>
+    <title>Contratos</title>
 
 </head>
 
@@ -22,10 +30,12 @@
 <?php
     include("../include/menu.php");
     ?>
-    <div class="cuadroblancocontenido">
+    <main class="main-content">
     <!-- INICIO BLOQUE PARA EL CUERPO -->
         <?php include("../modulos/modulo_juridico_comodato_demos.php"); ?>
-    </div>
+    </main>
+
+        <?php include("../ui/modales_juridico_comodato_demos.php"); ?>
 
     <div class="contenedorspinner" id="contenedorspinner">
         <span class="loader"></span>

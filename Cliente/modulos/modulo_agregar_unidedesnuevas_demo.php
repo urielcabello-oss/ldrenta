@@ -358,16 +358,9 @@
                     <option value="">Seleccionar</option>
 
                     <?php
-
-                    if ($id_tipo_usuario == 1) {
                         $sql = "SELECT id_tipo_unidad, tipo_unidad 
-                                FROM tipo_unidad 
-                                WHERE id_tipo_unidad != 3";
-                    } else {
-                        $sql = "SELECT id_tipo_unidad, tipo_unidad 
-                                FROM tipo_unidad 
-                                WHERE id_tipo_unidad = 3";
-                    }
+                                FROM tipo_unidad ";
+                    
 
                     $result = $conexion->query($sql);
 

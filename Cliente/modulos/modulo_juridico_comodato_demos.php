@@ -1,82 +1,67 @@
-<!-------------------------------------------aqui comienza el contenedor Validacion de los comodatos ----------------------------------------------------------->
-<div class="contenedorvalidacionunidades">
-    <h5 class="letravalidacionunidadjuridico text-nowrap">
-        Sube el COMODATO correspondiente a la unidad DEMO.
-    </h5>
-    <div class="container mt-4">
-        <div class="d-flex flex-wrap justify-content-center contenedor_botones_subir_comodato_demo">
-            <!-- Botón estilizado -->
-            <button onclick="window.location.href='../interfaces/comodatos.php'" class="btn btn-comodato_interna m-2 "><i class="fa-solid fa-car"></i> Unidad Interna</button>
-            <!-- Botón estilizado -->
-            <button onclick="window.location.href='../interfaces/comodatos_demos.php'" class="btn btn-comodato_demo m-2 "><i class="fa-solid fa-truck"></i> Unidad DEMO</button>
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
+<!-------------------------------------------
+    CONTENEDOR JURÍDICO DEMOS
+-------------------------------------------->
+
+<div class="container-fluid px-3 px-md-4 mt-4">
+
+    <!-- HEADER -->
+    <section class="ldr-page-header">
+
+        <div>
+
+            <span class="ldr-page-badge">
+                ÁREA JURÍDICA
+            </span>
+
+            <h1 class="ldr-page-title">
+                Gestión de contratos
+            </h1>
+
+            <p class="ldr-page-subtitle">
+                Administra, revisa y sube los contratos correspondientes a las unidades demo.
+            </p>
+
         </div>
-    </div>
-</div>
-<!-- Campo de búsqueda para filtrar la tabla -->
-<div class="grupo-buscador-juridico">
-    <div class="buscadorcomodatojuridico mb-3 col-md-8">
-        <input type="text" id="filtroBusqueda" class="form-control" placeholder="Buscar unidades..." onkeyup="filtrarCards(), filtrarTabla()">
-    </div>
-    <!-- // Botón para alternar vista -->
-    <div class="d-flex justify-center" style="left: 130px;">
-        <button class="btn btn-cambiar_vista_juridico_demo mb-3" id="botonCambiarVista" onclick="toggleVista()">Cambiar a vista de tabla</button>
-    </div>
-</div>
 
-<!--contenedor de las cards de las unidades por asignar-->
-<div class="contenedorcardunidadesjuridico">
-    <?php include("../../Servidor/componentes/obtener_unidades_subir_comodato_demo.php"); ?>
-</div>
+    </section>
 
+    <!-- CONTENIDO -->
+    <section class="ldr-table-card">
 
-<!-------------------------------------modal para subir el comodato correspondiente al usuario-------------------------------->
-<!--modal-->
-<div class="modal fade modalunidadcomodatodemo" id="modalunidadcomodatodemo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detalles de la unidad</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btncerrarmodalunidadcomodatodemo"></button>
+        <div class="ldr-table-header">
+
+            <div>
+
+                <h2>
+                    Listado de contratos
+                </h2>
+
+                <p>
+                    Consulta las asignaciones pendientes y administra los documentos jurídicos.
+                </p>
+
             </div>
-            <div class="modal-body" id="modalunidadcomodatodemobody">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="btncerrarmodalunidadcomodatodemo" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="btnenviarcomodato">Enviar</button>
-            </div>
+
         </div>
-    </div>
-</div>
 
-<!----------------------------------------modal para ver los archivos de las personas fisicas o morales------------------------------>
-<!--modal-->
-<div class="modal fade" id="modalArchivos" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Archivos del solicitante</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body" id="contenidoModalArchivos">
-        <!-- Aquí se cargará el HTML desde AJAX -->
-        <div class="text-center">
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Cargando...</span>
-          </div>
+        <!-- CARDS -->
+        <div class="contenedorcardunidadesjuridico">
+
+            <?php include("../../Servidor/componentes/obtener_unidades_subir_comodato_demo.php"); ?>
+
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary" id="guardarComentarios">Guardar comentarios</button>
-      </div>
-    </div>
-  </div>
+
+    </section>
+
 </div>
 
-
-<!-------------------------------------js para subir el comodato correspondiente al usuario-------------------------------->
+<!-- JS -->
 <script src="../js/juridico/comodato_demo.js"></script>
-<!--js para filtrar las cards de unidades-->
 <script src="../js/unidades/filtrar_cards_tabla.js"></script>
-<!--js para verificar los archivos de las personas fisicas o morales-->
 <script src="../js/juridico/ver_archivos.js"></script>

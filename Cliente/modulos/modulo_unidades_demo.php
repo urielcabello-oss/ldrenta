@@ -2,15 +2,6 @@
 if (!isset($_SESSION)) {
   session_start();
 }
-
-// Verificar que la sesión tenga los datos necesarios
-if (!isset($_SESSION['id_colaborador']) || !isset($_SESSION['id_tipo_usuario'])) {
-  echo "Sesión inválida";
-  exit;
-}
-
-$colaborador = $_SESSION['id_colaborador'];
-$id_tipo_usuario = $_SESSION['id_tipo_usuario'];
 ?>
 
 <div class="ldr-dashboard">

@@ -83,14 +83,14 @@ if (
     $emplacamiento =
         isset($_POST['emplacamiento_ldr']) &&
         $_POST['emplacamiento_ldr'] == '1'
-        ? 'SI'
-        : 'NO';
+        ? 1
+        : 2;
 
     $seguro =
         isset($_POST['asegurar_ldr']) &&
         $_POST['asegurar_ldr'] == '1'
-        ? 'SI'
-        : 'NO';
+        ? 1
+        : 2;
 
     // =====================================================
     // INSERTAR SOLICITUD
@@ -136,10 +136,8 @@ if (
 
     if (!$resultadoInsertar) {
 
-        die(
-            "Error INSERT: " .
-            mysqli_error($conexion)
-        );
+        die("Error INSERT: " .
+            mysqli_error($conexion));
     }
 
     $id_asignacion_demo =
@@ -192,7 +190,7 @@ if (
     // ENVIAR CORREO
     // =====================================================
 
-    
+
     try {
 
         $mail = new PHPMailer(true);
@@ -266,12 +264,11 @@ if (
         ";
 
         $mail->send();
-
     } catch (Exception $e) {
 
         error_log(
             'Error correo DEMO: ' .
-            $mail->ErrorInfo
+                $mail->ErrorInfo
         );
     }
 
@@ -280,9 +277,7 @@ if (
     // =====================================================
 
     echo "success";
-
 } else {
 
     echo "No llegaron datos POST";
 }
-?>

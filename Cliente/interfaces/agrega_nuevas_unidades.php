@@ -5,14 +5,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// Validar que la sesión tenga la información necesaria
-if (!isset($_SESSION['id_colaborador']) || !isset($_SESSION['id_tipo_usuario'])) {
-    echo "Sesión inválida";
-    exit;
-}
-
-$colaborador = $_SESSION['id_colaborador'];
-$id_tipo_usuario = $_SESSION['id_tipo_usuario'];
 ?>
 <!doctype html>
 <html lang="en">

@@ -3,17 +3,6 @@ include("../../conexion.php");
 
 if (!isset($_SESSION)) session_start();
 
-// =====================================================
-// VALIDAR SESIÓN
-// =====================================================
-
-if (!isset($_SESSION['id_colaborador']) || !isset($_SESSION['id_tipo_usuario'])) {
-    echo '
-    <div class="alert alert-danger">
-        Sesión inválida
-    </div>';
-    exit;
-}
 
 if (!isset($_POST['id_unidad'])) {
     echo '

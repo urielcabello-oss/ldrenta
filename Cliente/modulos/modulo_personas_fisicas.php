@@ -5,14 +5,6 @@ if (!isset($_SESSION)) {
   session_start();
 }
 
-// Verificar que la sesión tenga los datos necesarios
-if (!isset($_SESSION['id_colaborador']) || !isset($_SESSION['id_tipo_usuario'])) {
-  echo "Sesión inválida";
-  exit;
-}
-
-$colaborador = $_SESSION['id_colaborador'];
-$id_tipo_usuario = $_SESSION['id_tipo_usuario'];
 
 ?>
 
@@ -106,10 +98,7 @@ $id_tipo_usuario = $_SESSION['id_tipo_usuario'];
               <th class="titulostablaunidades">Domicilio</th>
               <th class="titulostablaunidades">Contacto</th>
               <th class="titulostablaunidades">Resguardo de unidad</th>
-              <?php if ($id_tipo_usuario == 4): // Administrador demos 
-              ?>
-                <th class="titulostablaunidades">Creador de la persona</th>
-              <?php endif; ?>
+              <th class="titulostablaunidades">Creador de la persona</th>
               <th class="titulostablaunidades">Identificación o pasaporte</th>
               <th class="titulostablaunidades">CURP</th>
               <th class="titulostablaunidades">Constancia de situación fiscal</th>

@@ -5,14 +5,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-// Verificar que la sesión tenga los datos necesarios
-if (!isset($_SESSION['id_colaborador']) || !isset($_SESSION['id_tipo_usuario'])) {
-    echo "Sesión inválida";
-    exit;
-}
-
-$colaborador = $_SESSION['id_colaborador'];
-$id_tipo_usuario = $_SESSION['id_tipo_usuario'];
 
 
 // Consulta según tipo de usuario
@@ -23,8 +15,7 @@ $sql = "SELECT pm.*,
                col.apellido_materno AS apellido_materno_colaborador
         FROM personas_morales AS pm
         LEFT JOIN colaboradores col 
-        ON pm.id_registrador_persona_moral = col.id_colaborador
-        WHERE pm.id_registrador_persona_moral = '$colaborador'";
+        ON pm.id_registrador_persona_moral = col.id_colaborador";
 
 
 $resultado = $conexion->query($sql);
@@ -45,14 +36,14 @@ if ($resultado->num_rows > 0) {
             ";
 
         // Mostrar nombre del creador solo si el usuario es admin tipo 4
-        if ($id_tipo_usuario == 4) {
+     
             echo "<td class='titulostablaunidades'>" . 
                 $fila['nombre_1_colaborador'] . " " . 
                 $fila['nombre_2_colaborador'] . " " . 
                 $fila['apellido_paterno_colaborador'] . " " . 
                 $fila['apellido_materno_colaborador'] . 
             "</td>";
-        }
+        
 
         echo "
             <td style='text-align: center;'>

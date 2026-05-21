@@ -86,22 +86,22 @@ error_reporting(E_ALL);
 
                 <div class="ldr-stats-grid">
                     <div class="ldr-stat-box">
-                        <span class="ldr-stat-number">111</span>
+                        <span class="ldr-stat-number" id="cardUnidades">0</span>
                         <span class="ldr-stat-label">Unidades disponibles</span>
                     </div>
 
                     <div class="ldr-stat-box">
-                        <span class="ldr-stat-number">3</span>
+                        <span class="ldr-stat-number" id="cardContratos">0</span>
                         <span class="ldr-stat-label">Contratos</span>
                     </div>
 
                     <div class="ldr-stat-box">
-                        <span class="ldr-stat-number">12</span>
+                        <span class="ldr-stat-number" id="cardAsignaciones">0</span>
                         <span class="ldr-stat-label">Asignaciones activas</span>
                     </div>
 
                     <div class="ldr-stat-box">
-                        <span class="ldr-stat-number">49</span>
+                        <span class="ldr-stat-number" id="cardMantenimientos">0</span>
                         <span class="ldr-stat-label">Mantenimientos</span>
                     </div>
                 </div>
@@ -154,6 +154,41 @@ error_reporting(E_ALL);
     <script src="../js/alertas/alertas.js"></script>
     <!--inactividad y cerrar la sesion-->
     <script src="../js/inactividad.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            fetch(
+                    "../../Servidor/solicitudes/unidades/dashboard/obtener_resumen_operativo.php"
+                )
+                .then(res => res.json())
+                .then(resp => {
+
+                    if (!resp.success) {
+                        console.error(resp.message);
+                        return;
+                    }
+
+                    const data = resp.data;
+
+                    document.getElementById("cardUnidades").textContent =
+                        data.unidades_disponibles || 0;
+
+                    document.getElementById("cardContratos").textContent =
+                        data.contratos || 0;
+
+                    document.getElementById("cardAsignaciones").textContent =
+                        data.asignaciones_activas || 0;
+
+                    document.getElementById("cardMantenimientos").textContent =
+                        data.mantenimientos || 0;
+                })
+                .catch(err => {
+                    console.error("Error dashboard:", err);
+                });
+
+        });
+    </script>
 
 
     <!-- cieera el body -->
