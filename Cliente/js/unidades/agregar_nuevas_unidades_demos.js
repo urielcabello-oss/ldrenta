@@ -120,18 +120,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const camposObligatorios = [
       { campo: valormarcaunidad, nombre: "Marca" },
       { campo: valormodelounidad, nombre: "Modelo" },
-      { campo: valormotorunidad, nombre: "Motor" },
-      { campo: valoranounidad, nombre: "Año" },
-      { campo: valorcolorunidad, nombre: "Color" },
       { campo: valorcostoneto, nombre: "Costo neto" },
-      { campo: valorestadounidad, nombre: "Estado" },
-      { campo: valorestatusunidad, nombre: "Estatus" },
-      { campo: valorsedeunidad, nombre: "Sede" },
-      { campo: valortipoadquisicionunidad, nombre: "Tipo de adquisición" },
-      { campo: valortipounidad, nombre: "Tipo de unidad" },
-      { campo: valorfoliofactura, nombre: "Folio de factura" },
+      { campo: valorcolorunidad, nombre: "Color" },
       { campo: valorplacaunidad, nombre: "Placa" },
       { campo: valorVIN, nombre: "VIN" },
+      { campo: valormotorunidad, nombre: "Número de motor" },
+      { campo: valoranounidad, nombre: "Año" },
+      { campo: valorfoliofactura, nombre: "Folio de factura" },
+      { campo: valorestadounidad, nombre: "Estado" },
+      { campo: valorestatusunidad, nombre: "Estatus" },
+      { campo: valortipounidad, nombre: "Tipo de unidad" },
+      { campo: valorsedeunidad, nombre: "Sede" },
+      { campo: valortipoadquisicionunidad, nombre: "Tipo de adquisición" },
+      { campo: valorarrendadora, nombre: "Arrendadora" },
     ];
 
     camposObligatorios.forEach((c) => {

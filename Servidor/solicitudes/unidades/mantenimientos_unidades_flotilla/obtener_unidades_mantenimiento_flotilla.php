@@ -26,8 +26,11 @@ $sql = "SELECT
           u.id_estatus_unidad,
           u.id_sede
         FROM unidades u
-        LEFT JOIN modelos m ON u.id_modelo = m.id_modelo
-        LEFT JOIN marcas mar ON m.id_marca = mar.id_marca";
+        LEFT JOIN modelos m 
+            ON u.id_modelo = m.id_modelo
+        LEFT JOIN marcas mar 
+            ON m.id_marca = mar.id_marca
+        WHERE 1=1 ";
 
 // Si viene query q => filtrar por VIN, placa, número de motor o modelo/marca
 if ($q !== '') {

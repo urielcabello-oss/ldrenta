@@ -1,4 +1,17 @@
 /* ================================= ESTILOS LDRENTA ============================================ */
+/*alerts adelantes de las modales*/
+.swal2-container {
+    z-index: 20000 !important;
+}
+/*selects predictivos de boostrap */
+.select2-container .select2-selection--single {
+    height: 38px !important;
+    padding-top: 4px;
+}
+
+.select2-container {
+    width: 100% !important;
+}
 
 /*estilos de los encabezados de las modales*/
 .modal-header {
@@ -324,7 +337,7 @@ body {
 
 /* cuando sidebar está cerrado en desktop */
 .sidebar.active ~ .main-content {
-  margin-left: 260px;
+  margin-left: 190px;
 }
 
 /* cuando sidebar está oculto en mobile */
@@ -1663,5 +1676,170 @@ TABLA MODERNA
 
 /*
 ==========================================================
-                  JURIDICO 
+                  INCIDENCIAS 
 =========================================================*/
+.ldr-incidencias-dashboard{
+    padding: 1.5rem;
+    background: #f4f6f9;
+}
+
+.ldr-incidencias-hero{
+    background: linear-gradient(135deg,#ffffff,#f7f8fb);
+    border-radius: 28px;
+    padding: 2rem;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 10px 30px rgba(0,0,0,.04);
+}
+
+.ldr-btn-incidencia-outline{
+    border: 1px solid #d6dbe1;
+    background: #fff;
+    color: #374151;
+    border-radius: 14px;
+    padding: .85rem 1.3rem;
+    font-weight: 600;
+}
+
+.ldr-hero-alert-card{
+    background: #fff;
+    border-radius: 24px;
+    padding: 1.7rem;
+    border: 1px solid #ececec;
+    box-shadow: 0 10px 25px rgba(0,0,0,.04);
+}
+
+.ldr-alert-mini-title{
+    font-size: .75rem;
+    font-weight: 700;
+    color: #ff6600;
+}
+
+.ldr-alert-main-number{
+    font-size: 3rem;
+    font-weight: 800;
+    margin: .5rem 0;
+    color: #1f2937;
+}
+
+.ldr-alert-icon{
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    background: rgba(255,102,0,.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #ff6600;
+}
+
+.ldr-inc-card{
+    background: #fff;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid #ececec;
+    box-shadow: 0 10px 25px rgba(0,0,0,.03);
+    height: 100%;
+}
+
+.ldr-inc-card-top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
+
+.ldr-inc-icon{
+    width: 55px;
+    height: 55px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.ldr-status-pill{
+    padding: .4rem .8rem;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 700;
+}
+
+.ldr-inc-card h3{
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: .2rem;
+    color: #111827;
+}
+
+.ldr-inc-card p{
+    margin: 0;
+    color: #6b7280;
+    font-size: .9rem;
+}
+
+.ldr-panel-card{
+    background: #fff;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid #ececec;
+    box-shadow: 0 10px 25px rgba(0,0,0,.03);
+}
+
+.ldr-panel-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1.5rem;
+}
+
+.ldr-panel-header h4{
+    font-weight: 700;
+    margin-bottom: .3rem;
+    color: #1f2937;
+}
+
+.ldr-panel-header p{
+    margin: 0;
+    color: #6b7280;
+    font-size: .92rem;
+}
+
+.ldr-activity-list{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.ldr-activity-item{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 18px;
+    background: #f9fafb;
+}
+
+.ldr-activity-dot{
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+}
+
+@media(max-width:768px){
+
+    .ldr-incidencias-title{
+        font-size: 1.8rem;
+    }
+
+    .ldr-incidencias-hero{
+        padding: 1.5rem;
+    }
+
+}
+
+.status-incidencia{
+  background-color: #a35c5a;
+  border-radius: 55px;
+}

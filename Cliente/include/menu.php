@@ -71,7 +71,7 @@ $avatarFinal = empty($avatar)
 
         </div>
 
-        <?php if (tienePermiso('UNIDADES', 'r') || tienePermiso('RENTUNID', 'r') || tienePermiso('ASIGNACIONES', 'r') || tienePermiso('DOCUMENTOS', 'r') || tienePermiso('MENTENIMIENTO', 'r')): ?>
+        <?php if (tienePermiso('UNIDADES', 'r') || tienePermiso('RENTUNID', 'r') || tienePermiso('ASIGNACIONES', 'r') || tienePermiso('DOCUMENTOS', 'r') || tienePermiso('MENTENIMIENTO', 'r') || tienePermiso('INCIDENCIAS', 'r')): ?>
         <!-- OPERACIONES -->
         <div class="menu-section">
 
@@ -122,6 +122,15 @@ $avatarFinal = empty($avatar)
                         <a href="unidades_mantenimiento_flotilla.php">
                             <i class="fas fa-tools"></i>
                             Mantenimientos
+                        </a>
+                    </li>
+                <?php endif; ?>
+
+                <?php if (tienePermiso('INCIDENCIAS', 'r')): ?>
+                    <li>
+                        <a href="incidencias_unidades.php">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Incidencias
                         </a>
                     </li>
                 <?php endif; ?>

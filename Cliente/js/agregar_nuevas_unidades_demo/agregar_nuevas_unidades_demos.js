@@ -39,21 +39,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const sede = document.getElementById("sedeunidad").value;
     const adquisicion = document.getElementById("tipoadquisicion").value;
+    const arrendadora = document.getElementById("arrendadora").value.trim();
 
     // ==============================
     // VALIDACIONES
     // ==============================
 
     if (
-      !marca ||
-      !modelo ||
-      !placa ||
-      !vin ||
-      !estado ||
-      !estatus ||
-      !tipo ||
-      !sede ||
-      !adquisicion
+      marca === "" ||
+      modelo === "" ||
+      placa === "" ||
+      vin === "" ||
+      estado === "" ||
+      estatus === "" ||
+      tipo === "" ||
+      sede === "" ||
+      adquisicion === "" ||
+      arrendadora === ""
     ) {
       Swal.fire({
         icon: "warning",
@@ -101,11 +103,11 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       );
 
-    const text = await response.text();
+      const text = await response.text();
 
-console.log(text);
+      console.log(text);
 
-const data = JSON.parse(text);
+      const data = JSON.parse(text);
       // ==============================
       // RESPUESTA
       // ==============================

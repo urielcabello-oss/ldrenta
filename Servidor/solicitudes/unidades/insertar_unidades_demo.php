@@ -59,7 +59,8 @@ $obligatorios = [
     "numero_motor",
     "anio_unidad",
     "folio_factura",
-    "vin"
+    "vin",
+    "id_arrendadora"
 ];
 
 foreach ($obligatorios as $campo) {

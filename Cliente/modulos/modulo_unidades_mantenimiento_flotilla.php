@@ -35,6 +35,11 @@
                     Nuevo mantenimiento
                 </button>
 
+                <button class="btn ldr-btn-secondary" id="btnNuevoTaller">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    Alta de talleres
+                </button>
+
             </div>
 
         </div>
