@@ -3,7 +3,7 @@ let tableUsuarios;
 $("#buscarColaborador").keyup(function () {
   let term = $(this).val();
 
-  if (term.length < 3) {
+  if (term.length < 1) {
     $("#resultadoColaborador").hide();
 
     return;
@@ -54,7 +54,7 @@ $("#formUsuario").submit(function (e) {
   e.preventDefault();
 
   $.ajax({
-    url: "../../Servidor/usuarios/setusuario.php",
+    url: "../../Servidor/usuarios/setUsuario.php",
     type: "POST",
     data: $(this).serialize(),
     dataType: "json",
@@ -78,6 +78,9 @@ $("#formUsuario").submit(function (e) {
         });
 
         $("#modalUsuario").modal("hide");
+
+        // RECARGAR TABLA
+        tableUsuarios.ajax.reload(null, false);
 
     } else {
 

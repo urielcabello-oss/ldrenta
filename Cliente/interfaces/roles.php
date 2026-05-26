@@ -41,7 +41,12 @@
         <?php
         include("../include/menu.php");
         ?>
+        <main class="main-content">
         <?php include("../modulos/modulo_roles.php"); ?>
+
+        </main>
+
+        <?php include("../ui/modales_roles.php"); ?>
 
 
         <div class="contenedorspinner" id="contenedorspinner">

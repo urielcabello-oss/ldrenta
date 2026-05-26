@@ -15,6 +15,8 @@ $sql = "
             ' - ',
             c.nombre_1,
             ' ',
+            c.nombre_2,
+            ' ',
             c.apellido_paterno,
             ' ',
             c.apellido_materno

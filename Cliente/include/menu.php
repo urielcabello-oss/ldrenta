@@ -71,7 +71,7 @@ $avatarFinal = empty($avatar)
 
         </div>
 
-        <?php if (tienePermiso('UNIDADES', 'r') || tienePermiso('RENTUNID', 'r') || tienePermiso('ASIGNACIONES', 'r') || tienePermiso('DOCUMENTOS', 'r') || tienePermiso('MENTENIMIENTO', 'r') || tienePermiso('INCIDENCIAS', 'r')): ?>
+        <?php if (tienePermiso('UNIDADES', 'r') || tienePermiso('RENTUNID', 'r') || tienePermiso('ASIGNACIONES', 'r') || tienePermiso('CONTRATOSJURID', 'r') || tienePermiso('MENTENIMIENTO', 'r') || tienePermiso('INCIDENCIAS', 'r') || tienePermiso('DOCUMENTACION', 'r')): ?>
         <!-- OPERACIONES -->
         <div class="menu-section">
 
@@ -90,6 +90,15 @@ $avatarFinal = empty($avatar)
                     </li>
                 <?php endif; ?>
 
+                <?php if (tienePermiso('DOCUMENTACION', 'r')): ?>
+                    <li>
+                        <a href="documentacion_unidades_demo.php">
+                            <i class="fas fa-file-alt"></i>
+                            Documentación
+                        </a>
+                    </li>
+                <?php endif; ?>
+
                 <?php if (tienePermiso('RENTUNID', 'r')): ?>
                     <li>
                         <a href="solicitar_unidades_demo.php">
@@ -99,11 +108,11 @@ $avatarFinal = empty($avatar)
                     </li>
                 <?php endif; ?>
                 
-                <?php if (tienePermiso('DOCUMENTOS', 'r')): ?>
+                <?php if (tienePermiso('CONTRATOSJURID', 'r')): ?>
                     <li>
                         <a href="asignaciones_unidades_demo.php">
-                            <i class="fas fa-file-alt"></i>
-                            Documentación
+                            <i class="fas fa-balance-scale"></i>
+                            Contratos jurídico
                         </a>
                     </li>
                 <?php endif; ?>

@@ -197,11 +197,6 @@ try {
                     $rutaBase .
                     $nombreArchivo;
 
-                // ruta para navegador
-                $rutaBD =
-                    "Servidor/evidencias/files/incidencias/" .
-                    $nombreArchivo;
-
                 if (
                     move_uploaded_file(
                         $tmpName,
@@ -230,7 +225,7 @@ try {
                         "isss",
                         $id_incidencia,
                         $nombreOriginal,
-                        $rutaBD,
+                        $nombreArchivo,
                         $tipoArchivo
                     );
 

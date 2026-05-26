@@ -253,3 +253,143 @@
     </div>
 
 </div>
+
+<!-- ===================================================== -->
+<!-- MODAL TALLERES -->
+<!-- ===================================================== -->
+
+<div class="modal fade"
+     id="modalTalleres"
+     tabindex="-1"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-header">
+
+                <h5 class="modal-title">
+                    Administración de talleres
+                </h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <!-- FORM -->
+                <form id="formTaller">
+
+                    <input type="hidden"
+                           id="idTaller">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Nombre del taller
+                            </label>
+
+                            <input type="text"
+                                   id="nombreTaller"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Contacto
+                            </label>
+
+                            <input type="text"
+                                   id="contactoTaller"
+                                   class="form-control">
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Teléfono
+                            </label>
+
+                            <input type="text"
+                                   id="telefonoTaller"
+                                   class="form-control">
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label class="form-label">
+                                Dirección
+                            </label>
+
+                            <input type="text"
+                                   id="direccionTaller"
+                                   class="form-control">
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4 text-end">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            <i class="bi bi-save me-2"></i>
+                            Guardar taller
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+                <hr class="my-4">
+
+                <!-- TABLA -->
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle" id="tablaTalleres">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Taller</th>
+                                <th>Contacto</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Estatus</th>
+                                <th class="text-center">
+                                    Acciones
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="tbodyTalleres"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

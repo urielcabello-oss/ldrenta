@@ -387,7 +387,7 @@ async function verIncidencia(id) {
         const esImagen = archivo.tipo_archivo.startsWith("image/");
 
         const ruta =
-          window.location.origin + "/ldrenta/" + archivo.ruta_archivo;
+          "../../Servidor/evidencias/files/incidencias/" + archivo.ruta_archivo;
 
         contenedorEvidencias.innerHTML += `
 
@@ -675,7 +675,7 @@ async function abrirGestionIncidencia(id) {
     } else {
       data.evidencias.forEach((archivo) => {
         const ruta =
-          window.location.origin + "/ldrenta/" + archivo.ruta_archivo;
+          "../../Servidor/evidencias/files/incidencias/" + archivo.ruta_archivo;
 
         contenedor.innerHTML += `
 

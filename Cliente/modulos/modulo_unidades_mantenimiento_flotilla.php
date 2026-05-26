@@ -35,10 +35,17 @@
                     Nuevo mantenimiento
                 </button>
 
-                <button class="btn ldr-btn-secondary" id="btnNuevoTaller">
-                    <i class="bi bi-plus-circle me-2"></i>
-                    Alta de talleres
-                </button>
+                <?php if (tienePermiso('TALLERES', 'r')): ?>
+
+                    <button class="btn ldr-btn-secondary"
+                        id="btnNuevoTaller">
+
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Alta de talleres
+
+                    </button>
+
+                <?php endif; ?>
 
             </div>
 
@@ -169,69 +176,69 @@
     <!-- ===================================================== -->
     <!-- TABLA -->
     <!-- ===================================================== -->
-     <div style="padding-top: 20px;">
+    <div style="padding-top: 20px;">
 
-    <section class="ldr-table-card">
+        <section class="ldr-table-card">
 
-        <div class="ldr-table-header">
+            <div class="ldr-table-header">
 
-            <div>
+                <div>
 
-                <h2>
-                    Bitácora de mantenimientos
-                </h2>
+                    <h2>
+                        Bitácora de mantenimientos
+                    </h2>
 
-                <p>
-                    Historial general de mantenimientos registrados.
-                </p>
+                    <p>
+                        Historial general de mantenimientos registrados.
+                    </p>
+
+                </div>
+
+
+
+                <button class="btn btn-outline-dark btn-sm rounded-pill" id="exportCsv">
+
+                    <i class="bi bi-download me-2"></i>
+                    Exportar CSV
+
+                </button>
+
+
 
             </div>
 
+            <div class="table-responsive">
 
+                <table class="table align-middle ldr-table" id="maintTable">
 
-            <button class="btn btn-outline-dark btn-sm rounded-pill" id="exportCsv">
+                    <thead>
 
-                <i class="bi bi-download me-2"></i>
-                Exportar CSV
+                        <tr>
 
-            </button>
+                            <th>ID</th>
+                            <th>Modelo</th>
+                            <th>VIN</th>
+                            <th>Tipo</th>
+                            <th>Estatus</th>
+                            <th>Ingreso</th>
+                            <th>Salida</th>
+                            <th>KM</th>
+                            <th>Taller</th>
+                            <th>Costo</th>
+                            <th>Descripción</th>
+                            <th class="text-center">Acciones</th>
 
+                        </tr>
 
+                    </thead>
 
-        </div>
+                    <tbody id="maintBody"></tbody>
 
-        <div class="table-responsive">
+                </table>
 
-            <table class="table align-middle ldr-table" id="maintTable">
+            </div>
 
-                <thead>
-
-                    <tr>
-
-                        <th>ID</th>
-                        <th>Modelo</th>
-                        <th>VIN</th>
-                        <th>Tipo</th>
-                        <th>Estatus</th>
-                        <th>Ingreso</th>
-                        <th>Salida</th>
-                        <th>KM</th>
-                        <th>Taller</th>
-                        <th>Costo</th>
-                        <th>Descripción</th>
-                        <th class="text-center">Acciones</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="maintBody"></tbody>
-
-            </table>
-
-        </div>
-
-    </section>
+        </section>
 
     </div>
 
@@ -372,3 +379,5 @@
 <script src="../js/modulo_mantenimientos_flotilla/modulo_mantenimientos_flotilla.js"></script>
 <!--js para realizar el modulo editar los mantenimientos-->
 <script src="../js/modulo_mantenimientos_flotilla/mantenimientos_flotilla_editar.js"></script>
+<!--js para dar de alta talleres-->
+<script src="../js/modulo_mantenimientos_flotilla/talleres.js"></script>

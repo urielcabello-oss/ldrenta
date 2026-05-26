@@ -1,9 +1,15 @@
-    <?php
-    //session_start();
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
-    ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
+
     <!doctype html>
     <html lang="en">
 
@@ -17,6 +23,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
         <!--estilos de FontAwesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <!--estIlos de interfaz-->
         <link rel="stylesheet" href="../css/estilos.css?v=1">
         <!--cdn para icons-->
@@ -33,21 +40,20 @@
 
 
 
-        <title>Usuarios</title>
+        <title>Unidades</title>
 
     </head>
 
     <body>
-        <?php
-        include("../include/menu.php");
-        ?>
+        <?php include("../include/menu.php"); ?>
+
         <main class="main-content">
-        <?php include("../modulos/modulo_usuarios.php"); ?>
+
+            <?php include("../modulos/modulo_documentacion_unidades_demo.php"); ?>
 
         </main>
 
-        <?php include("../ui/modales_usuarios.php"); ?>
-
+        <?php include("../ui/modales_documentacion_unidades_demo.php"); ?>
 
         <div class="contenedorspinner" id="contenedorspinner">
             <span class="loader"></span>
@@ -81,14 +87,13 @@
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!-- CDN para poder utilizar las Sweet Alert2-->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <!--MENU-->
         <script src="../js/menu.js"></script>
         <!--alertas de js-->
         <script src="../js/alertas/alertas.js"></script>
         <!--inactividad y cerrar la sesion-->
         <script src="../js/inactividad.js"></script>
-        <!-- USUARIOS -->
-        <script src="../js/usuarios/usuarios.js"></script>
 
 
     </body>

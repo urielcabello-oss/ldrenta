@@ -77,20 +77,19 @@ if ($stmt->execute()) {
 
             if (move_uploaded_file($tmp_name, $ruta_final)) {
 
-                $ruta_bd =
-                    "Servidor/evidencias/files/incidencias/" .
-                    $nombreServidor;
+                // SOLO GUARDAR NOMBRE DEL ARCHIVO
+                $ruta_bd = $nombreServidor;
 
                 $insert = $conexion->prepare("
-            INSERT INTO incidencias_evidencias
-            (
-                id_incidencia,
-                nombre_archivo,
-                ruta_archivo,
-                tipo_archivo
-            )
-            VALUES (?, ?, ?, ?)
-        ");
+        INSERT INTO incidencias_evidencias
+        (
+            id_incidencia,
+            nombre_archivo,
+            ruta_archivo,
+            tipo_archivo
+        )
+        VALUES (?, ?, ?, ?)
+    ");
 
                 $insert->bind_param(
                     "isss",

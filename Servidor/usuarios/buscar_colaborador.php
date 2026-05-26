@@ -2,39 +2,54 @@
 
 require_once('../conexion.php');
 
-$term = $_POST['term'] ?? '';
+$term = trim($_POST['term'] ?? '');
+
+if ($term === '') {
+
+    echo json_encode([]);
+    exit;
+}
 
 $sql = "
     SELECT
-
         id_colaborador,
 
-        CONCAT(
-            numero_colaborador,
-            ' - ',
+        CONCAT_WS(
+            ' ',
+            CONCAT(numero_colaborador, ' -'),
             nombre_1,
-            ' ',
+            NULLIF(nombre_2, ''),
             apellido_paterno,
-            ' ',
-            apellido_materno
+            NULLIF(apellido_materno, '')
         ) AS nombre
 
     FROM colaboradores
 
-    WHERE (
-        nombre_1 LIKE '%$term%'
-        OR apellido_paterno LIKE '%$term%'
-        OR numero_colaborador LIKE '%$term%'
-    )
+    WHERE CONCAT_WS(
+            ' ',
+            numero_colaborador,
+            nombre_1,
+            NULLIF(nombre_2, ''),
+            apellido_paterno,
+            NULLIF(apellido_materno, '')
+        ) LIKE ?
 
     LIMIT 10
 ";
 
-$query = $conexion->query($sql);
+$stmt = $conexion->prepare($sql);
+
+$buscar = "%{$term}%";
+
+$stmt->bind_param("s", $buscar);
+
+$stmt->execute();
+
+$result = $stmt->get_result();
 
 $data = [];
 
-while($row = $query->fetch_assoc()){
+while($row = $result->fetch_assoc()){
 
     $data[] = $row;
 }
