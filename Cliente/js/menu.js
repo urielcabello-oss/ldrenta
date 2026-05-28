@@ -3,33 +3,52 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleBtn = document.querySelector(".menu-toggle");
     const sidebar = document.querySelector(".sidebar");
     const overlay = document.querySelector(".sidebar-overlay");
-    const closeBtn = document.querySelector(".sidebar-close");
 
-    function openSidebar() {
+    function isMobile() {
+        return window.innerWidth <= 1100;
+    }
+
+    function openMobileSidebar() {
         sidebar.classList.add("active");
         overlay.classList.add("active");
     }
 
-    function closeSidebar() {
+    function closeMobileSidebar() {
         sidebar.classList.remove("active");
         overlay.classList.remove("active");
     }
 
-    // BOTÓN NARANJA (FUNCIONA EN TODO)
+    function toggleDesktopSidebar() {
+        sidebar.classList.toggle("collapsed");
+    }
+
     if (toggleBtn) {
+
         toggleBtn.addEventListener("click", () => {
 
-            // si está abierto lo cierra
-            if (sidebar.classList.contains("active")) {
-                closeSidebar();
-            } else {
-                openSidebar();
+            // MOBILE
+            if (isMobile()) {
+
+                if (sidebar.classList.contains("active")) {
+                    closeMobileSidebar();
+                } else {
+                    openMobileSidebar();
+                }
+
+            }
+            // DESKTOP
+            else {
+
+                toggleDesktopSidebar();
+
             }
 
         });
+
     }
 
-    if (overlay) overlay.addEventListener("click", closeSidebar);
-    if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+    if (overlay) {
+        overlay.addEventListener("click", closeMobileSidebar);
+    }
 
 });

@@ -12,20 +12,22 @@ $avatarFinal = empty($avatar)
     : 'https://ldrhsys.ldrhumanresources.com/Cliente/img/avatars/' . $avatar . '.png';
 ?>
 
-<button class="menu-toggle">
-    ☰
-</button>
+
 
 <div class="sidebar-overlay"></div>
 
 <nav class="sidebar">
 
+    <button class="menu-toggle">
+        ☰
+    </button>
+
     <div class="sidebar-header">
 
-    <div class="sidebar-logo">
-        <img src="../img/Logo_LDRenta_OG.png">
+        <div class="sidebar-logo">
+            <img src="../img/Logo_LDRenta_OG.png">
+        </div>
     </div>
-</div>
 
     <!-- USER -->
     <div class="sidebar-user">
@@ -72,81 +74,81 @@ $avatarFinal = empty($avatar)
         </div>
 
         <?php if (tienePermiso('UNIDADES', 'r') || tienePermiso('RENTUNID', 'r') || tienePermiso('ASIGNACIONES', 'r') || tienePermiso('CONTRATOSJURID', 'r') || tienePermiso('MENTENIMIENTO', 'r') || tienePermiso('INCIDENCIAS', 'r') || tienePermiso('DOCUMENTACION', 'r')): ?>
-        <!-- OPERACIONES -->
-        <div class="menu-section">
+            <!-- OPERACIONES -->
+            <div class="menu-section">
 
-            <div class="menu-section-title">
-                OPERACIONES
+                <div class="menu-section-title">
+                    OPERACIONES
+                </div>
+
+                <ul>
+
+                    <?php if (tienePermiso('UNIDADES', 'r')): ?>
+                        <li>
+                            <a href="unidades_demo.php">
+                                <i class="fas fa-truck"></i>
+                                Unidades
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (tienePermiso('DOCUMENTACION', 'r')): ?>
+                        <li>
+                            <a href="documentacion_unidades_demo.php">
+                                <i class="fas fa-file-alt"></i>
+                                Documentación
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (tienePermiso('RENTUNID', 'r')): ?>
+                        <li>
+                            <a href="solicitar_unidades_demo.php">
+                                <i class="fas fa-key"></i>
+                                Rentar unidad
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (tienePermiso('CONTRATOSJURID', 'r')): ?>
+                        <li>
+                            <a href="asignaciones_unidades_demo.php">
+                                <i class="fas fa-balance-scale"></i>
+                                Contratos jurídico
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (tienePermiso('ASIGNACIONES', 'r')): ?>
+                        <li>
+                            <a href="unidades_autorizadas.php">
+                                <i class="fas fa-clipboard-check"></i>
+                                Unidades rentadas
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (tienePermiso('MENTENIMIENTO', 'r')): ?>
+                        <li>
+                            <a href="unidades_mantenimiento_flotilla.php">
+                                <i class="fas fa-tools"></i>
+                                Mantenimientos
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (tienePermiso('INCIDENCIAS', 'r')): ?>
+                        <li>
+                            <a href="incidencias_unidades.php">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Incidencias
+                            </a>
+                        </li>
+                    <?php endif; ?>
+
+                </ul>
+
             </div>
-
-            <ul>
-
-                <?php if (tienePermiso('UNIDADES', 'r')): ?>
-                    <li>
-                        <a href="unidades_demo.php">
-                            <i class="fas fa-truck"></i>
-                            Unidades
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <?php if (tienePermiso('DOCUMENTACION', 'r')): ?>
-                    <li>
-                        <a href="documentacion_unidades_demo.php">
-                            <i class="fas fa-file-alt"></i>
-                            Documentación
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <?php if (tienePermiso('RENTUNID', 'r')): ?>
-                    <li>
-                        <a href="solicitar_unidades_demo.php">
-                            <i class="fas fa-key"></i>
-                            Rentar unidad
-                        </a>
-                    </li>
-                <?php endif; ?>
-                
-                <?php if (tienePermiso('CONTRATOSJURID', 'r')): ?>
-                    <li>
-                        <a href="asignaciones_unidades_demo.php">
-                            <i class="fas fa-balance-scale"></i>
-                            Contratos jurídico
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <?php if (tienePermiso('ASIGNACIONES', 'r')): ?>
-                    <li>
-                        <a href="unidades_autorizadas.php">
-                            <i class="fas fa-clipboard-check"></i>
-                            Unidades rentadas
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <?php if (tienePermiso('MENTENIMIENTO', 'r')): ?>
-                    <li>
-                        <a href="unidades_mantenimiento_flotilla.php">
-                            <i class="fas fa-tools"></i>
-                            Mantenimientos
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-                <?php if (tienePermiso('INCIDENCIAS', 'r')): ?>
-                    <li>
-                        <a href="incidencias_unidades.php">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Incidencias
-                        </a>
-                    </li>
-                <?php endif; ?>
-
-            </ul>
-
-        </div>
         <?php endif; ?>
 
 
@@ -224,10 +226,10 @@ $avatarFinal = empty($avatar)
             <ul>
                 <li>
 
-                <a href="http://localhost/intranet/LDRHSystem/Cliente/interfaces/Inicio.php">
-                    <i class="fas fa-building"></i>
-                    <span>Intranet</span>
-                </a>
+                    <a href="http://localhost/intranet/LDRHSystem/Cliente/interfaces/Inicio.php">
+                        <i class="fas fa-building"></i>
+                        <span>Intranet</span>
+                    </a>
 
                 </li>
             </ul>

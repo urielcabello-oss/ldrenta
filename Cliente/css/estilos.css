@@ -171,6 +171,19 @@ body {
   transition: left 0.3s ease;
 }
 
+/* =========================================
+   SIDEBAR COLAPSADO DESKTOP
+========================================= */
+
+.sidebar.collapsed {
+  left: -220px;
+}
+
+/* el contenido ocupa todo el ancho */
+.sidebar.collapsed ~ .main-content {
+  margin-left: 0;
+}
+
 /* estado cerrado (lo controla el botón naranja) */
 .sidebar.active {
   left: 0;
@@ -335,11 +348,6 @@ body {
   z-index: 1;
 }
 
-/* cuando sidebar está cerrado en desktop */
-.sidebar.active ~ .main-content {
-  margin-left: 190px;
-}
-
 /* cuando sidebar está oculto en mobile */
 @media (max-width: 1100px) {
   .main-content {
@@ -356,25 +364,32 @@ body {
   position: fixed;
   top: 15px;
   left: 15px;
+
   width: 45px;
   height: 45px;
+
   border: none;
   border-radius: 12px;
+
   background: #f97316;
   color: #fff;
+
   font-size: 22px;
   cursor: pointer;
-  z-index: 3000;
-  display: none;
+
+  z-index: 5000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+  transition: all 0.3s ease;
 }
 
-/* solo visible en mobile */
-@media (max-width: 1100px) {
-  .menu-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.menu-toggle:hover {
+  transform: scale(1.05);
 }
 
 /* =========================================================

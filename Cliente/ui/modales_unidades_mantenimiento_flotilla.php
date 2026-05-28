@@ -220,7 +220,6 @@
     </div>
 </div>
 
-//modal evidencias
 <!-- Modal evidencias -->
 <div class="modal fade" id="modalEvidencias" tabindex="-1">
 

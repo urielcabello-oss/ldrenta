@@ -92,6 +92,10 @@
                                     EVIDENCIA
                                 </option>
 
+                                <option value="EVIDENCIA">
+                                    OTROS
+                                </option>
+
                             </select>
 
                         </div>
@@ -464,6 +468,10 @@
 
                                 <option value="EVIDENCIA">
                                     EVIDENCIA
+                                </option>
+
+                                <option value="EVIDENCIA">
+                                    OTROS
                                 </option>
 
                             </select>
