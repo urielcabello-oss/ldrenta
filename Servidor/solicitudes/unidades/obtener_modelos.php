@@ -3,7 +3,7 @@ include("../../conexion.php");
 
 if (isset($_GET['marca_id'])) {
     $marca_id = intval($_GET['marca_id']);
-    $sql = "SELECT id_modelo, nombre_modelo FROM modelos WHERE id_marca = $marca_id";
+    $sql = "SELECT id_modelo, nombre_modelo FROM modelos WHERE id_marca = $marca_id AND activo = 1";
     $result = $conectar->query($sql);
 
     $modelos = array();

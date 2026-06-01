@@ -1,23 +1,25 @@
 <?php
 include("../../conexion.php");
-// Iniciar sesión si no está iniciada
-if (
-    !isset($_SESSION)
-    && isset($_POST['id_unidad'])
-    && isset($_POST['data_id_persona_fisica'])
-    && isset($_POST['data_id_persona_moral'])
-    && isset($_POST['data_fecha_solicitudemo'])
-    && isset($_POST['data_fecha_devoluciondemo'])
-) {
+
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-$id_usuario_demo = $_SESSION['id_colaborador'];
-$id_unidad = $_POST['id_unidad'];
-$id_persona_moral = $_POST['data_id_persona_moral'];
-$id_persona_fisica = $_POST['data_id_persona_fisica'];
-$data_fecha_solicitudemo = $_POST['data_fecha_solicitudemo'];
-$data_fecha_devoluciondemo = $_POST['data_fecha_devoluciondemo'];
+$id_usuario_demo = $_SESSION['id_colaborador'] ?? null;
+
+$id_unidad = $_POST['id_unidad'] ?? null;
+
+$id_persona_moral =
+    $_POST['data_id_persona_moral'] ?? '';
+
+$id_persona_fisica =
+    $_POST['data_id_persona_fisica'] ?? '';
+
+$data_fecha_solicitudemo =
+    $_POST['data_fecha_solicitudemo'] ?? '';
+
+$data_fecha_devoluciondemo =
+    $_POST['data_fecha_devoluciondemo'] ?? '';
 
 //obtenemos la informacion de la unidad
 

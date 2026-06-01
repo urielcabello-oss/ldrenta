@@ -188,8 +188,14 @@ document.addEventListener("DOMContentLoaded", function () {
         response = response.trim();
 
         if (response === "Unidad insertada correctamente") {
-          window.location.href =
-            "./agrega_nuevas_unidades.php?resultado=Unidadinsertada";
+          Swal.fire({
+            icon: "success",
+            title: "Unidad registrada",
+            timer: 1500,
+            showConfirmButton: false,
+          });
+
+          document.getElementById("formRegistrarUnidadDemo").reset();
 
           return;
         }
@@ -221,3 +227,292 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// =========================================
+// REGISTRAR MARCA
+// =========================================
+
+document
+  .getElementById("btnRegistrarMarca")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const marca = document.getElementById("nuevaMarca").value;
+
+    if (marca === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Campo vacío",
+        text: "Ingresa una marca",
+      });
+
+      return;
+    }
+
+    fetch("../../Servidor/solicitudes/unidades/registrar_marca.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "marca=" + encodeURIComponent(marca),
+    })
+      .then((response) => response.json())
+
+      .then((data) => {
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Marca registrada",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            document.getElementById("nuevaMarca").value = "";
+
+            recargarMarcas();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: data.message,
+          });
+        }
+      });
+  });
+
+// =========================================
+// REGISTRAR MODELO
+// =========================================
+document
+  .getElementById("btnRegistrarModelo")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const marca = document.getElementById("marcaModelo").value;
+    const modelo = document.getElementById("nuevoModelo").value;
+
+    const kmInput = document.getElementById("kmMantenimiento");
+
+    const km = kmInput ? kmInput.value : 10000;
+
+    if (marca === "" || modelo === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Completa todos los campos",
+      });
+
+      return;
+    }
+
+    fetch("../../Servidor/solicitudes/unidades/registrar_modelo.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body:
+        "marca=" +
+        encodeURIComponent(marca) +
+        "&modelo=" +
+        encodeURIComponent(modelo) +
+        "&km=" +
+        encodeURIComponent(km),
+    })
+      .then((response) => response.json())
+
+      .then((data) => {
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Modelo registrado",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            document.getElementById("nuevoModelo").value = "";
+
+            recargarModelos();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: data.message,
+          });
+        }
+      });
+  });
+
+// =========================================
+// REGISTRAR SEDE
+// =========================================
+
+document
+  .getElementById("btnRegistrarSede")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const sede = document.getElementById("nuevaSede").value;
+
+    if (sede === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Ingresa una sede",
+      });
+
+      return;
+    }
+
+    fetch("../../Servidor/solicitudes/unidades/registrar_sede.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "sede=" + encodeURIComponent(sede),
+    })
+      .then((response) => response.json())
+
+      .then((data) => {
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Sede registrada",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            document.getElementById("nuevaSede").value = "";
+
+            recargarSedes();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: data.message || "Error al registrar sede",
+          });
+        }
+      })
+
+      .catch((error) => {
+        console.error(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error inesperado",
+        });
+      });
+  });
+
+// =========================================
+// MOSTRAR / OCULTAR CATALOGOS
+// =========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btnToggleCatalogos = document.getElementById("btnToggleCatalogos");
+
+  const panelCatalogos = document.getElementById("panelCatalogos");
+
+  const panelAltaUnidad = document.getElementById("panelAltaUnidad");
+
+  if (btnToggleCatalogos && panelCatalogos && panelAltaUnidad) {
+    btnToggleCatalogos.addEventListener("click", () => {
+      const catalogosVisibles = !panelCatalogos.classList.contains("d-none");
+
+      // =====================================
+      // OCULTAR CATALOGOS
+      // =====================================
+
+      if (catalogosVisibles) {
+        panelCatalogos.classList.add("d-none");
+
+        panelAltaUnidad.classList.remove("d-none");
+
+        btnToggleCatalogos.innerHTML = `
+                    <i class="fa-solid fa-sliders me-2"></i>
+                    Administrar catálogos
+                `;
+      }
+
+      // =====================================
+      // MOSTRAR CATALOGOS
+      // =====================================
+      else {
+        panelCatalogos.classList.remove("d-none");
+
+        panelAltaUnidad.classList.add("d-none");
+
+        btnToggleCatalogos.innerHTML = `
+                    <i class="fa-solid fa-xmark me-2"></i>
+                    Ocultar catálogos
+                `;
+      }
+    });
+  }
+});
+
+async function recargarMarcas() {
+  const response = await fetch(
+    "../../Servidor/solicitudes/unidades/obtener_marcas.php",
+  );
+
+  const data = await response.json();
+
+  const selects = [
+    document.getElementById("marcaunidad"),
+    document.getElementById("marcaModelo"),
+  ];
+
+  selects.forEach((select) => {
+    if (!select) return;
+
+    select.innerHTML = '<option value="">Seleccionar</option>';
+
+    data.forEach((marca) => {
+      select.innerHTML += `
+                <option value="${marca.id_marca}">
+                    ${marca.nombre_marca}
+                </option>
+            `;
+    });
+  });
+}
+
+async function recargarSedes() {
+  const response = await fetch(
+    "../../Servidor/solicitudes/unidades/obtener_sedes.php",
+  );
+
+  const data = await response.json();
+
+  const select = document.getElementById("sedeunidad");
+
+  select.innerHTML = '<option value="">Seleccionar</option>';
+
+  data.forEach((sede) => {
+    select.innerHTML += `
+            <option value="${sede.id_sede}">
+                ${sede.ubicacion}
+            </option>
+        `;
+  });
+}
+
+async function recargarModelos() {
+  const marcaId = document.getElementById("marcaunidad").value;
+
+  if (!marcaId) return;
+
+  const response = await fetch(
+    "../../Servidor/solicitudes/unidades/obtener_modelos.php?marca_id=" +
+      marcaId,
+  );
+
+  const data = await response.json();
+
+  const select = document.getElementById("modelounidad");
+
+  select.innerHTML = '<option value="">Seleccionar</option>';
+
+  data.forEach((modelo) => {
+    select.innerHTML += `
+            <option value="${modelo.id_modelo}">
+                ${modelo.nombre_modelo}
+            </option>
+        `;
+  });
+}

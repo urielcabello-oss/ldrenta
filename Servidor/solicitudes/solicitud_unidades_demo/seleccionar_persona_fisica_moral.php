@@ -1,8 +1,7 @@
 <?php
 include("../../conexion.php");
 
-if (!isset($_SESSION)
-    && isset($_POST['id_unidad'])) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 

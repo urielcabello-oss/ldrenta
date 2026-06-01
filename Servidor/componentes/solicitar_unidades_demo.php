@@ -126,28 +126,42 @@
         ];
 
         ids.forEach(id => {
+
             const el = document.getElementById(id);
 
             if (el) {
                 el.value = '';
             }
+
         });
+
+        // Quitar restricción de devolución
+        fechaInputDevolucion.min = '';
+
     }
 
     const fechaInputSolicitud = document.getElementById('fechasolicitudunidademo');
     const fechaInputDevolucion = document.getElementById('fechadevolucionunidademo');
 
-    const hoy = new Date();
-
-    const yyyy = hoy.getFullYear();
-    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
-    const dd = String(hoy.getDate()).padStart(2, '0');
-
-    fechaInputSolicitud.min = `${yyyy}-${mm}-${dd}`;
-    fechaInputDevolucion.min = `${yyyy}-${mm}-${dd}`;
+    // ==========================================
+    // CUANDO CAMBIA FECHA DE SOLICITUD
+    // ==========================================
 
     fechaInputSolicitud.addEventListener('change', function () {
+
+        // La devolución no puede ser menor
         fechaInputDevolucion.min = this.value;
+
+        // Si ya había una devolución menor, limpiarla
+        if (
+            fechaInputDevolucion.value &&
+            fechaInputDevolucion.value < this.value
+        ) {
+
+            fechaInputDevolucion.value = '';
+
+        }
+
     });
 
 </script>

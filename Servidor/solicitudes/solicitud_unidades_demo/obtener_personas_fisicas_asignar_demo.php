@@ -6,6 +6,14 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
+// Verificar que la sesión tenga los datos necesarios
+if (!isset($_SESSION['id_colaborador'])) {
+    echo "<div class='alert alert-danger'>Sesión inválida</div>";
+    exit;
+}
+
+$colaborador = $_SESSION['id_colaborador'];
+
 // Validar variables POST
 $id_unidad = $_POST['id_unidad'] ?? null;
 $data_fecha_solicitudemo = $_POST['data_fecha_solicitudemo'] ?? null;
@@ -45,8 +53,8 @@ $resultado = $conexion->query($sql);
 if ($resultado && $resultado->num_rows > 0) {
     echo "
     <div class='table-responsive'>
-        <table class='table table-hover'>
-            <thead class='table-light'>
+        <table class='table align-middle ldr-table'>
+            <thead>
                 <tr>
                     <th class='titulostablaunidades'>ID</th>
                     <th class='titulostablaunidades'>Nombre</th>

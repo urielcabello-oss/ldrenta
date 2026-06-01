@@ -1,21 +1,36 @@
-<form id="formRegistrarUnidadDemo" enctype="multipart/form-data">
+<div class="container-fluid px-3 px-md-4 mt-4">
 
-    <div class="container-fluid px-3 px-md-4 mt-4">
+    <!-- HEADER -->
+    <div class="panel-acciones-final p-4 mb-4">
 
-        <!-- HEADER -->
-        <div class="panel-acciones-final p-4 mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
 
-                <div>
-                    <h4 class="titulo-validacion mb-1">
-                        Registro de unidades
-                    </h4>
+                <h4 class="titulo-validacion mb-1">
+                    Registro de unidades
+                </h4>
 
-                    <p class="subtitulo-validacion mb-0">
-                        Alta y administración de nuevas unidades dentro de la flotilla.
-                    </p>
-                </div>
+                <p class="subtitulo-validacion mb-0">
+                    Alta y administración de nuevas unidades dentro de la flotilla.
+                </p>
+
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <?php if (tienePermiso('ROLES', 'w')): ?>
+
+                    <button type="button"
+                        class="btn btn-dark"
+                        id="btnToggleCatalogos">
+
+                        <i class="fa-solid fa-sliders me-2"></i>
+                        Administrar catálogos
+
+                    </button>
+
+                <?php endif; ?>
 
                 <button type="button"
                     class="btn btn-light btn-modern border"
@@ -30,13 +45,24 @@
 
         </div>
 
+    </div>
+
+    <!-- ========================================= -->
+    <!-- PANEL CATALOGOS -->
+    <!-- ========================================= -->
+
+    <div id="panelCatalogos"
+        class="panel-acciones-final p-4 mb-4 d-none">
+
+
         <!-- ========================================= -->
-        <!-- MARCA Y MODELO -->
+        <!-- ADMINISTRACION DE CATALOGOS -->
         <!-- ========================================= -->
 
-        <div class="panel-acciones-final p-4 mb-4">
 
-            <div class="titulo-seccion-orange mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+
+            <div class="titulo-seccion-orange">
 
                 <div class="icono-seccion">
                     <i class="fa-solid fa-car-side"></i>
@@ -44,62 +70,152 @@
 
                 <div>
                     <h5 class="mb-0 fw-bold">
-                        Marca y modelo
+                        Administración de catálogos
                     </h5>
 
                     <small>
-                        Información principal de identificación
+                        Gestión de marcas, modelos y sedes
                     </small>
                 </div>
 
             </div>
 
-            <div class="row g-4">
+        </div>
 
-                <!-- MARCA -->
-                <div class="col-md-6">
+        <!-- ================================= -->
+        <!-- ALTAS RAPIDAS -->
+        <!-- ================================= -->
 
-                    <label class="form-label label-form">
-                        Marca <span class="text-danger">*</span>
-                    </label>
+        <div class="row g-4 mb-5">
 
-                    <select class="form-select input-moderno"
-                        id="marcaunidad"
-                        name="marcaunidad">
+            <!-- MARCAS -->
+            <div class="col-md-4">
 
-                        <option value="">Seleccionar</option>
+                <div class="card border-0 shadow-sm h-100">
 
-                        <?php
-                        $sql = "SELECT id_marca, nombre_marca FROM marcas";
-                        $result = $conexion->query($sql);
+                    <div class="card-body">
 
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_marca'] . '">
+                        <h6 class="fw-bold mb-3">
+
+                            <i class="fa-solid fa-car me-2 text-warning"></i>
+                            Nueva marca
+
+                        </h6>
+
+                        <input type="text"
+                            class="form-control input-moderno mb-3"
+                            id="nuevaMarca"
+                            placeholder="Ej. Toyota">
+
+                        <button type="button"
+                            class="btn btn-orange w-100"
+                            id="btnRegistrarMarca">
+
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Registrar marca
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- MODELOS -->
+            <div class="col-md-4">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h6 class="fw-bold mb-3">
+
+                            <i class="fa-solid fa-list me-2 text-warning"></i>
+                            Nuevo modelo
+
+                        </h6>
+
+                        <select class="form-select input-moderno mb-3"
+                            id="marcaModelo">
+
+                            <option value="">
+                                Seleccionar marca
+                            </option>
+
+                            <?php
+
+                            $sql = "SELECT *
+                                FROM marcas
+                                WHERE activo = 1
+                                ORDER BY nombre_marca ASC";
+
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+
+                                echo '
+                            
+                            <option value="' . $row['id_marca'] . '">
                                 ' . $row['nombre_marca'] . '
-                              </option>';
-                        }
-                        ?>
+                            </option>
 
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
+                            ';
+                            }
+
+                            ?>
+
+                        </select>
+
+                        <input type="text"
+                            class="form-control input-moderno mb-3"
+                            id="nuevoModelo"
+                            placeholder="Ej. Hilux">
+
+                        <button type="button"
+                            class="btn btn-orange w-100"
+                            id="btnRegistrarModelo">
+
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Registrar modelo
+
+                        </button>
+
+                    </div>
 
                 </div>
 
-                <!-- MODELO -->
-                <div class="col-md-6">
+            </div>
 
-                    <label class="form-label label-form">
-                        Modelo <span class="text-danger">*</span>
-                    </label>
+            <!-- SEDES -->
+            <div class="col-md-4">
 
-                    <select class="form-select input-moderno"
-                        id="modelounidad"
-                        name="modelounidad">
+                <div class="card border-0 shadow-sm h-100">
 
-                        <option value="">Seleccionar</option>
+                    <div class="card-body">
 
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
+                        <h6 class="fw-bold mb-3">
+
+                            <i class="fa-solid fa-location-dot me-2 text-warning"></i>
+                            Nueva sede
+
+                        </h6>
+
+                        <input type="text"
+                            class="form-control input-moderno mb-3"
+                            id="nuevaSede"
+                            placeholder="Ej. Monterrey">
+
+                        <button type="button"
+                            class="btn btn-orange w-100"
+                            id="btnRegistrarSede">
+
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Registrar sede
+
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -107,472 +223,382 @@
 
         </div>
 
-        <!-- ========================================= -->
-        <!-- DATOS GENERALES -->
-        <!-- ========================================= -->
+        <!-- ================================= -->
+        <!-- TABS -->
+        <!-- ================================= -->
 
-        <div class="panel-acciones-final p-4 mb-4">
+        <ul class="nav nav-pills mb-4"
+            role="tablist">
 
-            <div class="titulo-seccion-orange mb-4">
+            <!-- MARCAS -->
+            <li class="nav-item me-2">
 
-                <div class="icono-seccion">
-                    <i class="fa-solid fa-circle-info"></i>
-                </div>
+                <button class="nav-link active"
+                    data-bs-toggle="pill"
+                    data-bs-target="#tabMarcas">
 
-                <div>
-                    <h5 class="mb-0 fw-bold">
-                        Datos generales
-                    </h5>
+                    <i class="fa-solid fa-car me-2"></i>
+                    Marcas
 
-                    <small>
-                        Información administrativa y técnica
-                    </small>
-                </div>
+                </button>
 
-            </div>
+            </li>
 
-            <div class="row g-4">
+            <!-- MODELOS -->
+            <li class="nav-item me-2">
 
-                <!-- COSTO -->
-                <div class="col-md-4">
+                <button class="nav-link"
+                    data-bs-toggle="pill"
+                    data-bs-target="#tabModelos">
 
-                    <label class="form-label label-form">
-                        Costo neto<span class="text-danger">*</span>
-                    </label>
+                    <i class="fa-solid fa-list me-2"></i>
+                    Modelos
 
-                    <input type="number"
-                        step="0.01"
-                        class="form-control input-moderno"
-                        id="costoneto"
-                        name="costoneto">
+                </button>
 
-                    <small class="text-danger">Campo obligatorio</small>
+            </li>
 
-                </div>
+            <!-- SEDES -->
+            <li class="nav-item">
 
-                <!-- COLOR -->
-                <div class="col-md-4">
+                <button class="nav-link"
+                    data-bs-toggle="pill"
+                    data-bs-target="#tabSedes">
 
-                    <label class="form-label label-form">
-                        Color<span class="text-danger">*</span>
-                    </label>
+                    <i class="fa-solid fa-location-dot me-2"></i>
+                    Sedes
 
-                    <select class="form-select input-moderno"
-                        id="colorunidad"
-                        name="colorunidad">
+                </button>
 
-                        <option value="">Seleccionar</option>
+            </li>
 
-                        <?php
-                        $sql = "SELECT id_color, color_unidad FROM unidad_color";
-                        $result = $conexion->query($sql);
+        </ul>
 
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_color'] . '">
-                                ' . $row['color_unidad'] . '
-                              </option>';
-                        }
-                        ?>
+        <div class="tab-content">
 
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
+            <!-- ================================= -->
+            <!-- TAB MARCAS -->
+            <!-- ================================= -->
 
-                </div>
+            <div class="tab-pane fade show active"
+                id="tabMarcas">
 
-                <!-- PLACA -->
-                <div class="col-md-4">
+                <div class="table-responsive">
 
-                    <label class="form-label label-form">
-                        Placa <span class="text-danger">*</span>
-                    </label>
+                    <table class="table align-middle ldr-table">
 
-                    <input type="text"
-                        class="form-control input-moderno"
-                        id="placaunidad"
-                        name="placaunidad">
-                    <small class="text-danger">Campo obligatorio</small>
+                        <thead class="table-light">
 
-                </div>
+                            <tr>
 
-                <!-- VIN -->
-                <div class="col-md-4">
+                                <th>Marca</th>
+                                <th width="150">Estatus</th>
+                                <th width="180">Acciones</th>
 
-                    <label class="form-label label-form">
-                        VIN <span class="text-danger">*</span>
-                    </label>
+                            </tr>
 
-                    <input type="text"
-                        class="form-control input-moderno"
-                        id="vin"
-                        name="vin">
-                    <small class="text-danger">Campo obligatorio</small>
+                        </thead>
 
-                </div>
+                        <tbody>
 
-                <!-- MOTOR -->
-                <div class="col-md-4">
+                            <?php
 
-                    <label class="form-label label-form">
-                        Número de motor<span class="text-danger">*</span>
-                    </label>
+                            $sql = "SELECT *
+                                FROM marcas
+                                ORDER BY nombre_marca ASC";
 
-                    <input type="text"
-                        class="form-control input-moderno"
-                        id="motorunidad"
-                        name="motorunidad">
-                    <small class="text-danger">Campo obligatorio</small>
+                            $result = $conexion->query($sql);
 
-                </div>
+                            while ($row = $result->fetch_assoc()) {
 
-                <!-- AÑO -->
-                <div class="col-md-4">
+                            ?>
 
-                    <label class="form-label label-form">
-                        Año de la unidad<span class="text-danger">*</span>
-                    </label>
+                                <tr>
 
-                    <input type="number"
-                        class="form-control input-moderno"
-                        id="anounidad"
-                        name="anounidad">
-                    <small class="text-danger">Campo obligatorio</small>
+                                    <td>
+                                        <?php echo $row['nombre_marca']; ?>
+                                    </td>
 
-                </div>
+                                    <td>
 
-                <!-- PASO DIFERENCIAL -->
-                <div class="col-md-4">
+                                        <?php if ($row['activo'] == 1) { ?>
 
-                    <label class="form-label label-form">
-                        Paso diferencial
-                    </label>
+                                            <span class="badge bg-success">
+                                                Activo
+                                            </span>
 
-                    <input type="number"
-                        step="0.01"
-                        class="form-control input-moderno"
-                        id="pasodiferencial"
-                        name="pasodiferencial">
+                                        <?php } else { ?>
 
-                </div>
+                                            <span class="badge bg-danger">
+                                                Inactivo
+                                            </span>
 
-                <!-- FOLIO FACTURA -->
-                <div class="col-md-4">
+                                        <?php } ?>
 
-                    <label class="form-label label-form">
-                        Folio factura<span class="text-danger">*</span>
-                    </label>
+                                    </td>
 
-                    <input type="text"
-                        class="form-control input-moderno"
-                        id="foliofactura"
-                        name="foliofactura">
-                    <small class="text-danger">Campo obligatorio</small>
+                                    <td>
 
-                </div>
-            </div>
+                                        <!-- EDITAR -->
+                                        <button type="button"
+                                            class="btn btn-sm btn-warning btnEditarMarca"
+                                            data-id="<?php echo $row['id_marca']; ?>"
+                                            data-marca="<?php echo $row['nombre_marca']; ?>">
 
-        </div>
+                                            <i class="fa-solid fa-pen"></i>
 
-        <!-- ========================================= -->
-        <!-- ESTADO Y ESTATUS -->
-        <!-- ========================================= -->
+                                        </button>
 
-        <div class="panel-acciones-final p-4 mb-4">
+                                        <!-- ACTIVAR / DESACTIVAR -->
+                                        <?php if ($row['activo'] == 1) { ?>
 
-            <div class="titulo-seccion-orange mb-4">
+                                            <button type="button"
+                                                class="btn btn-sm btn-danger btnEstatusMarca"
+                                                data-id="<?php echo $row['id_marca']; ?>"
+                                                data-estatus="0">
 
-                <div class="icono-seccion">
-                    <i class="fa-solid fa-clipboard-check"></i>
-                </div>
+                                                <i class="fa-solid fa-ban"></i>
 
-                <div>
-                    <h5 class="mb-0 fw-bold">
-                        Estado y estatus
-                    </h5>
+                                            </button>
 
-                    <small>
-                        Configuración operativa
-                    </small>
-                </div>
+                                        <?php } else { ?>
 
-            </div>
+                                            <button type="button"
+                                                class="btn btn-sm btn-success btnEstatusMarca"
+                                                data-id="<?php echo $row['id_marca']; ?>"
+                                                data-estatus="1">
 
-            <div class="row g-4">
+                                                <i class="fa-solid fa-check"></i>
 
-                <!-- ESTADO -->
-                <div class="col-md-4">
+                                            </button>
 
-                    <label class="form-label label-form">
-                        Estado unidad<span class="text-danger">*</span>
-                    </label>
+                                        <?php } ?>
 
-                    <select class="form-select input-moderno"
-                        id="estadounidad"
-                        name="estadounidad">
+                                    </td>
 
-                        <option value="">Seleccionar</option>
+                                </tr>
 
-                        <?php
-                        $sql = "SELECT id_estado_unidad, estado FROM estado_unidad";
-                        $result = $conexion->query($sql);
+                            <?php } ?>
 
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_estado_unidad'] . '">
-                                ' . $row['estado'] . '
-                              </option>';
-                        }
-                        ?>
+                        </tbody>
 
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
-
-                </div>
-
-                <!-- ESTATUS -->
-                <div class="col-md-4">
-
-                    <label class="form-label label-form">
-                        Estatus<span class="text-danger">*</span>
-                    </label>
-
-                    <select class="form-select input-moderno"
-                        id="estatusunidad"
-                        name="estatusunidad">
-
-                        <option value="">Seleccionar</option>
-
-                        <?php
-                        $sql = "SELECT id_estatus_unidad, estatus FROM estatus_unidades";
-                        $result = $conexion->query($sql);
-
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_estatus_unidad'] . '">
-                                ' . $row['estatus'] . '
-                              </option>';
-                        }
-                        ?>
-
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
-
-                </div>
-
-                <!-- TIPO -->
-                <div class="col-md-4">
-
-                    <label class="form-label label-form">
-                        Tipo unidad<span class="text-danger">*</span>
-                    </label>
-
-                    <select class="form-select input-moderno"
-                        id="tipounidad"
-                        name="tipounidad">
-
-                        <option value="">Seleccionar</option>
-
-                        <?php
-                        $sql = "SELECT id_tipo_unidad, tipo_unidad 
-                                FROM tipo_unidad ";
-
-
-                        $result = $conexion->query($sql);
-
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_tipo_unidad'] . '">
-                                ' . $row['tipo_unidad'] . '
-                              </option>';
-                        }
-                        ?>
-
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
+                    </table>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- ================================= -->
+            <!-- TAB MODELOS -->
+            <!-- ================================= -->
 
-        <!-- ========================================= -->
-        <!-- UBICACION -->
-        <!-- ========================================= -->
+            <div class="tab-pane fade"
+                id="tabModelos">
 
-        <div class="panel-acciones-final p-4 mb-4">
+                <div class="table-responsive">
 
-            <div class="titulo-seccion-orange mb-4">
+                    <table class="table align-middle ldr-table">
 
-                <div class="icono-seccion">
-                    <i class="fa-solid fa-location-dot"></i>
-                </div>
+                        <thead class="table-light">
 
-                <div>
-                    <h5 class="mb-0 fw-bold">
-                        Ubicación y adquisición
-                    </h5>
+                            <tr>
 
-                    <small>
-                        Información administrativa
-                    </small>
-                </div>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th width="150">Estatus</th>
+                                <th width="180">Acciones</th>
 
-            </div>
+                            </tr>
 
-            <div class="row g-4">
+                        </thead>
 
-                <!-- SEDE -->
-                <div class="col-md-4">
+                        <tbody>
 
-                    <label class="form-label label-form">
-                        Sede<span class="text-danger">*</span>
-                    </label>
+                            <?php
 
-                    <select class="form-select input-moderno"
-                        id="sedeunidad"
-                        name="sedeunidad">
+                            $sql = "SELECT m.*,
+                                       ma.nombre_marca
+                                FROM modelos m
+                                INNER JOIN marcas ma
+                                    ON ma.id_marca = m.id_marca
+                                ORDER BY ma.nombre_marca ASC";
 
-                        <option value="">Seleccionar</option>
+                            $result = $conexion->query($sql);
 
-                        <?php
-                        $sql = "SELECT id_sede, ubicacion FROM sedes";
-                        $result = $conexion->query($sql);
+                            while ($row = $result->fetch_assoc()) {
 
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_sede'] . '">
-                                ' . $row['ubicacion'] . '
-                              </option>';
-                        }
-                        ?>
+                            ?>
 
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
+                                <tr>
 
-                </div>
+                                    <td>
+                                        <?php echo $row['nombre_marca']; ?>
+                                    </td>
 
-                <!-- FECHA -->
-                <div class="col-md-4">
+                                    <td>
+                                        <?php echo $row['nombre_modelo']; ?>
+                                    </td>
 
-                    <label class="form-label label-form">
-                        Fecha adquisición
-                    </label>
+                                    <td>
 
-                    <input type="date"
-                        class="form-control input-moderno"
-                        id="fechaadquisicion"
-                        name="fechaadquisicion">
+                                        <?php if ($row['activo'] == 1) { ?>
 
-                </div>
+                                            <span class="badge bg-success">
+                                                Activo
+                                            </span>
 
-                <!-- TIPO ADQUISICION -->
-                <div class="col-md-4">
+                                        <?php } else { ?>
 
-                    <label class="form-label label-form">
-                        Tipo adquisición<span class="text-danger">*</span>
-                    </label>
+                                            <span class="badge bg-danger">
+                                                Inactivo
+                                            </span>
 
-                    <select class="form-select input-moderno"
-                        id="tipoadquisicion"
-                        name="tipoadquisicion">
+                                        <?php } ?>
 
-                        <option value="">Seleccionar</option>
+                                    </td>
 
-                        <?php
-                        $sql = "SELECT id_tipo_adquisicion, nombre_tipo_adquisicion 
-                            FROM tipo_adquisicion";
+                                    <td>
 
-                        $result = $conexion->query($sql);
+                                        <button type="button"
+                                            class="btn btn-sm btn-warning">
 
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_tipo_adquisicion'] . '">
-                                ' . $row['nombre_tipo_adquisicion'] . '
-                              </option>';
-                        }
-                        ?>
+                                            <i class="fa-solid fa-pen"></i>
 
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
+                                        </button>
 
-                </div>
+                                        <?php if ($row['activo'] == 1) { ?>
 
-                <!-- ARRENDADORA -->
-                <div class="col-md-4">
+                                            <button type="button"
+                                                class="btn btn-sm btn-danger">
 
-                    <label class="form-label label-form">
-                        Arrendadora<span class="text-danger">*</span>
-                    </label>
+                                                <i class="fa-solid fa-ban"></i>
 
-                    <select class="form-select input-moderno"
-                        id="arrendadora"
-                        name="arrendadora">
+                                            </button>
 
-                        <option value="">Seleccionar</option>
+                                        <?php } else { ?>
 
-                        <?php
-                        $sql = "SELECT id_arrendadora, arrendadora 
-                            FROM arrendadora";
+                                            <button type="button"
+                                                class="btn btn-sm btn-success">
 
-                        $result = $conexion->query($sql);
+                                                <i class="fa-solid fa-check"></i>
 
-                        while ($row = $result->fetch_assoc()) {
-                            echo '<option value="' . $row['id_arrendadora'] . '">
-                                ' . $row['arrendadora'] . '
-                              </option>';
-                        }
-                        ?>
+                                            </button>
 
-                    </select>
-                    <small class="text-danger">Campo obligatorio</small>
+                                        <?php } ?>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php } ?>
+
+                        </tbody>
+
+                    </table>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- ================================= -->
+            <!-- TAB SEDES -->
+            <!-- ================================= -->
 
-        <!-- ========================================= -->
-        <!-- IMAGEN -->
-        <!-- ========================================= -->
+            <div class="tab-pane fade"
+                id="tabSedes">
 
-        <div class="panel-acciones-final p-4 mb-5">
+                <div class="table-responsive">
 
-            <div class="titulo-seccion-orange mb-4">
+                    <table class="table align-middle ldr-table">
 
-                <div class="icono-seccion">
-                    <i class="fa-solid fa-image"></i>
-                </div>
+                        <thead class="table-light">
 
-                <div>
-                    <h5 class="mb-0 fw-bold">
-                        Imagen de la unidad
-                    </h5>
+                            <tr>
 
-                    <small>
-                        Fotografía de referencia
-                    </small>
-                </div>
+                                <th>Sede</th>
+                                <th width="150">Estatus</th>
+                                <th width="180">Acciones</th>
 
-            </div>
+                            </tr>
 
-            <div class="row align-items-center g-4">
+                        </thead>
 
-                <div class="col-md-8">
+                        <tbody>
 
-                    <input type="file"
-                        class="form-control input-moderno"
-                        id="imagen_unidad"
-                        name="imagen_unidad"
-                        accept="image/*">
+                            <?php
 
-                </div>
+                            $sql = "SELECT *
+                                FROM sedes
+                                ORDER BY ubicacion ASC";
 
-                <div class="col-md-4">
+                            $result = $conexion->query($sql);
 
-                    <button type="button"
-                        class="btn btn-orange w-100 py-3"
-                        id="btnregistrarunidad">
+                            while ($row = $result->fetch_assoc()) {
 
-                        <i class="fa-solid fa-check me-2"></i>
-                        Registrar unidad
+                            ?>
 
-                    </button>
+                                <tr>
+
+                                    <td>
+                                        <?php echo $row['ubicacion']; ?>
+                                    </td>
+
+                                    <td>
+
+                                        <?php if ($row['activo'] == 1) { ?>
+
+                                            <span class="badge bg-success">
+                                                Activo
+                                            </span>
+
+                                        <?php } else { ?>
+
+                                            <span class="badge bg-danger">
+                                                Inactivo
+                                            </span>
+
+                                        <?php } ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <button type="button"
+                                            class="btn btn-sm btn-warning">
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                        </button>
+
+                                        <?php if ($row['activo'] == 1) { ?>
+
+                                            <button type="button"
+                                                class="btn btn-sm btn-danger">
+
+                                                <i class="fa-solid fa-ban"></i>
+
+                                            </button>
+
+                                        <?php } else { ?>
+
+                                            <button type="button"
+                                                class="btn btn-sm btn-success">
+
+                                                <i class="fa-solid fa-check"></i>
+
+                                            </button>
+
+                                        <?php } ?>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php } ?>
+
+                        </tbody>
+
+                    </table>
 
                 </div>
 
@@ -582,7 +608,562 @@
 
     </div>
 
-</form>
+    <div id="panelAltaUnidad">
+        <form id="formRegistrarUnidadDemo" enctype="multipart/form-data">
+            <!-- ========================================= -->
+            <!-- MARCA Y MODELO -->
+            <!-- ========================================= -->
+
+            <div class="panel-acciones-final p-4 mb-4">
+
+                <div class="titulo-seccion-orange mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="fa-solid fa-car-side"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="mb-0 fw-bold">
+                            Marca y modelo
+                        </h5>
+
+                        <small>
+                            Información principal de identificación
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- MARCA -->
+                    <div class="col-md-6">
+
+                        <label class="form-label label-form">
+                            Marca <span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="marcaunidad"
+                            name="marcaunidad">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_marca, nombre_marca FROM marcas WHERE activo = 1";
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_marca'] . '">
+                                ' . $row['nombre_marca'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- MODELO -->
+                    <div class="col-md-6">
+
+                        <label class="form-label label-form">
+                            Modelo <span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="modelounidad"
+                            name="modelounidad">
+
+                            <option value="">Seleccionar</option>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+            <!-- DATOS GENERALES -->
+            <!-- ========================================= -->
+
+            <div class="panel-acciones-final p-4 mb-4">
+
+                <div class="titulo-seccion-orange mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="mb-0 fw-bold">
+                            Datos generales
+                        </h5>
+
+                        <small>
+                            Información administrativa y técnica
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- COSTO -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Costo neto<span class="text-danger">*</span>
+                        </label>
+
+                        <input type="number"
+                            step="0.01"
+                            class="form-control input-moderno"
+                            id="costoneto"
+                            name="costoneto">
+
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- COLOR -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Color<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="colorunidad"
+                            name="colorunidad">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_color, color_unidad FROM unidad_color";
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_color'] . '">
+                                ' . $row['color_unidad'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- PLACA -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Placa <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                            class="form-control input-moderno"
+                            id="placaunidad"
+                            name="placaunidad">
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- VIN -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            VIN <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                            class="form-control input-moderno"
+                            id="vin"
+                            name="vin">
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- MOTOR -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Número de motor<span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                            class="form-control input-moderno"
+                            id="motorunidad"
+                            name="motorunidad">
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- AÑO -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Año de la unidad<span class="text-danger">*</span>
+                        </label>
+
+                        <input type="number"
+                            class="form-control input-moderno"
+                            id="anounidad"
+                            name="anounidad">
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- PASO DIFERENCIAL -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Paso diferencial
+                        </label>
+
+                        <input type="number"
+                            step="0.01"
+                            class="form-control input-moderno"
+                            id="pasodiferencial"
+                            name="pasodiferencial">
+
+                    </div>
+
+                    <!-- FOLIO FACTURA -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Folio factura<span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                            class="form-control input-moderno"
+                            id="foliofactura"
+                            name="foliofactura">
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+            <!-- ESTADO Y ESTATUS -->
+            <!-- ========================================= -->
+
+            <div class="panel-acciones-final p-4 mb-4">
+
+                <div class="titulo-seccion-orange mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="mb-0 fw-bold">
+                            Estado y estatus
+                        </h5>
+
+                        <small>
+                            Configuración operativa
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- ESTADO -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Estado unidad<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="estadounidad"
+                            name="estadounidad">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_estado_unidad, estado FROM estado_unidad";
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_estado_unidad'] . '">
+                                ' . $row['estado'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- ESTATUS -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Estatus<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="estatusunidad"
+                            name="estatusunidad">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_estatus_unidad, estatus FROM estatus_unidades";
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_estatus_unidad'] . '">
+                                ' . $row['estatus'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- TIPO -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Tipo unidad<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="tipounidad"
+                            name="tipounidad">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_tipo_unidad, tipo_unidad 
+                                FROM tipo_unidad ";
+
+
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_tipo_unidad'] . '">
+                                ' . $row['tipo_unidad'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+            <!-- UBICACION -->
+            <!-- ========================================= -->
+
+            <div class="panel-acciones-final p-4 mb-4">
+
+                <div class="titulo-seccion-orange mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="mb-0 fw-bold">
+                            Ubicación y adquisición
+                        </h5>
+
+                        <small>
+                            Información administrativa
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row g-4">
+
+                    <!-- SEDE -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Sede<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="sedeunidad"
+                            name="sedeunidad">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_sede, ubicacion FROM sedes WHERE id_sede = 1";
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_sede'] . '">
+                                ' . $row['ubicacion'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- FECHA -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Fecha adquisición
+                        </label>
+
+                        <input type="date"
+                            class="form-control input-moderno"
+                            id="fechaadquisicion"
+                            name="fechaadquisicion">
+
+                    </div>
+
+                    <!-- TIPO ADQUISICION -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Tipo adquisición<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="tipoadquisicion"
+                            name="tipoadquisicion">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_tipo_adquisicion, nombre_tipo_adquisicion 
+                            FROM tipo_adquisicion";
+
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_tipo_adquisicion'] . '">
+                                ' . $row['nombre_tipo_adquisicion'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- ARRENDADORA -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Arrendadora<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="arrendadora"
+                            name="arrendadora">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_arrendadora, arrendadora 
+                            FROM arrendadora";
+
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_arrendadora'] . '">
+                                ' . $row['arrendadora'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================================= -->
+            <!-- IMAGEN -->
+            <!-- ========================================= -->
+
+            <div class="panel-acciones-final p-4 mb-5">
+
+                <div class="titulo-seccion-orange mb-4">
+
+                    <div class="icono-seccion">
+                        <i class="fa-solid fa-image"></i>
+                    </div>
+
+                    <div>
+                        <h5 class="mb-0 fw-bold">
+                            Imagen de la unidad
+                        </h5>
+
+                        <small>
+                            Fotografía de referencia
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="row align-items-center g-4">
+
+                    <div class="col-md-8">
+
+                        <input type="file"
+                            class="form-control input-moderno"
+                            id="imagen_unidad"
+                            name="imagen_unidad"
+                            accept="image/*">
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <button type="button"
+                            class="btn btn-orange w-100 py-3"
+                            id="btnregistrarunidad">
+
+                            <i class="fa-solid fa-check me-2"></i>
+                            Registrar unidad
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+    </div>
+
+    </form>
+</div>
 
 <script>
     document.getElementById('marcaunidad').addEventListener('change', function() {

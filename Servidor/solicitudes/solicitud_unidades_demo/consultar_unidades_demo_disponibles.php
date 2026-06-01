@@ -21,20 +21,7 @@ if (isset($_POST['fechasolicitudunidademo'])
 
     // Características funcionales como filtros
     $nombre_modelo       = $_POST['nombre_modelo'] ?? '';
-    $capacidad_carga     = $_POST['capacidad_carga'] ?? '';
-    $capacidad_pasajeros = $_POST['capacidad_pasajeros'] ?? '';
-    $tipo_combustible    = $_POST['tipo_combustible'] ?? '';
-    $traccion            = $_POST['traccion'] ?? '';
-    $tipo_carroceria     = $_POST['tipo_carrceria'] ?? '';
-    $numero_puertas      = $_POST['numero_puertas'] ?? '';
-    $numero_asientos     = $_POST['numero_asientos'] ?? '';
-    $tipo_caja           = $_POST['tipo_caja'] ?? '';
-    $tipo_frenos         = $_POST['tipo_frenos'] ?? '';
-    $suspension          = $_POST['suspension'] ?? '';
-    $numero_ejes         = $_POST['numero_ejes'] ?? '';
-    $uso_permitido       = $_POST['uso_permitido'] ?? '';
-    $camara_reversa      = $_POST['camara_reversa'] ?? '';
-    $sensores_reversa    = $_POST['sensores_reversa'] ?? '';
+    
     $busqueda_global = $_POST['busqueda_global'] ?? '';
 
     // Construcción dinámica del WHERE
@@ -42,18 +29,7 @@ if (isset($_POST['fechasolicitudunidademo'])
                 AND ung.id_estatus_unidad = 1 ";
 
     if ($nombre_modelo !== '')          $filtros .= " AND ung.id_modelo = '$nombre_modelo'";
-    if ($capacidad_carga !== '')        $filtros .= " AND ung.capacidad_carga >= '$capacidad_carga'";
-    if ($capacidad_pasajeros !== '')    $filtros .= " AND ung.capacidad_pasajeros >= '$capacidad_pasajeros'";
-    if ($tipo_combustible !== '')       $filtros .= " AND ung.id_tipo_combustible = '$tipo_combustible'";
-    if ($traccion !== '')               $filtros .= " AND ung.id_traccion = '$traccion'";
-    if ($tipo_carroceria !== '')        $filtros .= " AND ung.tipo_carrceria LIKE '%$tipo_carroceria%'";
-    if ($numero_puertas !== '')         $filtros .= " AND ung.numero_puertas = '$numero_puertas'";
-    if ($numero_asientos !== '')        $filtros .= " AND ung.numero_asientos = '$numero_asientos'";
-    if ($tipo_caja !== '')              $filtros .= " AND ung.id_tipo_caja = '$tipo_caja'";
-    if ($tipo_frenos !== '')            $filtros .= " AND ung.id_tipo_freno = '$tipo_frenos'";
-    if ($suspension !== '')             $filtros .= " AND ung.id_tipo_suspencion = '$suspension'";
-    if ($numero_ejes !== '')            $filtros .= " AND ung.numero_ejes = '$numero_ejes'";
-    if ($uso_permitido !== '')          $filtros .= " AND ung.id_tipo_uso = '$uso_permitido'";
+   
     if ($busqueda_global !== '') {
 
     $busqueda = $conexion->real_escape_string($busqueda_global);
@@ -171,7 +147,7 @@ if (isset($_POST['fechasolicitudunidademo'])
 
     echo '
     <div class="alert alert-danger">
-        ⚠ No hay unidades disponibles con esas especificaciones.
+        ⚠ No hay unidades disponibles.
     </div>';
 }
 } else {

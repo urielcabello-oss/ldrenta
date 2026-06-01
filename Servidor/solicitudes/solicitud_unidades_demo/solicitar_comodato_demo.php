@@ -1,8 +1,13 @@
 <?php
+
+ob_start();
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (!isset($_SESSION)) {
+header('Content-Type: application/json');
+
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -15,269 +20,568 @@ require '../../lib/PHPMailer-master/src/SMTP.php';
 
 include("../../conexion.php");
 
+$response = [
+    "success" => false,
+    "message" => ""
+];
+
 // =====================================================
 // VALIDAR DATOS POST
 // =====================================================
 
 if (
-    isset($_POST['id_unidad']) &&
-    isset($_POST['id_colaborador']) &&
-    isset($_POST['fechasolicitudunidademo']) &&
-    isset($_POST['fechadevolucionunidademo'])
+    !isset($_POST['id_unidad']) ||
+    !isset($_POST['id_colaborador']) ||
+    !isset($_POST['fechasolicitudunidademo']) ||
+    !isset($_POST['fechadevolucionunidademo'])
 ) {
 
-    // =====================================================
-    // RECIBIR DATOS
-    // =====================================================
+    $response["message"] =
+        "No llegaron todos los datos requeridos";
 
-    $id_unidad = mysqli_real_escape_string(
+    echo json_encode($response);
+
+    exit;
+}
+
+// =====================================================
+// RECIBIR DATOS
+// =====================================================
+
+$id_unidad = mysqli_real_escape_string(
+    $conexion,
+    $_POST['id_unidad']
+);
+
+$id_colaborador = mysqli_real_escape_string(
+    $conexion,
+    $_POST['id_colaborador']
+);
+
+$fecha_prestamo = mysqli_real_escape_string(
+    $conexion,
+    $_POST['fechasolicitudunidademo']
+);
+
+$fecha_devolucion = mysqli_real_escape_string(
+    $conexion,
+    $_POST['fechadevolucionunidademo']
+);
+
+$id_persona_fisica =
+    !empty($_POST['id_persona_fisica'])
+    ? mysqli_real_escape_string(
         $conexion,
-        $_POST['id_unidad']
-    );
+        $_POST['id_persona_fisica']
+    )
+    : "NULL";
 
-    $id_colaborador = mysqli_real_escape_string(
+$id_persona_moral =
+    !empty($_POST['id_persona_moral'])
+    ? mysqli_real_escape_string(
         $conexion,
-        $_POST['id_colaborador']
-    );
+        $_POST['id_persona_moral']
+    )
+    : "NULL";
 
-    $fecha_prestamo = mysqli_real_escape_string(
+$objetivo = isset($_POST['objetivo_prueba_demo'])
+    ? mysqli_real_escape_string(
         $conexion,
-        $_POST['fechasolicitudunidademo']
-    );
+        $_POST['objetivo_prueba_demo']
+    )
+    : '';
 
-    $fecha_devolucion = mysqli_real_escape_string(
+$comentarios = isset($_POST['comentarios_pruebas_demo'])
+    ? mysqli_real_escape_string(
         $conexion,
-        $_POST['fechadevolucionunidademo']
-    );
+        $_POST['comentarios_pruebas_demo']
+    )
+    : '';
 
-    $id_persona_fisica =
-        !empty($_POST['id_persona_fisica'])
-        ? mysqli_real_escape_string(
-            $conexion,
-            $_POST['id_persona_fisica']
-        )
-        : "NULL";
+$emplacamiento =
+    isset($_POST['emplacamiento_ldr']) &&
+    $_POST['emplacamiento_ldr'] == '1'
+    ? 1
+    : 2;
 
-    $id_persona_moral =
-        !empty($_POST['id_persona_moral'])
-        ? mysqli_real_escape_string(
-            $conexion,
-            $_POST['id_persona_moral']
-        )
-        : "NULL";
+$seguro =
+    isset($_POST['asegurar_ldr']) &&
+    $_POST['asegurar_ldr'] == '1'
+    ? 1
+    : 2;
 
-    $objetivo = isset($_POST['objetivo_prueba_demo'])
-        ? mysqli_real_escape_string(
-            $conexion,
-            $_POST['objetivo_prueba_demo']
-        )
-        : '';
+// =====================================================
+// INSERTAR SOLICITUD
+// =====================================================
 
-    $comentarios = isset($_POST['comentarios_pruebas_demo'])
-        ? mysqli_real_escape_string(
-            $conexion,
-            $_POST['comentarios_pruebas_demo']
-        )
-        : '';
+$queryInsertar = "
+    INSERT INTO asignacion_unidad_demo
+    (
+        id_unidad,
+        id_colaborador_que_asigna,
+        id_persona_fisica,
+        id_persona_moral,
+        fecha_prestamo,
+        fecha_devolucion,
+        objetivo_prestamo,
+        comentarios,
+        solicitar_emplacamiento_ldr,
+        solicitar_seguro_ldr,
+        estado,
+        id_estatus_comodato_demo
+    )
+    VALUES
+    (
+        '$id_unidad',
+        '$id_colaborador',
+        $id_persona_fisica,
+        $id_persona_moral,
+        '$fecha_prestamo',
+        '$fecha_devolucion',
+        '$objetivo',
+        '$comentarios',
+        '$emplacamiento',
+        '$seguro',
+        '1',
+        '1'
+    )
+";
 
-    $emplacamiento =
-        isset($_POST['emplacamiento_ldr']) &&
-        $_POST['emplacamiento_ldr'] == '1'
-        ? 1
-        : 2;
+$resultadoInsertar = mysqli_query(
+    $conexion,
+    $queryInsertar
+);
 
-    $seguro =
-        isset($_POST['asegurar_ldr']) &&
-        $_POST['asegurar_ldr'] == '1'
-        ? 1
-        : 2;
+if (!$resultadoInsertar) {
 
-    // =====================================================
-    // INSERTAR SOLICITUD
-    // =====================================================
+    $response["message"] =
+        "Error INSERT: " . mysqli_error($conexion);
 
-    $queryInsertar = "
-        INSERT INTO asignacion_unidad_demo
-        (
-            id_unidad,
-            id_colaborador_que_asigna,
-            id_persona_fisica,
-            id_persona_moral,
-            fecha_prestamo,
-            fecha_devolucion,
-            objetivo_prestamo,
-            comentarios,
-            solicitar_emplacamiento_ldr,
-            solicitar_seguro_ldr,
-            estado,
-            id_estatus_comodato_demo
-        )
-        VALUES
-        (
-            '$id_unidad',
-            '$id_colaborador',
-            $id_persona_fisica,
-            $id_persona_moral,
-            '$fecha_prestamo',
-            '$fecha_devolucion',
-            '$objetivo',
-            '$comentarios',
-            '$emplacamiento',
-            '$seguro',
-            '1',
-            '1'
-        )
-    ";
+    echo json_encode($response);
 
-    $resultadoInsertar = mysqli_query(
-        $conexion,
-        $queryInsertar
-    );
+    exit;
+}
 
-    if (!$resultadoInsertar) {
+$id_asignacion_demo =
+    mysqli_insert_id($conexion);
 
-        die("Error INSERT: " .
-            mysqli_error($conexion));
-    }
+// =====================================================
+// ACTUALIZAR ESTADO UNIDAD
+// =====================================================
 
-    $id_asignacion_demo =
-        mysqli_insert_id($conexion);
+$queryUnidad = "
+    UPDATE unidades
+    SET id_estado_unidad = 3
+    WHERE id_unidad = '$id_unidad'
+";
 
-    // =====================================================
-    // ACTUALIZAR ESTADO UNIDAD
-    // =====================================================
+mysqli_query($conexion, $queryUnidad);
 
-    $queryUnidad = "
-        UPDATE unidades
-        SET id_estado_unidad = 3
-        WHERE id_unidad = '$id_unidad'
-    ";
+// =====================================================
+// OBTENER INFORMACIÓN COMPLETA
+// =====================================================
 
-    mysqli_query($conexion, $queryUnidad);
+$queryInfo = "
+SELECT
+    au.*,
 
-    // =====================================================
-    // OBTENER CORREOS JURIDICO
-    // =====================================================
+    u.placa,
+    u.numero_motor,
+    u.VIN,
 
-    $idrol_juridico = 3;
+    mo.nombre_modelo,
+    ma.nombre_marca,
 
-    $queryCorreos = "
-        SELECT
-            col.email_corporativo
-        FROM usuario_rol ur
-        INNER JOIN usuarios u
-            ON ur.id_usuario = u.id_usuario
-        INNER JOIN colaboradores col
-            ON u.id_colaborador = col.id_colaborador
-        WHERE ur.idrol = '$idrol_juridico'
-    ";
+    c.nombre_1,
+    c.nombre_2,
+    c.apellido_paterno,
+    c.apellido_materno,
 
-    $resultadoCorreos =
-        mysqli_query($conexion, $queryCorreos);
+    pf.nombre_1 AS pf_nombre_1,
+    pf.nombre_2 AS pf_nombre_2,
+    pf.apellido_paterno AS pf_apellido_paterno,
+    pf.apellido_materno AS pf_apellido_materno,
+    pf.archivo_ine,
+    pf.archivo_curp,
+    pf.archivo_domicilio,
+    pf.archivo_domicilio_resguardo_unidad,
+    pf.archivo_rfc,
 
-    $correos = [];
+    pm.organizacion_institucion,
+    pm.archivo_identificacion_representante_legal,
+    pm.archivo_poder_representante_legal,
+    pm.archivo_rfc_moral,
+    pm.archivo_domiclio_moral,
+    pm.archivo_domicilio_resguardo_unidad,
 
-    while ($row = mysqli_fetch_assoc($resultadoCorreos)) {
+    aec.nombre_archivo,
+    aees.nombre_archivo_estatus_sociales
 
-        if (!empty($row['email_corporativo'])) {
+FROM asignacion_unidad_demo au
 
-            $correos[] =
-                $row['email_corporativo'];
-        }
-    }
+INNER JOIN unidades u
+ON au.id_unidad = u.id_unidad
 
-    // =====================================================
-    // ENVIAR CORREO
-    // =====================================================
+INNER JOIN modelos mo
+ON u.id_modelo = mo.id_modelo
 
+INNER JOIN marcas ma
+ON mo.id_marca = ma.id_marca
 
-    try {
+INNER JOIN colaboradores c
+ON au.id_colaborador_que_asigna = c.id_colaborador
 
-        $mail = new PHPMailer(true);
+LEFT JOIN personas_fisicas pf
+ON au.id_persona_fisica = pf.id_persona_fisica
 
-        $mail->isSMTP();
+LEFT JOIN personas_morales pm
+ON au.id_persona_moral = pm.id_persona_moral
 
-        $mail->Host = 'smtp.gmail.com';
+LEFT JOIN archivos_escritura_constitutiva aec
+ON pm.id_persona_moral = aec.id_persona_moral
 
-        $mail->SMTPAuth = true;
+LEFT JOIN archivos_escritura_estatus_sociales aees
+ON pm.id_persona_moral = aees.id_persona_moral
 
-        $mail->Username =
-            'notificacion@ldrsolutions.com.mx';
+WHERE au.id_asignacion_unidad_demo = '$id_asignacion_demo'
+";
 
-        $mail->Password =
-            'PASSWORD';
+$resultInfo = mysqli_query(
+    $conexion,
+    $queryInfo
+);
 
-        $mail->SMTPSecure = 'tls';
+if (!$resultInfo) {
 
-        $mail->Port = 587;
+    $response["message"] =
+        "Error consulta info: " .
+        mysqli_error($conexion);
 
-        $mail->setFrom(
-            'notificacion@ldrsolutions.com.mx',
-            'LDRenta'
-        );
+    echo json_encode($response);
 
-        foreach ($correos as $correo) {
+    exit;
+}
 
-            $mail->addAddress($correo);
-        }
+$info = mysqli_fetch_assoc($resultInfo);
 
-        $mail->isHTML(true);
+// =====================================================
+// ARMAR DOCUMENTOS
+// =====================================================
 
-        $mail->Subject =
-            'Nueva solicitud de comodato DEMO';
+$lista_documentos = "";
 
-        $mail->Body = "
-            <h2>
-                Nueva solicitud de unidad DEMO
-            </h2>
+if (!empty($info['id_persona_fisica'])) {
 
-            <p>
-                ID solicitud:
-                <strong>
-                    $id_asignacion_demo
-                </strong>
-            </p>
+    // =================================================
+    // PERSONA FISICA
+    // =================================================
 
-            <p>
-                Fecha préstamo:
-                <strong>
-                    $fecha_prestamo
-                </strong>
-            </p>
+    $base =
+        "http://localhost/ldrenta/Servidor/archivos/files/files_asignacion_demo/personas_fisicas/";
 
-            <p>
-                Fecha devolución:
-                <strong>
-                    $fecha_devolucion
-                </strong>
-            </p>
+    $documentos = [
 
-            <p>
-                Objetivo:
-                <br>
-                $objetivo
-            </p>
+        "INE" =>
+        $base . "files_ines/" .
+            $info['archivo_ine'],
 
-            <p>
-                Favor de revisar la solicitud.
-            </p>
-        ";
+        "CURP" =>
+        $base . "files_CURP/" .
+            $info['archivo_curp'],
 
-        $mail->send();
-    } catch (Exception $e) {
+        "DOMICILIO" =>
+        $base . "files_domicilio/" .
+            $info['archivo_domicilio'],
 
-        error_log(
-            'Error correo DEMO: ' .
-                $mail->ErrorInfo
-        );
-    }
+        "DOMICILIO RESGUARDO" =>
+        $base . "files_domicilio/" .
+            $info['archivo_domicilio_resguardo_unidad'],
 
-    // =====================================================
-    // RESPUESTA FINAL
-    // =====================================================
-
-    echo "success";
+        "RFC" =>
+        $base . "files_RFC/" .
+            $info['archivo_rfc'],
+    ];
 } else {
 
-    echo "No llegaron datos POST";
+    // =================================================
+    // PERSONA MORAL
+    // =================================================
+
+    $base =
+        "http://localhost/ldrenta/Servidor/archivos/files/files_asignacion_demo/personas_morales/";
+
+    $documentos = [
+
+        "Identificación representante legal" =>
+        $base . "files_id/" .
+            $info['archivo_identificacion_representante_legal'],
+
+        "Poder representante legal" =>
+        $base . "files_poder/" .
+            $info['archivo_poder_representante_legal'],
+
+        "RFC moral" =>
+        $base . "files_RFC/" .
+            $info['archivo_rfc_moral'],
+
+        "Comprobante domicilio" =>
+        $base . "files_domicilio/" .
+            $info['archivo_domiclio_moral'],
+
+        "Domicilio de resguardo de la unidad" =>
+        $base . "files_domicilioresguardounidad/" .
+            $info['archivo_domicilio_resguardo_unidad'],
+
+        "Escritura constitutiva" =>
+        $base . "files_escrituraconstitutiva/" .
+            $info['nombre_archivo'],
+
+        "Escritura de los estatutos sociales" =>
+        $base . "files_estatusociales/" .
+            $info['nombre_archivo_estatus_sociales'],
+    ];
 }
+
+$lista_documentos .= "<ul>";
+
+foreach ($documentos as $nombre => $url) {
+
+    if (!empty($url) && $url != $base) {
+
+        $lista_documentos .= "
+            <li>
+                <a href='$url' target='_blank'>
+                    $nombre
+                </a>
+            </li>
+        ";
+    }
+}
+
+$lista_documentos .= "</ul>";
+
+// =====================================================
+// OBTENER CORREOS JURIDICO
+// =====================================================
+
+$queryCorreos = "
+SELECT DISTINCT
+    c.email_corporativo
+FROM usuario_rol ur
+INNER JOIN usuarios u
+    ON ur.id_usuario = u.id_usuario
+INNER JOIN colaboradores c
+    ON u.id_colaborador = c.id_colaborador
+WHERE ur.idrol = 3
+";
+
+$resultadoCorreos =
+    mysqli_query($conexion, $queryCorreos);
+
+if (!$resultadoCorreos) {
+
+    $response["message"] =
+        "Error consulta correos: " .
+        mysqli_error($conexion);
+
+    echo json_encode($response);
+
+    exit;
+}
+
+$correos = [];
+
+while (
+    $row = mysqli_fetch_assoc(
+        $resultadoCorreos
+    )
+) {
+
+    if (!empty($row['email_corporativo'])) {
+
+        $correos[] =
+            $row['email_corporativo'];
+    }
+}
+
+if (empty($correos)) {
+
+    $response["message"] =
+        "No se encontraron correos jurídicos";
+
+    echo json_encode($response);
+
+    exit;
+}
+
+// =====================================================
+// ENVIAR CORREO
+// =====================================================
+
+try {
+
+    $mail = new PHPMailer(true);
+
+
+    $mail->isSMTP();
+
+    $mail->Host = 'smtp.gmail.com';
+
+    $mail->SMTPAuth = true;
+
+    $mail->Username =
+        'notificacion@ldrsolutions.com.mx';
+
+    $mail->Password =
+        'ppiz zylc bpod tczi';
+
+    $mail->SMTPSecure =
+        PHPMailer::ENCRYPTION_STARTTLS;
+
+    $mail->Port = 587;
+
+    $mail->setFrom(
+        'notificacion@ldrsolutions.com.mx',
+        'LDRenta'
+    );
+
+    foreach ($correos as $correo) {
+
+        $mail->addAddress($correo);
+    }
+
+    $mail->addBCC(
+        'uriel.cabello@ldrsolutions.com.mx'
+    );
+
+    $mail->isHTML(true);
+
+    $mail->Subject =
+        utf8_decode(
+            'Nueva solicitud de comodato DEMO'
+        );
+
+    $nombreSolicitante =
+        $info['nombre_1'] . ' ' .
+        $info['nombre_2'] . ' ' .
+        $info['apellido_paterno'] . ' ' .
+        $info['apellido_materno'];
+
+    $personaAsignada = '';
+
+    if (!empty($info['id_persona_fisica'])) {
+
+        $personaAsignada =
+            $info['pf_nombre_1'] . ' ' .
+            $info['pf_nombre_2'] . ' ' .
+            $info['pf_apellido_paterno'] . ' ' .
+            $info['pf_apellido_materno'];
+    } else {
+
+        $personaAsignada =
+            $info['organizacion_institucion'];
+    }
+
+    $mail->Body = utf8_decode("
+        <h2>
+            Nueva solicitud de unidad DEMO
+        </h2>
+
+        <hr>
+
+        <p>
+            <strong>Solicitud:</strong>
+            #$id_asignacion_demo
+        </p>
+
+        <p>
+            <strong>Solicitante:</strong>
+            $nombreSolicitante
+        </p>
+
+        <p>
+            <strong>Persona asignada:</strong>
+            $personaAsignada
+        </p>
+
+        <p>
+            <strong>Unidad:</strong>
+            {$info['nombre_marca']}
+            {$info['nombre_modelo']}
+        </p>
+
+        <p>
+            <strong>Placa:</strong>
+            {$info['placa']}
+        </p>
+
+        <p>
+            <strong>Número motor:</strong>
+            {$info['numero_motor']}
+        </p>
+
+        <p>
+            <strong>VIN:</strong>
+            {$info['VIN']}
+        </p>
+
+        <p>
+            <strong>Fecha préstamo:</strong>
+            $fecha_prestamo
+        </p>
+
+        <p>
+            <strong>Fecha devolución:</strong>
+            $fecha_devolucion
+        </p>
+
+        <p>
+            <strong>Objetivo:</strong>
+            <br>
+            $objetivo
+        </p>
+
+        <p>
+            <strong>Comentarios:</strong>
+            <br>
+            $comentarios
+        </p>
+
+        <hr>
+
+        <h3>
+            Documentos para descarga
+        </h3>
+
+        $lista_documentos
+
+        <hr>
+
+        <p>
+            Favor de revisar la solicitud
+            en la plataforma.
+        </p>
+    ");
+
+    $mail->send();
+
+    $response["success"] = true;
+
+    $response["message"] =
+        "Solicitud registrada correctamente";
+} catch (Exception $e) {
+
+    $response["success"] = true;
+
+    $response["message"] =
+        "Solicitud registrada, pero el correo falló";
+}
+
+// =====================================================
+// RESPUESTA FINAL
+// =====================================================
+
+ob_clean();
+
+echo json_encode($response);
+exit;
