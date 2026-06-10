@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
               }).showToast();
 
               contenedorspinner.style.display = "none";
-              window.location.href = "./unidades.php?resultado=Teneciactualizada";
+              window.location.href = "./unidades_demo.php?resultado=Teneciactualizada";
               modalEditarTenencias.hide();
             } else if (response.includes("Duplicate")) {
           Toastify({

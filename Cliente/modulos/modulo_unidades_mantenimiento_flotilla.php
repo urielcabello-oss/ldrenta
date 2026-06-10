@@ -59,6 +59,35 @@
 
     <div class="row g-3 mt-1">
 
+    
+        <div class="col-xl-3 col-md-6">
+
+            <div class="ldr-card-mini">
+
+                <div class="ldr-icon-card bg-secondary-subtle text-secondary">
+                    <i class="bi bi-car-front"></i>
+                </div>
+
+                <div>
+
+                    <small class="text-muted">
+                        Mantenimientos
+                    </small>
+
+                    <h5 id="cardTotalMantenimientos" class="fw-bold mb-0">
+                        0
+                    </h5>
+
+                    <span class="small text-muted">
+                        registrados
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
         <div class="col-xl-3 col-md-6">
 
             <div class="ldr-card-mini">
@@ -79,34 +108,6 @@
 
                     <span class="small text-muted">
                         mantenimientos
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-
-            <div class="ldr-card-mini">
-
-                <div class="ldr-icon-card bg-danger-subtle text-danger">
-                    <i class="bi bi-truck"></i>
-                </div>
-
-                <div>
-
-                    <small class="text-muted">
-                        Fuera de servicio
-                    </small>
-
-                    <h5 id="cardOutOfService" class="fw-bold mb-0">
-                        0
-                    </h5>
-
-                    <span class="small text-muted">
-                        en taller
                     </span>
 
                 </div>
@@ -167,6 +168,62 @@
 
                 </div>
 
+            </div>
+
+        </div>
+
+        <div class="row g-3 mt-2">
+
+            <div class="col-xl-3 col-md-6">
+                <div class="ldr-card-mini">
+                    <div class="ldr-icon-card bg-warning-subtle text-warning">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted">En proceso</small>
+                        <h5 id="cardEnProceso" class="fw-bold mb-0">0</h5>
+                        <span class="small text-muted">en taller</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="ldr-card-mini">
+                    <div class="ldr-icon-card bg-secondary-subtle text-secondary">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted">Pendientes</small>
+                        <h5 id="cardPendientes" class="fw-bold mb-0">0</h5>
+                        <span class="small text-muted">riesgo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="ldr-card-mini">
+                    <div class="ldr-icon-card bg-success-subtle text-success">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted">Finalizados</small>
+                        <h5 id="cardFinalizados" class="fw-bold mb-0">0</h5>
+                        <span class="small text-muted">cerrados</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="ldr-card-mini">
+                    <div class="ldr-icon-card bg-danger-subtle text-danger">
+                        <i class="bi bi-calendar-x"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted">Atrasados</small>
+                        <h5 id="cardAtrasados" class="fw-bold mb-0">0</h5>
+                        <span class="small text-muted">vencidos</span>
+                    </div>
+                </div>
             </div>
 
         </div>

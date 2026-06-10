@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }).showToast();
 
           contenedorspinner.style.display = "none";
-          window.location.href ="./unidades.php?resultado=Verificacionactualizada";
+          window.location.href ="./unidades_demo.php?resultado=Verificacionactualizada";
           modalEditarVerificaciones.hide();
         } else if (response.includes("Duplicate")) {
           Toastify({

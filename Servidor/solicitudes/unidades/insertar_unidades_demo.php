@@ -35,11 +35,14 @@ $valores = [
     "placa" => obtener("placaunidad"),
     "costo_neto" => obtener("costoneto"),
     "id_color" => obtener("colorunidad"),
+    "id_supervisor" => obtener("supervisor"),
     "fecha_adquisicion" => obtener("fechaadquisicionunidad"),
     "anio_unidad" => obtener("anounidad"),
     "id_arrendadora" => obtener("arrendadora"),
     "folio_factura" => obtener("foliofactura"),
-    "paso_diferencial" => obtener("paso_diferencial")
+    "id_ubicacion" => obtener("ubicacion"),
+    "ciudad" => obtener("ciudad"),
+    "municipio" => obtener("municipio"),
 ];
 
 /* ==============================
@@ -56,15 +59,19 @@ $obligatorios = [
     "placa",
     "costo_neto",
     "id_color",
+    "id_supervisor",
     "numero_motor",
     "anio_unidad",
     "folio_factura",
     "vin",
-    "id_arrendadora"
+    "id_arrendadora",
+    "ciudad",
+    "municipio",
+    "id_ubicacion",
 ];
 
 foreach ($obligatorios as $campo) {
-    if (empty($valores[$campo])) {
+    if ($valores[$campo] === null) {
         echo "Falta campo obligatorio: " . $campo;
         exit;
     }
@@ -107,6 +114,7 @@ if ($resultado->num_rows > 0) {
 /* ==============================
    4️⃣ PREPARED STATEMENT
 ============================== */
+error_log("UBICACION RECIBIDA: " . $valores["id_ubicacion"]);
 
 $stmt = $conexion->prepare("
     INSERT INTO unidades (
@@ -127,12 +135,20 @@ $stmt = $conexion->prepare("
         anio_unidad,
         id_arrendadora,
         folio_factura,
-        paso_diferencial
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        id_supervisor,
+        id_ubicacion,
+        ciudad,
+        municipio
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
 ");
+foreach ($valores as $k => $v) {
+    if ($v === "") {
+        $valores[$k] = null;
+    }
+}
 
 $stmt->bind_param(
-    "iiiiiiisssdissiisd",
+    "iiiiiiisssdissisisiss",
     $creador_unidad,
     $valores["id_modelo"],
     $valores["id_estado_unidad"],
@@ -150,7 +166,10 @@ $stmt->bind_param(
     $valores["anio_unidad"],
     $valores["id_arrendadora"],
     $valores["folio_factura"],
-    $valores["paso_diferencial"]
+    $valores["id_supervisor"],
+    $valores["id_ubicacion"],
+    $valores["ciudad"],
+    $valores["municipio"]
 );
 
 if ($stmt->execute()) {

@@ -113,46 +113,104 @@ document.addEventListener("DOMContentLoaded", function () {
   // ---------------------------
   function updateCards(data) {
     const now = new Date();
-    const thisMonth = data.filter((m) => {
-      try {
-        return new Date(m.fecha_ingreso).getMonth() === now.getMonth();
-      } catch {
-        return false;
-      }
-    }).length;
+    const mesActual = now.getMonth();
+    const añoActual = now.getFullYear();
 
-    const outOfService = data.filter(
-      (m) => (m.estatus || "").toString().toLowerCase() === "en proceso",
-    ).length;
-    const totalCost = data.reduce(
-      (acc, m) => acc + Number(m.costo_estimado || 0),
-      0,
-    );
+    let thisMonth = 0;
+    let totalMantenimientos = data.length;
+    let enProceso = 0;
+    let pendientes = 0;
+    let finalizados = 0;
+    let atrasados = 0;
+    let totalCost = 0;
 
-    const counts = { preventivo: 0, correctivo: 0, mixto: 0 };
+    let preventivo = 0;
+    let correctivo = 0;
+
     data.forEach((m) => {
-      const tipo = (m.tipo || "").toString().toLowerCase();
-      counts[tipo] = (counts[tipo] || 0) + 1;
+      // =========================
+      // FECHA INGRESO (MES ACTUAL)
+      // =========================
+      const fecha = new Date(m.fecha_ingreso);
+      if (fecha.getMonth() === mesActual && fecha.getFullYear() === añoActual) {
+        thisMonth++;
+      }
+
+      // =========================
+      // COSTO
+      // =========================
+      totalCost += Number(m.costo_estimado || 0);
+
+      // =========================
+      // ESTATUS (NORMALIZADO)
+      // =========================
+      const estatus = (m.estatus || "").toLowerCase();
+
+      if (estatus.includes("proceso") || estatus.includes("taller")) {
+        enProceso++;
+      }
+
+      if (estatus.includes("pendiente")) {
+        pendientes++;
+      }
+
+      if (estatus.includes("final")) {
+        finalizados++;
+      }
+
+      // atrasados (regla simple)
+      if (m.proximo_fecha) {
+        const prox = new Date(m.proximo_fecha);
+        if (prox < now && !estatus.includes("final")) {
+          atrasados++;
+        }
+      }
+
+      // =========================
+      // TIPO
+      // =========================
+      const tipo = (m.tipo || "").toLowerCase();
+
+      if (tipo === "preventivo") preventivo++;
+      if (tipo === "correctivo") correctivo++;
     });
 
-    const totalPrevCorr = (counts.preventivo || 0) + (counts.correctivo || 0);
-    const percentPreventivo = totalPrevCorr
-      ? ((counts.preventivo / totalPrevCorr) * 100).toFixed(1)
-      : 0;
-    const percentCorrectivo = totalPrevCorr
-      ? ((counts.correctivo / totalPrevCorr) * 100).toFixed(1)
-      : 0;
+    // =========================
+    // % preventivo vs correctivo
+    // =========================
+    const total = preventivo + correctivo;
 
-    const elCardThisMonth = document.getElementById("cardThisMonth");
-    const elCardOutOfService = document.getElementById("cardOutOfService");
-    const elCardCost = document.getElementById("cardCost");
-    const elCardAvgDays = document.getElementById("cardAvgDays");
+    const percentPrev = total ? ((preventivo / total) * 100).toFixed(1) : 0;
+    const percentCorr = total ? ((correctivo / total) * 100).toFixed(1) : 0;
 
-    if (elCardThisMonth) elCardThisMonth.textContent = thisMonth;
-    if (elCardOutOfService) elCardOutOfService.textContent = outOfService;
-    if (elCardCost) elCardCost.textContent = `$${totalCost.toLocaleString()}`;
-    if (elCardAvgDays)
-      elCardAvgDays.innerHTML = `Prev: ${percentPreventivo}% <br> Corr: ${percentCorrectivo}%`;
+    console.log("cardThisMonth", document.getElementById("cardThisMonth"));
+    console.log(
+      "cardTotalMantenimientos",
+      document.getElementById("cardTotalMantenimientos"),
+    );
+    console.log("cardCost", document.getElementById("cardCost"));
+    console.log("cardAvgDays", document.getElementById("cardAvgDays"));
+    console.log("cardEnProceso", document.getElementById("cardEnProceso"));
+    console.log("cardPendientes", document.getElementById("cardPendientes"));
+    console.log("cardFinalizados", document.getElementById("cardFinalizados"));
+    console.log("cardAtrasados", document.getElementById("cardAtrasados"));
+
+    // =========================
+    // INYECTAR EN DOM
+    // =========================
+    document.getElementById("cardThisMonth").textContent = thisMonth;
+    document.getElementById("cardTotalMantenimientos").textContent =
+      totalMantenimientos;
+    document.getElementById("cardCost").textContent =
+      `$${totalCost.toLocaleString()}`;
+
+    document.getElementById("cardAvgDays").innerHTML =
+      `Prev: ${percentPrev}% <br> Corr: ${percentCorr}%`;
+
+    document.getElementById("cardEnProceso").textContent = enProceso;
+    document.getElementById("cardPendientes").textContent = pendientes;
+    document.getElementById("cardFinalizados").textContent = finalizados;
+    document.getElementById("cardAtrasados").textContent = atrasados;
   }
 
   // ---------------------------
@@ -767,14 +825,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 window.verEvidencias = function (mantenimiento) {
-
   let contenido = "";
 
   // ==========================
   // FACTURA
   // ==========================
   if (mantenimiento.factura) {
-
     contenido += `
       <div class="mb-4">
         <h6>Factura</h6>
@@ -814,9 +870,7 @@ window.verEvidencias = function (mantenimiento) {
   ];
 
   evidencias.forEach((ev) => {
-
     if (ev.archivo) {
-
       contenido += `
         <div class="col-md-6 mb-3 text-center">
 
@@ -839,7 +893,6 @@ window.verEvidencias = function (mantenimiento) {
 
   // Si no hay nada
   if (!contenido) {
-
     contenido = `
       <div class="alert alert-warning mb-0">
         No hay evidencias registradas.
@@ -855,9 +908,7 @@ window.verEvidencias = function (mantenimiento) {
   `;
 
   // Abrir modal
-  const modal = new bootstrap.Modal(
-    document.getElementById("modalEvidencias")
-  );
+  const modal = new bootstrap.Modal(document.getElementById("modalEvidencias"));
 
   modal.show();
 };

@@ -1,4 +1,5 @@
 <?php
+
 header('Content-Type: application/json');
 
 include '../../../conexion.php';
@@ -9,87 +10,93 @@ $response = [
 
 try {
 
-    // ============================
-    // UNIDADES DISPONIBLES
-    // id_estado_unidad = 1
-    // ============================
-    $sqlUnidades = "
-        SELECT COUNT(*) AS total
-        FROM unidades
-        WHERE id_estado_unidad = 1
-    ";
+    function obtenerTotal($conexion, $sql)
+    {
+        $res = $conexion->query($sql);
 
-    $resUnidades = $conexion->query($sqlUnidades);
+        if ($res && $row = $res->fetch_assoc()) {
+            return intval($row['total']);
+        }
 
-    $unidadesDisponibles = 0;
-
-    if ($resUnidades && $row = $resUnidades->fetch_assoc()) {
-        $unidadesDisponibles = intval($row['total']);
-    }
-
-    // ============================
-    // CONTRATOS
-    // id_estatus_comodato_demo = 3
-    // (ajústalo al estatus real)
-    // ============================
-    $sqlContratos = "
-        SELECT COUNT(*) AS total
-        FROM asignacion_unidad_demo
-        WHERE archivo_comodato_firmado IS NOT NULL
-        AND archivo_comodato_firmado <> ''
-    ";
-
-    $resContratos = $conexion->query($sqlContratos);
-
-    $contratos = 0;
-
-    if ($resContratos && $row = $resContratos->fetch_assoc()) {
-        $contratos = intval($row['total']);
-    }
-
-    // ============================
-    // ASIGNACIONES ACTIVAS
-    // estado = 1
-    // ============================
-    $sqlAsignaciones = "
-        SELECT COUNT(*) AS total
-        FROM asignacion_unidad_demo
-        WHERE estado = 1
-    ";
-
-    $resAsignaciones = $conexion->query($sqlAsignaciones);
-
-    $asignaciones = 0;
-
-    if ($resAsignaciones && $row = $resAsignaciones->fetch_assoc()) {
-        $asignaciones = intval($row['total']);
-    }
-
-    // ============================
-    // MANTENIMIENTOS
-    // ============================
-    $sqlMantenimientos = "
-        SELECT COUNT(*) AS total
-        FROM mantenimientos_flotilla
-    ";
-
-    $resMantenimientos = $conexion->query($sqlMantenimientos);
-
-    $mantenimientos = 0;
-
-    if ($resMantenimientos && $row = $resMantenimientos->fetch_assoc()) {
-        $mantenimientos = intval($row['total']);
+        return 0;
     }
 
     $response["success"] = true;
 
-    $response["data"] = [
-        "unidades_disponibles" => $unidadesDisponibles,
-        "contratos" => $contratos,
-        "asignaciones_activas" => $asignaciones,
-        "mantenimientos" => $mantenimientos
-    ];
+    $totalUnidades = obtenerTotal(
+        $conexion,
+        "SELECT COUNT(*) total FROM unidades"
+    );
 
+    $disponibles = obtenerTotal(
+        $conexion,
+        "SELECT COUNT(*) total
+     FROM unidades
+     WHERE id_estado_unidad = 1"
+    );
+
+    $enUso = $totalUnidades - $disponibles;
+
+    $response["data"] = [
+
+        "total_unidades" => $totalUnidades,
+
+        "disponibles" => $disponibles,
+
+        "en_uso" => $enUso,
+
+        "rentadas" => obtenerTotal(
+            $conexion,
+            "SELECT COUNT(*) total
+         FROM unidades
+         WHERE id_estado_unidad = 3"
+        ),
+
+        "mantenimiento" => obtenerTotal(
+            $conexion,
+            "SELECT COUNT(DISTINCT mf.id_unidad) total
+         FROM mantenimientos_flotilla mf
+         INNER JOIN estatus_mantenimiento em
+            ON mf.id_estatus_mantenimiento = em.id_estatus_mantenimiento
+         WHERE em.estatus <> 'Finalizado'"
+        ),
+
+        "corralon" => obtenerTotal(
+            $conexion,
+            "SELECT COUNT(*) total
+             FROM unidades
+             WHERE id_estado_unidad = 8"
+        ),
+
+        "siniestradas" => obtenerTotal(
+            $conexion,
+            "SELECT COUNT(*) total
+             FROM unidades
+             WHERE id_estado_unidad = 5"
+        ),
+
+        "contratos" => obtenerTotal(
+            $conexion,
+            "SELECT COUNT(*) total
+             FROM asignacion_unidad_demo
+             WHERE archivo_comodato_firmado IS NOT NULL
+             AND archivo_comodato_firmado <> ''"
+        ),
+
+        "asignaciones" => obtenerTotal(
+            $conexion,
+            "SELECT COUNT(*) total
+             FROM asignacion_unidad_demo
+             WHERE estado = 1"
+        ),
+
+        "mantenimientos" => obtenerTotal(
+            $conexion,
+            "SELECT COUNT(*) total
+             FROM mantenimientos_flotilla"
+        )
+
+    ];
 } catch (Exception $e) {
 
     $response["message"] = $e->getMessage();

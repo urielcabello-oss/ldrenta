@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }).showToast();
 
             contenedorspinner.style.display = "none";
-            window.location.href = "./unidades.php?resultado=Tenenciainsertada"; //resultado nombre del parametro -> resultado del contenido
+            window.location.href = "./unidades_demo.php?resultado=Tenenciainsertada"; //resultado nombre del parametro -> resultado del contenido
           }
           if (response.includes("Duplicate")) {
             Toastify({

@@ -77,52 +77,108 @@ error_reporting(E_ALL);
                 </a>
             </section>
 
-            <!-- RESUMEN OPERATIVO -->
+            <!-- ===================================================== -->
+            <!-- RESUMEN DE FLOTILLA -->
+            <!-- ===================================================== -->
             <section class="ldr-content-card">
+
                 <div class="ldr-section-header">
-                    <h2>Resumen operativo</h2>
-                    <p>Consulta rápidamente el estado general de unidades.</p>
+                    <h2>Resumen de flotilla</h2>
+                    <p>
+                        Estado general de las unidades registradas.
+                    </p>
                 </div>
 
                 <div class="ldr-stats-grid">
+
+                    <div class="ldr-stat-box ldr-stat-highlight">
+                        <span class="ldr-stat-number" id="cardTotalUnidades">0</span>
+                        <span class="ldr-stat-label">Total de unidades</span>
+                    </div>
+
                     <div class="ldr-stat-box">
-                        <span class="ldr-stat-number" id="cardUnidades">0</span>
-                        <span class="ldr-stat-label">Unidades disponibles</span>
+                        <span class="ldr-stat-number" id="cardDisponibles">0</span>
+                        <span class="ldr-stat-label">Disponibles</span>
+                    </div>
+
+                    <div class="ldr-stat-box">
+                        <span class="ldr-stat-number" id="cardEnUso">0</span>
+                        <span class="ldr-stat-label">En uso</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ===================================================== -->
+            <!-- ACTIVIDAD OPERATIVA -->
+            <!-- ===================================================== -->
+            <section class="ldr-content-card mt-4">
+
+                <div class="ldr-section-header">
+                    <h2>Actividad operativa</h2>
+                    <p>
+                        Desglose detallado del estado de las unidades.
+                    </p>
+                </div>
+
+                <div class="ldr-stats-grid">
+
+                    <div class="ldr-stat-box">
+                        <span class="ldr-stat-number" id="cardRentadas">0</span>
+                        <span class="ldr-stat-label">Rentadas</span>
+                    </div>
+
+                    <div class="ldr-stat-box">
+                        <span class="ldr-stat-number" id="cardCorralon">0</span>
+                        <span class="ldr-stat-label">Corralón</span>
+                    </div>
+
+                    <div class="ldr-stat-box">
+                        <span class="ldr-stat-number" id="cardSiniestradas">0</span>
+                        <span class="ldr-stat-label">Siniestradas</span>
                     </div>
 
                     <div class="ldr-stat-box">
                         <span class="ldr-stat-number" id="cardContratos">0</span>
-                        <span class="ldr-stat-label">Contratos</span>
+                        <span class="ldr-stat-label">Contratos firmados</span>
                     </div>
 
-                    <div class="ldr-stat-box">
-                        <span class="ldr-stat-number" id="cardAsignaciones">0</span>
-                        <span class="ldr-stat-label">Asignaciones activas</span>
-                    </div>
+                </div>
 
-                    <div class="ldr-stat-box">
-                        <span class="ldr-stat-number" id="cardMantenimientos">0</span>
-                        <span class="ldr-stat-label">Mantenimientos</span>
-                    </div>
+            </section>
+
+
+            <!-- ===================================================== -->
+            <!-- PANEL INFORMATIVO -->
+            <!-- ===================================================== -->
+            <section class="ldr-content-card mt-4">
+
+                <div class="ldr-section-header">
+                    <h2>Información general</h2>
                 </div>
 
                 <div class="ldr-info-panel">
+
                     <div class="ldr-info-block">
-                        <h4>Flujo del módulo</h4>
+                        <h4>Estado de la flotilla</h4>
                         <p>
-                            Gestiona asignaciones y da seguimiento al ciclo completo
-                            de la renta de unidades.
+                            Consulta rápidamente la disponibilidad de unidades,
+                            vehículos rentados, siniestrados o en mantenimiento.
                         </p>
                     </div>
 
                     <div class="ldr-info-block">
-                        <h4>Seguimiento centralizado</h4>
+                        <h4>Seguimiento operativo</h4>
                         <p>
-                            Consulta disponibilidad, asignaciones activas y mantenimientos
-                            desde la plataforma.
+                            Visualiza las asignaciones activas, contratos firmados y
+                            mantenimientos registrados desde una sola vista.
                         </p>
                     </div>
+
                 </div>
+
             </section>
 
             <!-- FOOTER -->
@@ -158,9 +214,7 @@ error_reporting(E_ALL);
     <script>
         document.addEventListener("DOMContentLoaded", () => {
 
-            fetch(
-                    "../../Servidor/solicitudes/unidades/dashboard/obtener_resumen_operativo.php"
-                )
+            fetch("../../Servidor/solicitudes/unidades/dashboard/obtener_resumen_operativo.php")
                 .then(res => res.json())
                 .then(resp => {
 
@@ -171,17 +225,26 @@ error_reporting(E_ALL);
 
                     const data = resp.data;
 
-                    document.getElementById("cardUnidades").textContent =
-                        data.unidades_disponibles || 0;
+                    document.getElementById("cardTotalUnidades").textContent =
+                        data.total_unidades || 0;
+
+                    document.getElementById("cardDisponibles").textContent =
+                        data.disponibles || 0;
+
+                    document.getElementById("cardRentadas").textContent =
+                        data.rentadas || 0;
+
+                    document.getElementById("cardCorralon").textContent =
+                        data.corralon || 0;
+
+                    document.getElementById("cardSiniestradas").textContent =
+                        data.siniestradas || 0;
 
                     document.getElementById("cardContratos").textContent =
                         data.contratos || 0;
 
-                    document.getElementById("cardAsignaciones").textContent =
-                        data.asignaciones_activas || 0;
-
-                    document.getElementById("cardMantenimientos").textContent =
-                        data.mantenimientos || 0;
+                    document.getElementById("cardEnUso").textContent =
+                        data.en_uso || 0;
                 })
                 .catch(err => {
                     console.error("Error dashboard:", err);

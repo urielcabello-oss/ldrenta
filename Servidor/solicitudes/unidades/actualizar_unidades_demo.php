@@ -34,7 +34,6 @@ if (isset($_FILES['imagen_unidad']) && $_FILES['imagen_unidad']['error'] === 0) 
 /* =========================
    NORMALIZAR VALORES VACÍOS
    ========================= */
-$_POST['editarPasoDiferencial'] = $_POST['editarPasoDiferencial'] ?: 0;
 $_POST['editarCostoNeto'] = $_POST['editarCostoNeto'] ?: 0;
 
 /* =========================
@@ -55,7 +54,10 @@ $tipoAdquisicion  = (int)$_POST['editartipoadquisicionunidad'];
 $arrendadora      = (int)$_POST['editartipoarrendadoraunidad'];
 $folioFactura     = $_POST['editarfoliofacturaunidad'];
 $fechaAdquisicion = $_POST['editarfechaadquisicionunidad'];
-$pasoDiferencial  = (float)$_POST['editarPasoDiferencial'];
+$editsupervisor = !empty($_POST['editsupervisor']) ? (int)$_POST['editsupervisor'] : null;
+$editubicacion = !empty($_POST['editubicacion']) ? (int)$_POST['editubicacion'] : null;
+$editarCiudad     = $_POST['editarCiudad'];
+$editarMunicipio  = $_POST['editarMunicipio'];
 
 
 /* =========================
@@ -77,7 +79,10 @@ $sql = "UPDATE unidades SET
     id_arrendadora = ?,
     folio_factura = ?,
     fecha_adquisicion = ?,
-    paso_diferencial = ?
+    id_supervisor = ?,
+    id_ubicacion = ?,
+    ciudad = ?,
+    municipio = ?
     $imagenSQL
     WHERE id_unidad = ?";
 
@@ -99,7 +104,10 @@ $params = [
     $arrendadora,
     $folioFactura,
     $fechaAdquisicion,
-    $pasoDiferencial
+    $editsupervisor,
+    $editubicacion,
+    $editarCiudad,
+    $editarMunicipio
 ];
 
 $typesArray = [
@@ -118,7 +126,10 @@ $typesArray = [
     "i", // arrendadora
     "s", // folio
     "s", // fecha
-    "d"  // paso diferencial
+    "i", // supervisor
+    "i", // ubicacion
+    "s", // ciudad
+    "s"  // municipio
 ];
 
 if ($nombreImagen) {

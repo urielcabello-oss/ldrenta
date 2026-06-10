@@ -62,11 +62,14 @@ document.body.addEventListener("click", function (e) {
       "editarEstatusUnidad",
       "editarTipoUnidad",
       "editsedeunidad",
+      "editubicacion",
       "editartipoadquisicionunidad",
       "editartipoarrendadoraunidad",
       "editarfoliofacturaunidad",
       "editarfechaadquisicionunidad",
-      "editarPasoDiferencial",
+      "editsupervisor",
+      "editarCiudad",
+      "editarMunicipio",
     ];
 
     for (let id of campos) {

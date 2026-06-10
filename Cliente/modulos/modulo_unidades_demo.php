@@ -35,6 +35,17 @@ if (!isset($_SESSION)) {
 
                 </button>
 
+                <button
+                    onclick="window.location.href='../interfaces/unidades_sustituto.php'"
+                    class="btn ldr-btn-secondary">
+
+                    <i class="fa-solid fa-plus me-2"></i>
+                    Unidades sutituto
+
+                </button>
+
+                
+
             </div>
 
 
@@ -68,11 +79,16 @@ if (!isset($_SESSION)) {
                         <th>Marca</th>
                         <th>Modelo</th>
                         <th>Placa</th>
+                        <th>Número motor</th>
                         <th>VIN</th>
-                        <th>Paso diferencial</th>
+                        <th>Supervisor</th>
+                        <th>Arrendadora</th>
                         <th>Estatus</th>
                         <th>Tipo unidad</th>
                         <th>Sede</th>
+                        <th>Ubicación</th>
+                        <th>Ciudad</th>
+                        <th>Municipio</th>
                         <th>Kilometraje</th>
                         <th>Maps</th>
                         <th>Seguros</th>

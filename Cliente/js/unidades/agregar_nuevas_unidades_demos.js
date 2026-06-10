@@ -13,10 +13,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const modelounidad = document.getElementById("modelounidad");
   const vin = document.getElementById("vin");
   const placaunidad = document.getElementById("placaunidad");
-  const pasodiferencial = document.getElementById("pasodiferencial");
   const motorunidad = document.getElementById("motorunidad");
   const anounidad = document.getElementById("anounidad");
   const colorunidad = document.getElementById("colorunidad");
+  const supervisor = document.getElementById("supervisor");
   const costoneto = document.getElementById("costoneto");
   const estadounidad = document.getElementById("estadounidad");
   const estatusunidad = document.getElementById("estatusunidad");
@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const tipoadquisicion = document.getElementById("tipoadquisicion");
   const fechaadquisicion = document.getElementById("fechaadquisicion");
   const foliofactura = document.getElementById("foliofactura");
+  const ubicacion = document.getElementById("ubicacion");
+  const ciudad = document.getElementById("ciudad");
+  const municipio = document.getElementById("municipio");
   const arrendadora = document.getElementById("arrendadora");
   const imagen_unidad = document.getElementById("imagen_unidad");
 
@@ -38,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let valormotorunidad;
   let valoranounidad;
   let valorcolorunidad;
+  let valorsupervisor;
   let valorcostoneto;
   let valorestadounidad;
   let valorestatusunidad;
@@ -46,7 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
   let valortipoadquisicionunidad;
   let valorfechaadquisicionunidad;
   let valorfoliofactura;
+  let valorciudad;
+  let valormunicipio;
   let valorarrendadora;
+  let valorubicacion;
   let valorimagenunidad;
 
   btnregistrarunidad.addEventListener("click", async function () {
@@ -75,10 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
     valormodelounidad = modelounidad.value;
     valorVIN = vin.value;
     valorplacaunidad = placaunidad.value;
-    valorpaso_diferencial = pasodiferencial.value;
     valormotorunidad = motorunidad.value;
     valoranounidad = anounidad.value;
     valorcolorunidad = colorunidad.value;
+    valorsupervisor = supervisor.value;
     valorcostoneto = costoneto.value;
     valorestadounidad = estadounidad.value;
     valorestatusunidad = estatusunidad.value;
@@ -89,6 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
     valortipoadquisicionunidad = tipoadquisicion.value;
     valorfechaadquisicionunidad = fechaadquisicion.value;
     valorfoliofactura = foliofactura.value;
+    valorubicacion = ubicacion.value;
+    valorciudad = ciudad.value;
+    valormunicipio = municipio.value;
     valorarrendadora = arrendadora.value;
     valorimagen_unidad = imagen_unidad.value;
 
@@ -100,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(valoranounidad);
     console.log(valorcolorunidad);
     console.log(valorcostoneto);
+    console.log(valorsupervisor);
     console.log(valorestadounidad);
     console.log(valorestatusunidad);
     if (tipounidad) {
@@ -109,6 +120,9 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(valortipoadquisicionunidad);
     console.log(valorfechaadquisicionunidad);
     console.log(valorfoliofactura);
+    console.log(ubicacion.value);
+    console.log(valorciudad);
+    console.log(valormunicipio);
     console.log(valorarrendadora);
     console.log(valorimagen_unidad);
   }
@@ -122,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { campo: valormodelounidad, nombre: "Modelo" },
       { campo: valorcostoneto, nombre: "Costo neto" },
       { campo: valorcolorunidad, nombre: "Color" },
+      { campo: valorsupervisor, nombre: "Supervisor" },
       { campo: valorplacaunidad, nombre: "Placa" },
       { campo: valorVIN, nombre: "VIN" },
       { campo: valormotorunidad, nombre: "Número de motor" },
@@ -133,6 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { campo: valorsedeunidad, nombre: "Sede" },
       { campo: valortipoadquisicionunidad, nombre: "Tipo de adquisición" },
       { campo: valorarrendadora, nombre: "Arrendadora" },
+      { campo: document.getElementById("ubicacion").value, nombre: "Ubicación" },
     ];
 
     camposObligatorios.forEach((c) => {
@@ -163,10 +179,10 @@ document.addEventListener("DOMContentLoaded", function () {
     caja.append("modelounidad", valormodelounidad);
     caja.append("VIN", valorVIN);
     caja.append("placaunidad", valorplacaunidad);
-    caja.append("paso_diferencial", valorpaso_diferencial);
     caja.append("motorunidad", valormotorunidad);
     caja.append("anounidad", valoranounidad);
     caja.append("colorunidad", valorcolorunidad);
+    caja.append("supervisor", valorsupervisor);
     caja.append("costoneto", valorcostoneto);
     caja.append("estadounidad", valorestadounidad);
     caja.append("estatusunidad", valorestatusunidad);
@@ -175,6 +191,9 @@ document.addEventListener("DOMContentLoaded", function () {
     caja.append("tipoadquisicionunidad", valortipoadquisicionunidad);
     caja.append("fechaadquisicionunidad", valorfechaadquisicionunidad);
     caja.append("foliofactura", valorfoliofactura);
+    caja.append("ubicacion", valorubicacion);
+    caja.append("ciudad", valorciudad);
+    caja.append("municipio", valormunicipio);
     caja.append("arrendadora", valorarrendadora);
     caja.append("imagen_unidad", imagen_unidad.files[0]);
 
@@ -399,6 +418,65 @@ document
   });
 
 // =========================================
+// REGISTRAR UBICACION
+// =========================================
+
+document
+  .getElementById("btnRegistrarUbicacion")
+  .addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const ubicacion = document.getElementById("nuevaUbicacion").value;
+
+    if (ubicacion === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Ingresa una ubicación",
+      });
+
+      return;
+    }
+
+    fetch("../../Servidor/solicitudes/unidades/registrar_ubicacion.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "ubicacion=" + encodeURIComponent(ubicacion),
+    })
+      .then((response) => response.json())
+
+      .then((data) => {
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Ubicación registrada",
+            timer: 1500,
+            showConfirmButton: false,
+          }).then(() => {
+            document.getElementById("nuevaUbicacion").value = "";
+
+            recargarUbicaciones();
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: data.message || "Error al registrar la ubicación",
+          });
+        }
+      })
+
+      .catch((error) => {
+        console.error(error);
+
+        Swal.fire({
+          icon: "error",
+          title: "Error inesperado",
+        });
+      });
+  });
+
+// =========================================
 // MOSTRAR / OCULTAR CATALOGOS
 // =========================================
 
@@ -487,6 +565,26 @@ async function recargarSedes() {
     select.innerHTML += `
             <option value="${sede.id_sede}">
                 ${sede.ubicacion}
+            </option>
+        `;
+  });
+}
+
+async function recargarUbicaciones() {
+  const response = await fetch(
+    "../../Servidor/solicitudes/unidades/obtener_ubicaciones.php",
+  );
+
+  const data = await response.json();
+
+const select = document.getElementById("ubicacion"); 
+
+  select.innerHTML = '<option value="">Seleccionar</option>';
+
+  data.forEach((ubicacion) => {
+    select.innerHTML += `
+            <option value="${ubicacion.id_ubicacion}">
+                ${ubicacion.ubicacion_unidad}
             </option>
         `;
   });

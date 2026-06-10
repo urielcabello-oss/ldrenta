@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }).showToast();
 
           contenedorspinner.style.display = "none";
-          window.location.href = "./unidades.php?resultado=Polizactualizada";
+          window.location.href = "./unidades_demo.php?resultado=Polizactualizada";
           modaleditarpolizasUnidades.hide();
         } else if (response.includes("Duplicate")) {
           Toastify({

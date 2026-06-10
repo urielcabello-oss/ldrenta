@@ -221,6 +221,40 @@
 
             </div>
 
+            <!-- UBICACIONES -->
+            <div class="col-md-4">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h6 class="fw-bold mb-3">
+
+                            <i class="fa-solid fa-location-dot me-2 text-warning"></i>
+                            Nueva Ubicación
+
+                        </h6>
+
+                        <input type="text"
+                            class="form-control input-moderno mb-3"
+                            id="nuevaUbicacion"
+                            placeholder="Ej. Patio FULOGMA TECAMAC">
+
+                        <button type="button"
+                            class="btn btn-orange w-100"
+                            id="btnRegistrarUbicacion">
+
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Registrar sede
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
         <!-- ================================= -->
@@ -267,6 +301,20 @@
 
                     <i class="fa-solid fa-location-dot me-2"></i>
                     Sedes
+
+                </button>
+
+            </li>
+
+            <!-- UBICACIONES -->
+            <li class="nav-item">
+
+                <button class="nav-link"
+                    data-bs-toggle="pill"
+                    data-bs-target="#tabUbicaciones">
+
+                    <i class="fa-solid fa-location-dot me-2"></i>
+                    Ubicaciones
 
                 </button>
 
@@ -604,6 +652,110 @@
 
             </div>
 
+            <!-- ================================= -->
+            <!-- TAB UBICACIONES -->
+            <!-- ================================= -->
+
+            <div class="tab-pane fade"
+                id="tabUbicaciones">
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle ldr-table">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th>Ubicación</th>
+                                <th width="150">Estatus</th>
+                                <th width="180">Acciones</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <?php
+
+                            $sql = "SELECT *
+                                FROM ubicaciones
+                                ORDER BY ubicacion_unidad ASC";
+
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+
+                            ?>
+
+                                <tr>
+
+                                    <td>
+                                        <?php echo $row['ubicacion_unidad']; ?>
+                                    </td>
+
+                                    <td>
+
+                                        <?php if ($row['activo'] == 1) { ?>
+
+                                            <span class="badge bg-success">
+                                                Activo
+                                            </span>
+
+                                        <?php } else { ?>
+
+                                            <span class="badge bg-danger">
+                                                Inactivo
+                                            </span>
+
+                                        <?php } ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <button type="button"
+                                            class="btn btn-sm btn-warning">
+
+                                            <i class="fa-solid fa-pen"></i>
+
+                                        </button>
+
+                                        <?php if ($row['activo'] == 1) { ?>
+
+                                            <button type="button"
+                                                class="btn btn-sm btn-danger">
+
+                                                <i class="fa-solid fa-ban"></i>
+
+                                            </button>
+
+                                        <?php } else { ?>
+
+                                            <button type="button"
+                                                class="btn btn-sm btn-success">
+
+                                                <i class="fa-solid fa-check"></i>
+
+                                            </button>
+
+                                        <?php } ?>
+
+                                    </td>
+
+                                </tr>
+
+                            <?php } ?>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
@@ -713,6 +865,62 @@
 
                 <div class="row g-4">
 
+                    <!-- SUPERVISOR -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Supervisor<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="supervisor"
+                            name="supervisor">
+
+                            <option value="">Seleccionar supervisor</option>
+
+                            <?php
+
+                            $sql = "
+                                SELECT
+                                    s.id_supervisor,
+                                    s.id_usuario,
+                                    u.id_colaborador,
+                                    c.nombre_1,
+                                    c.nombre_2,
+                                    c.apellido_paterno,
+                                    c.apellido_materno
+                                FROM supervisores s
+                                INNER JOIN usuarios u
+                                    ON s.id_usuario = u.id_usuario
+                                INNER JOIN colaboradores c
+                                    ON u.id_colaborador = c.id_colaborador
+                                WHERE s.estado = 1
+                                ORDER BY c.nombre_1 ASC
+                            ";
+
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+
+                                $nombreCompleto = trim(
+                                    $row['nombre_1'] . ' ' .
+                                        $row['nombre_2'] . ' ' .
+                                        $row['apellido_paterno'] . ' ' .
+                                        $row['apellido_materno']
+                                );
+
+                                echo '<option value="' . $row['id_supervisor'] . '">'
+                                    . htmlspecialchars($nombreCompleto) .
+                                    '</option>';
+                            }
+
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
                     <!-- COSTO -->
                     <div class="col-md-4">
 
@@ -816,21 +1024,6 @@
                             id="anounidad"
                             name="anounidad">
                         <small class="text-danger">Campo obligatorio</small>
-
-                    </div>
-
-                    <!-- PASO DIFERENCIAL -->
-                    <div class="col-md-4">
-
-                        <label class="form-label label-form">
-                            Paso diferencial
-                        </label>
-
-                        <input type="number"
-                            step="0.01"
-                            class="form-control input-moderno"
-                            id="pasodiferencial"
-                            name="pasodiferencial">
 
                     </div>
 
@@ -1012,7 +1205,7 @@
                             <option value="">Seleccionar</option>
 
                             <?php
-                            $sql = "SELECT id_sede, ubicacion FROM sedes WHERE id_sede = 1";
+                            $sql = "SELECT id_sede, ubicacion FROM sedes WHERE activo = 1";
                             $result = $conexion->query($sql);
 
                             while ($row = $result->fetch_assoc()) {
@@ -1023,6 +1216,65 @@
                             ?>
 
                         </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- UBICACIÓN -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Ubicación<span class="text-danger">*</span>
+                        </label>
+
+                        <select class="form-select input-moderno"
+                            id="ubicacion"
+                            name="ubicacion">
+
+                            <option value="">Seleccionar</option>
+
+                            <?php
+                            $sql = "SELECT id_ubicacion, ubicacion_unidad FROM ubicaciones WHERE activo = 1";
+                            $result = $conexion->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<option value="' . $row['id_ubicacion'] . '">
+                                ' . $row['ubicacion_unidad'] . '
+                              </option>';
+                            }
+                            ?>
+
+                        </select>
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- CIUDAD -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Ciudad<span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                            class="form-control input-moderno"
+                            id="ciudad"
+                            name="ciudad">
+                        <small class="text-danger">Campo obligatorio</small>
+
+                    </div>
+
+                    <!-- MUNICIPIO -->
+                    <div class="col-md-4">
+
+                        <label class="form-label label-form">
+                            Municipio<span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                            class="form-control input-moderno"
+                            id="municipio"
+                            name="municipio">
                         <small class="text-danger">Campo obligatorio</small>
 
                     </div>

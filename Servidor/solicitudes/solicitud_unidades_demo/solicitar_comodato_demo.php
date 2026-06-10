@@ -277,7 +277,7 @@ if (!empty($info['id_persona_fisica'])) {
     // =================================================
 
     $base =
-        "http://localhost/ldrenta/Servidor/archivos/files/files_asignacion_demo/personas_fisicas/";
+        "https://ldrenta.ldrhumanresources.com/Servidor/archivos/files/files_asignacion_demo/personas_fisicas/";
 
     $documentos = [
 
@@ -308,7 +308,7 @@ if (!empty($info['id_persona_fisica'])) {
     // =================================================
 
     $base =
-        "http://localhost/ldrenta/Servidor/archivos/files/files_asignacion_demo/personas_morales/";
+        "https://ldrenta.ldrhumanresources.com/Servidor/archivos/files/files_asignacion_demo/personas_morales/";
 
     $documentos = [
 

@@ -205,6 +205,7 @@
             <!-- ===================== DATOS GENERALES ===================== -->
 
             <div class="ldr-form-section">
+                <br>
 
                 <div class="ldr-section-title">
                     <i class="fas fa-file-lines"></i>
@@ -212,6 +213,85 @@
                 </div>
 
                 <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <select class="form-select input-moderno"
+                                id="editsupervisor"
+                                name="editsupervisor">
+                                <option value="">Seleccione un supervisor</option>
+                                <?php
+                                $supervisores = $conectar->query("
+                                                                SELECT
+                                                                    s.id_supervisor,
+                                                                    s.id_usuario,
+                                                                    u.id_colaborador,
+                                                                    c.nombre_1,
+                                                                    c.nombre_2,
+                                                                    c.apellido_paterno,
+                                                                    c.apellido_materno
+                                                                FROM supervisores s
+                                                                INNER JOIN usuarios u
+                                                                    ON s.id_usuario = u.id_usuario
+                                                                INNER JOIN colaboradores c
+                                                                    ON u.id_colaborador = c.id_colaborador
+                                                                WHERE s.estado = 1
+                                                                ORDER BY c.nombre_1 ASC
+                                                            ");
+                                while ($supervisor = $supervisores->fetch_assoc()) {
+                                    $nombreCompleto =
+                                        trim(
+                                            $supervisor['nombre_1'] . ' ' .
+                                                $supervisor['nombre_2'] . ' ' .
+                                                $supervisor['apellido_paterno'] . ' ' .
+                                                $supervisor['apellido_materno']
+                                        );
+                                    $selected = ($supervisor['id_supervisor'] == $data['id_supervisor'])
+                                        ? 'selected'
+                                        : '';
+                                    echo "
+                    <option value='{$supervisor['id_supervisor']}' {$selected}>
+                        {$nombreCompleto}
+                    </option>
+                ";
+                                }
+                                ?>
+                            </select>
+                            <label>Supervisor</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input type="number"
+                                class="form-control input-moderno"
+                                id="editarCostoNeto"
+                                name="editarCostoNeto"
+                                value="<?php echo htmlspecialchars($data['costo_neto']); ?>">
+                            <label>Costo neto</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <select class="form-select input-moderno"
+                                id="editarColor"
+                                name="editarColor">
+                                <option value="">Seleccione</option>
+                                <?php
+                                $colores = $conectar->query("SELECT * FROM unidad_color");
+                                while ($color = $colores->fetch_assoc()) {
+                                    $selected = ($color['id_color'] == $data['id_color']) ? 'selected' : '';
+                                    echo '
+                                <option value="' . $color['id_color'] . '" ' . $selected . '>
+                                    ' . $color['color_unidad'] . '
+                                </option>';
+                                }
+                                ?>
+                            </select>
+                            <label>Color</label>
+                        </div>
+                    </div>
 
                     <div class="col-md-4">
                         <div class="form-floating">
@@ -257,49 +337,16 @@
                         </div>
                     </div>
 
+
                     <div class="col-md-4">
                         <div class="form-floating">
                             <input type="text"
                                 class="form-control input-moderno"
-                                id="editarPasoDiferencial"
-                                name="editarPasoDiferencial"
-                                value="<?php echo htmlspecialchars($data['paso_diferencial']); ?>">
-                            <label>Paso diferencial</label>
+                                id="editarfoliofacturaunidad"
+                                name="editarfoliofacturaunidad"
+                                value="<?php echo htmlspecialchars($data['folio_factura']); ?>">
+                            <label>Folio factura</label>
                         </div>
-                    </div>
-
-                    <div class="col-md-4">
-
-                        <div class="form-floating">
-
-                            <select class="form-select input-moderno"
-                                id="editarColor"
-                                name="editarColor">
-
-                                <option value="">Seleccione</option>
-
-                                <?php
-
-                                $colores = $conectar->query("SELECT * FROM unidad_color");
-
-                                while ($color = $colores->fetch_assoc()) {
-
-                                    $selected = ($color['id_color'] == $data['id_color']) ? 'selected' : '';
-
-                                    echo '
-                                <option value="' . $color['id_color'] . '" ' . $selected . '>
-                                    ' . $color['color_unidad'] . '
-                                </option>';
-                                }
-
-                                ?>
-
-                            </select>
-
-                            <label>Color</label>
-
-                        </div>
-
                     </div>
 
                 </div>
@@ -309,6 +356,7 @@
             <!-- ===================== ESTATUS ===================== -->
 
             <div class="ldr-form-section">
+                <br>
 
                 <div class="ldr-section-title">
                     <i class="fas fa-circle-check"></i>
@@ -423,47 +471,78 @@
             <!-- ===================== ADQUISICIÓN ===================== -->
 
             <div class="ldr-form-section">
-
+                <br>
                 <div class="ldr-section-title">
                     <i class="fas fa-building"></i>
                     Ubicación y adquisición
                 </div>
 
+
                 <div class="row g-3">
 
-                    <div class="col-md-3">
-
+                    <div class="col-md-4">
                         <div class="form-floating">
-
-                            <input type="number"
-                                class="form-control input-moderno"
-                                id="editarCostoNeto"
-                                name="editarCostoNeto"
-                                value="<?php echo htmlspecialchars($data['costo_neto']); ?>">
-
-                            <label>Costo neto</label>
-
+                            <select class="form-select input-moderno"
+                                id="editsedeunidad"
+                                name="editsedeunidad">
+                                <?php
+                                $sedes = $conectar->query("SELECT * FROM sedes");
+                                while ($sede = $sedes->fetch_assoc()) {
+                                    $selected = ($sede['id_sede'] == $data['id_sede']) ? 'selected' : '';
+                                    echo '
+                                <option value="' . $sede['id_sede'] . '" ' . $selected . '>
+                                    ' . $sede['ubicacion'] . '
+                                </option>';
+                                }
+                                ?>
+                            </select>
+                            <label>Sede</label>
                         </div>
-
                     </div>
 
-                    <div class="col-md-3">
-
+                    <div class="col-md-4">
                         <div class="form-floating">
+                            <select class="form-select input-moderno"
+                                id="editubicacion"
+                                name="editubicacion">
+                                <?php
+                                $sedes = $conectar->query("SELECT * FROM ubicaciones");
+                                while ($sede = $sedes->fetch_assoc()) {
+                                    $selected = ($sede['id_ubicacion'] == $data['id_ubicacion']) ? 'selected' : '';
+                                    echo '
+                                <option value="' . $sede['id_ubicacion'] . '" ' . $selected . '>
+                                    ' . $sede['ubicacion_unidad'] . '
+                                </option>';
+                                }
+                                ?>
+                            </select>
+                            <label>Ubicación</label>
+                        </div>
+                    </div>
 
+                    <div class="col-md-4">
+                        <div class="form-floating">
                             <input type="text"
                                 class="form-control input-moderno"
-                                id="editarfoliofacturaunidad"
-                                name="editarfoliofacturaunidad"
-                                value="<?php echo htmlspecialchars($data['folio_factura']); ?>">
-
-                            <label>Folio factura</label>
-
+                                id="editarCiudad"
+                                name="editarCiudad"
+                                value="<?php echo htmlspecialchars($data['ciudad']); ?>">
+                            <label>Ciudad</label>
                         </div>
-
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-4">
+                        <div class="form-floating">
+                            <input type="text"
+                                class="form-control input-moderno"
+                                id="editarMunicipio"
+                                name="editarMunicipio"
+                                value="<?php echo htmlspecialchars($data['municipio']); ?>">
+                            <label>Municipio</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
 
                         <div class="form-floating">
 
@@ -474,38 +553,6 @@
                                 value="<?php echo htmlspecialchars($data['fecha_adquisicion']); ?>">
 
                             <label>Fecha adquisición</label>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-3">
-
-                        <div class="form-floating">
-
-                            <select class="form-select input-moderno"
-                                id="editsedeunidad"
-                                name="editsedeunidad">
-
-                                <?php
-
-                                $sedes = $conectar->query("SELECT * FROM sedes");
-
-                                while ($sede = $sedes->fetch_assoc()) {
-
-                                    $selected = ($sede['id_sede'] == $data['id_sede']) ? 'selected' : '';
-
-                                    echo '
-                                <option value="' . $sede['id_sede'] . '" ' . $selected . '>
-                                    ' . $sede['ubicacion'] . '
-                                </option>';
-                                }
-
-                                ?>
-
-                            </select>
-
-                            <label>Sede</label>
 
                         </div>
 
@@ -569,7 +616,7 @@
 
                             </select>
 
-                            <label>Tipo adquisición</label>
+                            <label>Adquisición</label>
 
                         </div>
 
@@ -582,6 +629,7 @@
             <!-- ===================== IMAGEN ===================== -->
 
             <div class="ldr-form-section">
+                <br>
 
                 <div class="ldr-section-title">
                     <i class="fas fa-image"></i>
