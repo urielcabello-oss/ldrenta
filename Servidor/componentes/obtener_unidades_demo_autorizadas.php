@@ -26,7 +26,7 @@ SELECT
     unid.placa,
     unid.vin,
     unid.vin,
-    unid.paso_diferencial,
+    unid.numero_motor,
     uda.fecha_prestamo,
     uda.fecha_devolucion,
     uda.estado,
@@ -58,7 +58,7 @@ echo '<div id="vistaTabla">
 <tr>
     <th>Nombre</th>
     <th>Modelo</th>
-    <th>Paso diferencial</th>
+    <th>Número motor</th>
     <th>VIN</th>
     <th>Placa</th>
     <th>Asignación</th>
@@ -88,7 +88,7 @@ while ($fila = $resultado->fetch_assoc()) {
         <tr class="fila-solicitante tipo-' . $tipo_solicitante . '">
             <td>' . $nombreSolicitante . '</td>
             <td>' . $fila['nombre_modelo'] . '</td>
-            <td>' . $fila['paso_diferencial'] . '</td>
+            <td>' . $fila['numero_motor'] . '</td>
             <td>' . $fila['vin'] . '</td>
             <td>' . $fila['placa'] . '</td>
             <td>' . $fila['fecha_prestamo'] . '</td>

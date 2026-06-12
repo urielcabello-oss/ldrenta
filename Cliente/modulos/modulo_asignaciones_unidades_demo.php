@@ -1,4 +1,9 @@
- <!-------------------------------------------aqui comienza el contenedor mis unidades cliente----------------------------------------------------------->
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+?>
+<!-------------------------------------------aqui comienza el contenedor mis unidades cliente----------------------------------------------------------->
  <div class="container-fluid px-3 px-md-4 mt-4">
 
      <!-- HEADER -->

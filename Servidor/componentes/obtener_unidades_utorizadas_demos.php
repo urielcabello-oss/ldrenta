@@ -5,7 +5,6 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-$id_colaborador_que_asigna = $_SESSION['id_colaborador'];
 
 // =====================================================
 // CONSULTA
@@ -53,8 +52,6 @@ ON uda.id_persona_moral = pm.id_persona_moral
 
 LEFT JOIN prorrogas_unidades_demo AS pru
 ON pru.id_asignacion_unidad_demo = uda.id_asignacion_unidad_demo
-
-WHERE uda.id_colaborador_que_asigna = '$id_colaborador_que_asigna'
 
 ORDER BY uda.id_asignacion_unidad_demo DESC
 ";
