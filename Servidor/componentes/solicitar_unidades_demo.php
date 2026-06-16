@@ -60,8 +60,7 @@
             $sql = "SELECT id_modelo, nombre_modelo 
                     FROM modelos 
                     LEFT JOIN marcas 
-                    ON modelos.id_marca = marcas.id_marca 
-                    WHERE marcas.id_marca = 1";
+                    ON modelos.id_marca = marcas.id_marca";
 
             $result = $conexion->query($sql);
 

@@ -92,28 +92,44 @@ document.body.addEventListener("click", function (e) {
       processData: false,
       contentType: false,
       success: function (res) {
-        spinner.style.display = "none";
+  spinner.style.display = "none";
 
-        if (res.includes("OK")) {
-          Swal.fire({
-            title: "Unidad actualizada correctamente",
-            text: "La unidad ha sido actualizada correctamente",
-            icon: "success",
-            confirmButtonText: "Aceptar",
-          });
+  let response;
 
-          modal.hide();
-          setTimeout(() => location.reload(), 1000);
-        } else {
-          Toastify({
-            text: res,
-            duration: 4000,
-            gravity: "top",
-            position: "right",
-            style: { background: "red" },
-          }).showToast();
-        }
-      },
+  try {
+    response = typeof res === "string" ? JSON.parse(res) : res;
+  } catch (e) {
+    Toastify({
+      text: "Respuesta inválida del servidor",
+      duration: 4000,
+      gravity: "top",
+      position: "right",
+      style: { background: "red" },
+    }).showToast();
+    return;
+  }
+
+  // ❌ ERROR DEL BACKEND
+  if (!response.success) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: response.message,
+    });
+    return;
+  }
+
+  // ✅ OK
+  Swal.fire({
+    title: "Unidad actualizada correctamente",
+    text: response.message,
+    icon: "success",
+    confirmButtonText: "Aceptar",
+  });
+
+  modal.hide();
+  setTimeout(() => location.reload(), 1000);
+},
     });
   }
 });

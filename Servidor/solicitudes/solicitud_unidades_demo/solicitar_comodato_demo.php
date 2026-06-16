@@ -458,7 +458,7 @@ try {
 
     $mail->Subject =
         utf8_decode(
-            'Nueva solicitud de comodato DEMO'
+            'Nueva solicitud de contrato unidad RENTA'
         );
 
     $nombreSolicitante =
@@ -484,7 +484,7 @@ try {
 
     $mail->Body = utf8_decode("
         <h2>
-            Nueva solicitud de unidad DEMO
+            Nueva solicitud de contrato unidad RENTA
         </h2>
 
         <hr>

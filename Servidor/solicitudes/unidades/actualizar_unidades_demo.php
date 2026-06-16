@@ -31,6 +31,42 @@ if (isset($_FILES['imagen_unidad']) && $_FILES['imagen_unidad']['error'] === 0) 
     }
 }
 
+function obtenerEstadoActual($idUnidad) {
+    global $conectar;
+
+    $sql = "SELECT id_estado_unidad 
+            FROM unidades 
+            WHERE id_unidad = ?";
+
+    $stmt = $conectar->prepare($sql);
+    $stmt->bind_param("i", $idUnidad);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    if ($row = $res->fetch_assoc()) {
+        return (int)$row['id_estado_unidad'];
+    }
+
+    return null;
+}
+
+function tieneAsignacionActiva($conectar, $idUnidad) {
+
+    $sql = "SELECT COUNT(*) as total
+            FROM asignacion_unidad_demo
+            WHERE id_unidad = ?
+            AND estado = 1";
+
+    $stmt = $conectar->prepare($sql);
+    $stmt->bind_param("i", $idUnidad);
+    $stmt->execute();
+    $res = $stmt->get_result();
+
+    $row = $res->fetch_assoc();
+
+    return $row['total'] > 0;
+}
+
 /* =========================
    NORMALIZAR VALORES VACÍOS
    ========================= */
@@ -47,6 +83,31 @@ $costoNeto        = (float)$_POST['editarCostoNeto'];
 $color            = (int)$_POST['editarColor'];
 $anio             = (int)$_POST['editarAnioUnidad'];
 $estado           = (int)$_POST['editarEstadoUnidad'];
+
+// 🔴 VALIDACIÓN DE FLUJO (ANTI-ROTO)
+$estadoActual = obtenerEstadoActual($idUnidad);
+
+if ($estadoActual == 3 && $estado != 3) {
+
+    echo json_encode([
+        "success" => false,
+        "message" => "No puedes cambiar el estado de una unidad RENTADA"
+    ]);
+    exit;
+}
+
+$estadoNuevo = (int)$_POST['editarEstadoUnidad'];
+$estadoActual = obtenerEstadoActual($idUnidad);
+
+// ❌ PROHIBIR cambios manuales a estados de flujo (RENTADA y PRE-ASIGNACIÓN)
+if (in_array($estadoNuevo, [3, 4]) && $estadoActual != $estadoNuevo) {
+
+    echo json_encode([
+        "success" => false,
+        "message" => "No puedes asignar manualmente estados de flujo (PRE-ASIGNACIÓN o RENTADA). Debe hacerse desde el módulo Rentar unidad."
+    ]);
+    exit;
+}
 $estatus          = (int)$_POST['editarEstatusUnidad'];
 $tipoUnidad       = (int)$_POST['editarTipoUnidad'];
 $sede             = (int)$_POST['editsedeunidad'];
@@ -149,9 +210,16 @@ $stmt->bind_param($types, ...$params);
    EJECUTAR
    ========================= */
 if ($stmt->execute()) {
-    echo "OK";
+    echo json_encode([
+    "success" => true,
+    "message" => "OK"
+]);
 } else {
-    echo "Error al actualizar: " . $stmt->error;
+    echo json_encode([
+    "success" => false,
+    "message" => $stmt->error
+]);
+exit;
 }
 
 $stmt->close();
