@@ -59,169 +59,164 @@
 
     <div class="row g-3 mt-1">
 
-    
+
         <div class="col-xl-3 col-md-6">
-
             <div class="ldr-card-mini">
-
                 <div class="ldr-icon-card bg-secondary-subtle text-secondary">
                     <i class="bi bi-car-front"></i>
                 </div>
-
                 <div>
-
                     <small class="text-muted">
                         Mantenimientos
                     </small>
-
                     <h5 id="cardTotalMantenimientos" class="fw-bold mb-0">
                         0
                     </h5>
-
                     <span class="small text-muted">
                         registrados
                     </span>
-
                 </div>
-
             </div>
-
         </div>
 
-        <div class="col-xl-3 col-md-6">
-
+        <div class="col-xl-2 col-md-6">
             <div class="ldr-card-mini">
-
-                <div class="ldr-icon-card bg-primary-subtle text-primary">
-                    <i class="bi bi-tools"></i>
-                </div>
-
-                <div>
-
-                    <small class="text-muted">
-                        Este mes
-                    </small>
-
-                    <h5 id="cardThisMonth" class="fw-bold mb-0">
-                        0
-                    </h5>
-
-                    <span class="small text-muted">
-                        mantenimientos
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-
-            <div class="ldr-card-mini">
-
-                <div class="ldr-icon-card bg-success-subtle text-success">
-                    <i class="bi bi-cash-stack"></i>
-                </div>
-
-                <div>
-
-                    <small class="text-muted">
-                        Costo total
-                    </small>
-
-                    <h5 id="cardCost" class="fw-bold mb-0">
-                        $0
-                    </h5>
-
-                    <span class="small text-muted">
-                        MXN
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-xl-3 col-md-6">
-
-            <div class="ldr-card-mini">
-
                 <div class="ldr-icon-card bg-warning-subtle text-warning">
-                    <i class="bi bi-bar-chart"></i>
+                    <i class="bi bi-hourglass-split"></i>
                 </div>
-
                 <div>
-
-                    <small class="text-muted">
-                        Preventivos
-                    </small>
-
-                    <h5 id="cardAvgDays" class="fw-bold mb-0">
-                        0%
-                    </h5>
-
-                    <span class="small text-muted">
-                        vs correctivos
-                    </span>
-
+                    <small class="text-muted">En proceso</small>
+                    <h5 id="cardEnProceso" class="fw-bold mb-0">0</h5>
                 </div>
+            </div>
+        </div>
 
+        <div class="col-xl-2 col-md-6">
+            <div class="ldr-card-mini">
+                <div class="ldr-icon-card bg-secondary-subtle text-secondary">
+                    <i class="bi bi-exclamation-triangle"></i>
+                </div>
+                <div>
+                    <small class="text-muted">Pendientes</small>
+                    <h5 id="cardPendientes" class="fw-bold mb-0">0</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-2 col-md-6">
+            <div class="ldr-card-mini">
+                <div class="ldr-icon-card bg-success-subtle text-success">
+                    <i class="bi bi-check-circle"></i>
+                </div>
+                <div>
+                    <small class="text-muted">Finalizados</small>
+                    <h5 id="cardFinalizados" class="fw-bold mb-0">0</h5>
+                </div>
+            </div>
+        </div>
+        
+            <!-- PORCENTAJES -->
+            <div class="col-xl-3 col-md-6">
+                <div class="ldr-card-mini">
+                    <div class="ldr-icon-card bg-warning-subtle text-warning">
+                        <i class="bi bi-bar-chart"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted">
+                            Porcentajes
+                        </small>
+                        <div id="cardAvgDays" class="fw-bold mb-0">
+                            0%
+                        </div>
+                    </div>
+                </div>
             </div>
 
-        </div>
+
 
         <div class="row g-3 mt-2">
 
             <div class="col-xl-3 col-md-6">
                 <div class="ldr-card-mini">
-                    <div class="ldr-icon-card bg-warning-subtle text-warning">
-                        <i class="bi bi-hourglass-split"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted">En proceso</small>
-                        <h5 id="cardEnProceso" class="fw-bold mb-0">0</h5>
-                        <span class="small text-muted">en taller</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6">
-                <div class="ldr-card-mini">
-                    <div class="ldr-icon-card bg-secondary-subtle text-secondary">
-                        <i class="bi bi-exclamation-triangle"></i>
-                    </div>
-                    <div>
-                        <small class="text-muted">Pendientes</small>
-                        <h5 id="cardPendientes" class="fw-bold mb-0">0</h5>
-                        <span class="small text-muted">riesgo</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xl-3 col-md-6">
-                <div class="ldr-card-mini">
                     <div class="ldr-icon-card bg-success-subtle text-success">
-                        <i class="bi bi-check-circle"></i>
+                        <i class="bi bi-cash-stack"></i>
                     </div>
                     <div>
-                        <small class="text-muted">Finalizados</small>
-                        <h5 id="cardFinalizados" class="fw-bold mb-0">0</h5>
-                        <span class="small text-muted">cerrados</span>
+                        <small class="text-muted">
+                            Costo total
+                        </small>
+                        <h5 id="cardCost" class="fw-bold mb-0">
+                            $0
+                        </h5>
+                        <span class="small text-muted">
+                            MXN
+                        </span>
                     </div>
                 </div>
             </div>
 
+            <!-- COSTO PREVENTIVO -->
+            <div class="col-xl-3 col-md-6">
+                <div class="ldr-card-mini">
+                    <div class="ldr-icon-card bg-primary-subtle text-primary">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted">
+                            Costo preventivo
+                        </small>
+
+                        <h5 id="cardCostoPreventivo" class="fw-bold mb-0">
+                            $0
+                        </h5>
+
+                        <span class="small text-muted">
+                            MXN
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COSTO CORRECTIVO -->
             <div class="col-xl-3 col-md-6">
                 <div class="ldr-card-mini">
                     <div class="ldr-icon-card bg-danger-subtle text-danger">
-                        <i class="bi bi-calendar-x"></i>
+                        <i class="bi bi-wrench-adjustable-circle"></i>
                     </div>
                     <div>
-                        <small class="text-muted">Atrasados</small>
-                        <h5 id="cardAtrasados" class="fw-bold mb-0">0</h5>
-                        <span class="small text-muted">vencidos</span>
+                        <small class="text-muted">
+                            Costo correctivo
+                        </small>
+
+                        <h5 id="cardCostoCorrectivo" class="fw-bold mb-0">
+                            $0
+                        </h5>
+
+                        <span class="small text-muted">
+                            MXN
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COSTO MIXTO -->
+            <div class="col-xl-3 col-md-6">
+                <div class="ldr-card-mini">
+                    <div class="ldr-icon-card bg-warning-subtle text-warning">
+                        <i class="bi bi-tools"></i>
+                    </div>
+                    <div>
+                        <small class="text-muted">
+                            Costo mixto
+                        </small>
+
+                        <h5 id="cardCostoMixto" class="fw-bold mb-0">
+                            $0
+                        </h5>
+
+                        <span class="small text-muted">
+                            MXN
+                        </span>
                     </div>
                 </div>
             </div>

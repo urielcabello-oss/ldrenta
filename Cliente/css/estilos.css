@@ -1634,14 +1634,14 @@ TABLA MODERNA
     padding: 5px;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
     box-shadow: 0 4px 16px rgba(0,0,0,.05);
     height: 100%;
 }
 
 .ldr-icon-card{
-    width: 58px;
-    height: 58px;
+    width: 30px;
+    height: 30px;
     border-radius: 18px;
     display: flex;
     align-items: center;

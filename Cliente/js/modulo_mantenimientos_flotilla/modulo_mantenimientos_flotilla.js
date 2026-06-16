@@ -121,11 +121,14 @@ document.addEventListener("DOMContentLoaded", function () {
     let enProceso = 0;
     let pendientes = 0;
     let finalizados = 0;
-    let atrasados = 0;
     let totalCost = 0;
 
     let preventivo = 0;
     let correctivo = 0;
+    let mixto = 0;
+    let costoPreventivo = 0;
+    let costoCorrectivo = 0;
+    let costoMixto = 0;
 
     data.forEach((m) => {
       // =========================
@@ -158,30 +161,58 @@ document.addEventListener("DOMContentLoaded", function () {
         finalizados++;
       }
 
-      // atrasados (regla simple)
-      if (m.proximo_fecha) {
-        const prox = new Date(m.proximo_fecha);
-        if (prox < now && !estatus.includes("final")) {
-          atrasados++;
-        }
-      }
-
       // =========================
       // TIPO
       // =========================
       const tipo = (m.tipo || "").toLowerCase();
+      const costo = Number(m.costo_estimado || 0);
 
-      if (tipo === "preventivo") preventivo++;
-      if (tipo === "correctivo") correctivo++;
+      if (tipo === "preventivo") {
+        preventivo++;
+        costoPreventivo += costo;
+      }
+
+      if (tipo === "correctivo") {
+        correctivo++;
+        costoCorrectivo += costo;
+      }
+
+      if (tipo === "mixto") {
+        mixto++;
+        costoMixto += costo;
+      }
     });
 
     // =========================
     // % preventivo vs correctivo
     // =========================
-    const total = preventivo + correctivo;
+    const totalTipos = preventivo + correctivo + mixto;
 
-    const percentPrev = total ? ((preventivo / total) * 100).toFixed(1) : 0;
-    const percentCorr = total ? ((correctivo / total) * 100).toFixed(1) : 0;
+    const percentPrev = totalTipos
+      ? ((preventivo / totalTipos) * 100).toFixed(1)
+      : 0;
+
+    const percentCorr = totalTipos
+      ? ((correctivo / totalTipos) * 100).toFixed(1)
+      : 0;
+
+    const percentMixto = totalTipos
+      ? ((mixto / totalTipos) * 100).toFixed(1)
+      : 0;
+
+    const totalCostoTipos = costoPreventivo + costoCorrectivo + costoMixto;
+
+    const porcentajeCostoPrev = totalCostoTipos
+      ? ((costoPreventivo / totalCostoTipos) * 100).toFixed(1)
+      : 0;
+
+    const porcentajeCostoCorr = totalCostoTipos
+      ? ((costoCorrectivo / totalCostoTipos) * 100).toFixed(1)
+      : 0;
+
+    const porcentajeCostoMixto = totalCostoTipos
+      ? ((costoMixto / totalCostoTipos) * 100).toFixed(1)
+      : 0;
 
     console.log("cardThisMonth", document.getElementById("cardThisMonth"));
     console.log(
@@ -193,24 +224,32 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("cardEnProceso", document.getElementById("cardEnProceso"));
     console.log("cardPendientes", document.getElementById("cardPendientes"));
     console.log("cardFinalizados", document.getElementById("cardFinalizados"));
-    console.log("cardAtrasados", document.getElementById("cardAtrasados"));
 
     // =========================
     // INYECTAR EN DOM
     // =========================
-    document.getElementById("cardThisMonth").textContent = thisMonth;
     document.getElementById("cardTotalMantenimientos").textContent =
       totalMantenimientos;
     document.getElementById("cardCost").textContent =
       `$${totalCost.toLocaleString()}`;
+    document.getElementById("cardCostoPreventivo").textContent =
+      `$${costoPreventivo.toLocaleString("es-MX")}`;
 
-    document.getElementById("cardAvgDays").innerHTML =
-      `Prev: ${percentPrev}% <br> Corr: ${percentCorr}%`;
+    document.getElementById("cardCostoCorrectivo").textContent =
+      `$${costoCorrectivo.toLocaleString("es-MX")}`;
+
+    document.getElementById("cardCostoMixto").textContent =
+      `$${costoMixto.toLocaleString("es-MX")}`;
+
+    document.getElementById("cardAvgDays").innerHTML = `
+Prev: ${percentPrev}%<br>
+Corr: ${percentCorr}%<br>
+Mixto: ${percentMixto}%
+`;
 
     document.getElementById("cardEnProceso").textContent = enProceso;
     document.getElementById("cardPendientes").textContent = pendientes;
     document.getElementById("cardFinalizados").textContent = finalizados;
-    document.getElementById("cardAtrasados").textContent = atrasados;
   }
 
   // ---------------------------
