@@ -173,7 +173,6 @@ while ($fila = $resultado->fetch_assoc()) {
                     </h6>
 
                     <h6><b>VIN:</b> ' . $fila['vin'] . '</h6>
-                    <h6><b>Paso dif.</b> ' . $fila['paso_diferencial'] . '</h6>
                     <h6><b>Placa:</b> ' . $fila['placa'] . '</h6>
                     <h6><b>Asignación:</b> ' . $fila['fecha_prestamo'] . '</h6>
                     <h6><b>Devolución:</b> ' .

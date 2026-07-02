@@ -477,7 +477,22 @@ Mixto: ${percentMixto}%
     <td class="txtmantenimientos">${m.id_unidad}</td>
     <td class="txtmantenimientos">${m.modelo || "-"}</td>
     <td class="txtmantenimientos">${m.vin || "-"}</td>
-    <td class="txtmantenimientos">${m.tipo || "-"}</td>
+
+<td>
+    <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill bg-primary-subtle text-primary fw-semibold">
+        <i class="bi bi-person-badge me-2"></i>
+        ${m.supervisor || "Sin supervisor"}
+    </span>
+</td>
+
+<td>
+    <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill bg-success-subtle text-success fw-semibold">
+        <i class="bi bi-building me-2"></i>
+        ${m.cliente || "Sin asignar"}
+    </span>
+</td>
+
+<td class="txtmantenimientos">${m.tipo || "-"}</td>
     <td class="txtmantenimientos">${m.estatus || "-"}</td>
     <td class="txtmantenimientos">${m.fecha_ingreso || "-"}</td>
     <td class="txtmantenimientos">${m.fecha_salida || "-"}</td>

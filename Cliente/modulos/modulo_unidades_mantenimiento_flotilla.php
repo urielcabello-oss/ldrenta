@@ -270,6 +270,8 @@
                             <th>ID</th>
                             <th>Modelo</th>
                             <th>VIN</th>
+                            <th>Supervisor</th>
+                            <th>Cliente</th>
                             <th>Tipo</th>
                             <th>Estatus</th>
                             <th>Ingreso</th>

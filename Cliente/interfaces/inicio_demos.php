@@ -97,7 +97,7 @@ error_reporting(E_ALL);
 
                 <div class="ldr-stat-box">
                     <span class="ldr-stat-number" id="cardEnUso">0</span>
-                    <span class="ldr-stat-label">En uso</span>
+                    <span class="ldr-stat-label">En operación</span>
                 </div>
 
             </div>
@@ -134,7 +134,7 @@ error_reporting(E_ALL);
         <section class="ldr-content-card mt-4">
 
             <div class="ldr-section-header">
-                <h2>Flujo de contratos</h2>
+                <h2>Flujo de contratos (Rentadas)</h2>
                 <p>Etapas reales del proceso jurídico</p>
             </div>
 

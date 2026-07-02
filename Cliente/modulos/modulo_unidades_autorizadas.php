@@ -50,14 +50,13 @@ if (!isset($_SESSION)) {
                         onkeyup="filtrarCards(); filtrarTabla();">
                 </div>
             </div>
-
-            <!-- Botón cambiar vista -->
+<!-- 
             <button class="btn btn-outline-primary"
                 id="botonCambiarVista"
                 onclick="toggleVista()">
                 <i class="fa-solid fa-table-cells me-2"></i>
                 Cambiar vista
-            </button>
+            </button> -->
 
             <!-- Filtro solicitante -->
             <div class="dropdown">

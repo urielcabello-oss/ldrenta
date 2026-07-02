@@ -22,7 +22,7 @@ error_reporting(E_ALL);
     <!--estilos de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!--estIlos de interfaz-->
-    <link rel="stylesheet" href="../css/estilos.css?v=1">
+    <link rel="stylesheet" href="../css/estilos.css">
     <!--cdn para icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css"
     integrity="sha512-9xKTRVabjVeZmc+GUW8GgSmcREDunMM+Dt/GrzchfN8tkwHizc5RP4Ok/MXFFy5rIjJjzhndFScTceq5e6GvVQ=="
