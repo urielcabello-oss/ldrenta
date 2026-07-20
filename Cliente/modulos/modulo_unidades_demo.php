@@ -82,6 +82,7 @@ if (!isset($_SESSION)) {
                         <th>Número motor</th>
                         <th>VIN</th>
                         <th>Supervisor</th>
+                        <th>Cliente</th>
                         <th>Arrendadora</th>
                         <th>Estatus</th>
                         <th>Tipo unidad</th>

@@ -29,7 +29,23 @@ $sql = "SELECT
         IFNULL(c.nombre_2, ''), ' ',
         c.apellido_paterno, ' ',
         IFNULL(c.apellido_materno, '')
-    ) AS supervisor
+    ) AS supervisor,
+
+    /* CLIENTE */
+            CASE
+                WHEN pf.id_persona_fisica IS NOT NULL THEN
+                    CONCAT(
+                        pf.nombre_1, ' ',
+                        IFNULL(pf.nombre_2, ''), ' ',
+                        pf.apellido_paterno, ' ',
+                        IFNULL(pf.apellido_materno, '')
+                    )
+
+                WHEN pm.id_persona_moral IS NOT NULL THEN
+                    pm.organizacion_institucion
+
+                ELSE 'Sin asignar'
+            END AS cliente
 
 FROM unidades AS ung
 INNER JOIN modelos AS model ON ung.id_modelo = model.id_modelo
@@ -43,7 +59,16 @@ INNER JOIN arrendadora AS arr ON ung.id_arrendadora = arr.id_arrendadora
 LEFT JOIN ubicaciones AS ubi ON ung.id_ubicacion = ubi.id_ubicacion
 LEFT JOIN supervisores AS s ON ung.id_supervisor = s.id_supervisor
 LEFT JOIN usuarios AS u ON s.id_usuario = u.id_usuario
-LEFT JOIN colaboradores AS c ON u.id_colaborador = c.id_colaborador";
+LEFT JOIN colaboradores AS c ON u.id_colaborador = c.id_colaborador
+LEFT JOIN asignacion_unidad_demo aud
+    ON ung.id_unidad = aud.id_unidad
+    AND aud.estado = 1
+
+LEFT JOIN personas_fisicas pf
+    ON aud.id_persona_fisica = pf.id_persona_fisica
+
+LEFT JOIN personas_morales pm
+    ON aud.id_persona_moral = pm.id_persona_moral";
 
 $resultado = $conexion->query($sql);
 
@@ -62,10 +87,27 @@ if ($resultado->num_rows > 0) {
             <td class='titulostablaunidades'>{$fila['placa']}</td>
             <td class='titulostablaunidades'>{$fila['numero_motor']}</td>
             <td class='titulostablaunidades'>{$fila['vin']}</td>
-            <td class='titulostablaunidades'>" .
+            <td class='titulostablaunidades'>
+            " .
             (!empty($fila['supervisor'])
-                ? $fila['supervisor']
-                : "<span style='color:#ffc107;font-weight:bold;'>Sin supervisor</span>"
+                ? "<span class='badge bg-primary-subtle text-primary border border-primary-subtle'>
+            <i class='fa-solid fa-user-tie me-1'></i>{$fila['supervisor']}
+       </span>"
+                : "<span class='badge bg-warning-subtle text-warning border border-warning-subtle'>
+            <i class='fa-solid fa-triangle-exclamation me-1'></i>Sin supervisor
+       </span>"
+            ) .
+            "</td>
+
+            <td class='titulostablaunidades'>
+            " .
+                        ($fila['cliente'] != 'Sin asignar'
+                ? "<span class='badge bg-success-subtle text-success border border-success-subtle'>
+            <i class='fa-solid fa-building me-1'></i>{$fila['cliente']}
+       </span>"
+                : "<span class='badge bg-secondary-subtle text-secondary border border-secondary-subtle'>
+            <i class='fa-solid fa-minus me-1'></i>Sin asignar
+       </span>"
             ) .
             "</td>
             <td class='titulostablaunidades'>{$fila['arrendadora']}</td>
