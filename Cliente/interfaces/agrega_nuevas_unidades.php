@@ -29,6 +29,9 @@ if (!isset($_SESSION)) {
         ?>
     </main>
     
+    <?php
+            include("../ui/modales_agregar_unidedesnuevas_demo.php");
+        ?>
 
     <div class="contenedorspinner" id="contenedorspinner">
         <span class="loader"></span>

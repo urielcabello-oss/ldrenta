@@ -614,3 +614,204 @@ async function recargarModelos() {
         `;
   });
 }
+
+
+
+const modalCatalogo = new bootstrap.Modal(
+  document.getElementById("modalCatalogo"),
+);
+
+document.addEventListener("click", (e) => {
+
+  // MARCA
+  if (e.target.closest(".btnEditarMarca")) {
+
+    const btn = e.target.closest(".btnEditarMarca");
+
+    document.getElementById("tipoCatalogo").value = "marca";
+    document.getElementById("idCatalogo").value = btn.dataset.id;
+    document.getElementById("nombreCatalogo").value = btn.dataset.marca;
+    document.getElementById("tituloCatalogo").innerText =
+      "Editar marca";
+
+    modalCatalogo.show();
+  }
+
+  // MODELO
+  if (e.target.closest(".btnEditarModelo")) {
+
+    const btn = e.target.closest(".btnEditarModelo");
+
+    document.getElementById("tipoCatalogo").value = "modelo";
+    document.getElementById("idCatalogo").value = btn.dataset.id;
+    document.getElementById("nombreCatalogo").value =
+      btn.dataset.modelo;
+
+    document.getElementById("tituloCatalogo").innerText =
+      "Editar modelo";
+
+    modalCatalogo.show();
+  }
+
+  // SEDE
+  if (e.target.closest(".btnEditarSede")) {
+
+    const btn = e.target.closest(".btnEditarSede");
+
+    document.getElementById("tipoCatalogo").value = "sede";
+    document.getElementById("idCatalogo").value = btn.dataset.id;
+    document.getElementById("nombreCatalogo").value =
+      btn.dataset.sede;
+
+    document.getElementById("tituloCatalogo").innerText =
+      "Editar sede";
+
+    modalCatalogo.show();
+  }
+
+  // UBICACION
+  if (e.target.closest(".btnEditarUbicacion")) {
+
+    const btn = e.target.closest(".btnEditarUbicacion");
+
+    document.getElementById("tipoCatalogo").value = "ubicacion";
+    document.getElementById("idCatalogo").value = btn.dataset.id;
+    document.getElementById("nombreCatalogo").value =
+      btn.dataset.ubicacion;
+
+    document.getElementById("tituloCatalogo").innerText =
+      "Editar ubicación";
+
+    modalCatalogo.show();
+  }
+});
+
+document
+  .getElementById("btnGuardarCatalogo")
+  .addEventListener("click", async () => {
+
+    const tipo = document.getElementById("tipoCatalogo").value;
+
+    const id = document.getElementById("idCatalogo").value;
+
+    const nombre =
+      document.getElementById("nombreCatalogo").value;
+
+    const response = await fetch(
+      "../../Servidor/solicitudes/unidades/editar_catalogo.php",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded",
+        },
+        body:
+          "tipo=" +
+          encodeURIComponent(tipo) +
+          "&id=" +
+          encodeURIComponent(id) +
+          "&nombre=" +
+          encodeURIComponent(nombre),
+      },
+    );
+
+    const data = await response.json();
+
+    if (data.success) {
+
+      Swal.fire({
+        icon: "success",
+        title: "Registro actualizado",
+      }).then(() => {
+        location.reload();
+      });
+
+    } else {
+
+      Swal.fire({
+        icon: "error",
+        title: data.message,
+      });
+
+    }
+  });
+
+  document.addEventListener("click", async (e) => {
+
+  let boton = null;
+  let tipo = null;
+
+  if (e.target.closest(".btnEstatusMarca")) {
+    boton = e.target.closest(".btnEstatusMarca");
+    tipo = "marca";
+  }
+
+  if (e.target.closest(".btnEstatusModelo")) {
+    boton = e.target.closest(".btnEstatusModelo");
+    tipo = "modelo";
+  }
+
+  if (e.target.closest(".btnEstatusSede")) {
+    boton = e.target.closest(".btnEstatusSede");
+    tipo = "sede";
+  }
+
+  if (e.target.closest(".btnEstatusUbicacion")) {
+    boton = e.target.closest(".btnEstatusUbicacion");
+    tipo = "ubicacion";
+  }
+
+  if (!boton) return;
+
+  const id = boton.dataset.id;
+  const estatus = boton.dataset.estatus;
+
+  const accion = estatus == 1 ? "activar" : "desactivar";
+
+  const confirmacion = await Swal.fire({
+    icon: "question",
+    title: `¿Deseas ${accion} este registro?`,
+    showCancelButton: true,
+    confirmButtonText: "Sí",
+    cancelButtonText: "Cancelar"
+  });
+
+  if (!confirmacion.isConfirmed) return;
+
+  const response = await fetch(
+    "../../Servidor/solicitudes/unidades/cambiar_estatus_catalogo.php",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body:
+        "tipo=" + encodeURIComponent(tipo) +
+        "&id=" + encodeURIComponent(id) +
+        "&estatus=" + encodeURIComponent(estatus),
+    }
+  );
+
+  const data = await response.json();
+
+  if (data.success) {
+
+    Swal.fire({
+      icon: "success",
+      title: "Actualizado correctamente",
+      timer: 1500,
+      showConfirmButton: false
+    }).then(() => {
+      location.reload();
+    });
+
+  } else {
+
+    Swal.fire({
+      icon: "error",
+      title: data.message || "Error al actualizar"
+    });
+
+  }
+
+});

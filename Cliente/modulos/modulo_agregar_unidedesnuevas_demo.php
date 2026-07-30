@@ -19,7 +19,7 @@
 
             <div class="d-flex gap-2">
 
-                <?php if (tienePermiso('ROLES', 'w')): ?>
+                <?php if (tienePermiso('CATALOGOS', 'w')): ?>
 
                     <button type="button"
                         class="btn btn-dark"
@@ -508,7 +508,9 @@
                                     <td>
 
                                         <button type="button"
-                                            class="btn btn-sm btn-warning">
+                                            class="btn btn-sm btn-warning btnEditarModelo"
+                                            data-id="<?= $row['id_modelo']; ?>"
+                                            data-modelo="<?= htmlspecialchars($row['nombre_modelo']); ?>">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -517,7 +519,9 @@
                                         <?php if ($row['activo'] == 1) { ?>
 
                                             <button type="button"
-                                                class="btn btn-sm btn-danger">
+                                                class="btn btn-sm btn-danger btnEstatusModelo"
+                                                data-id="<?= $row['id_modelo']; ?>"
+                                                data-estatus="0">
 
                                                 <i class="fa-solid fa-ban"></i>
 
@@ -526,7 +530,9 @@
                                         <?php } else { ?>
 
                                             <button type="button"
-                                                class="btn btn-sm btn-success">
+                                                class="btn btn-sm btn-success btnEstatusModelo"
+                                                data-id="<?= $row['id_modelo']; ?>"
+                                                data-estatus="1">
 
                                                 <i class="fa-solid fa-check"></i>
 
@@ -612,7 +618,9 @@
                                     <td>
 
                                         <button type="button"
-                                            class="btn btn-sm btn-warning">
+                                            class="btn btn-sm btn-warning btnEditarSede"
+                                            data-id="<?= $row['id_sede']; ?>"
+                                            data-sede="<?= htmlspecialchars($row['ubicacion']); ?>">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -621,7 +629,9 @@
                                         <?php if ($row['activo'] == 1) { ?>
 
                                             <button type="button"
-                                                class="btn btn-sm btn-danger">
+                                                class="btn btn-sm btn-danger btnEstatusSede"
+                                                data-id="<?= $row['id_sede']; ?>"
+                                                data-estatus="0">
 
                                                 <i class="fa-solid fa-ban"></i>
 
@@ -630,7 +640,9 @@
                                         <?php } else { ?>
 
                                             <button type="button"
-                                                class="btn btn-sm btn-success">
+                                                class="btn btn-sm btn-success btnEstatusSede"
+                                                data-id="<?= $row['id_sede']; ?>"
+                                                data-estatus="1">
 
                                                 <i class="fa-solid fa-check"></i>
 
@@ -716,7 +728,9 @@
                                     <td>
 
                                         <button type="button"
-                                            class="btn btn-sm btn-warning">
+                                            class="btn btn-sm btn-warning btnEditarUbicacion"
+                                            data-id="<?= $row['id_ubicacion']; ?>"
+                                            data-ubicacion="<?= htmlspecialchars($row['ubicacion_unidad']); ?>">
 
                                             <i class="fa-solid fa-pen"></i>
 
@@ -725,7 +739,9 @@
                                         <?php if ($row['activo'] == 1) { ?>
 
                                             <button type="button"
-                                                class="btn btn-sm btn-danger">
+                                                class="btn btn-sm btn-danger btnEstatusUbicacion"
+                                                data-id="<?= $row['id_ubicacion']; ?>"
+                                                data-estatus="0">
 
                                                 <i class="fa-solid fa-ban"></i>
 
@@ -734,7 +750,9 @@
                                         <?php } else { ?>
 
                                             <button type="button"
-                                                class="btn btn-sm btn-success">
+                                                class="btn btn-sm btn-success btnEstatusUbicacion"
+                                                data-id="<?= $row['id_ubicacion']; ?>"
+                                                data-estatus="1">
 
                                                 <i class="fa-solid fa-check"></i>
 
